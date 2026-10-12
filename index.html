@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexora Case Study</title>
+<meta name="description" content="Case study: a conversion-focused landing page for Nexora, a productivity platform for small businesses.">
+<meta property="og:title" content="Nexora — SaaS landing page case study">
+<meta property="og:description" content="Landing page design for a B2B productivity startup. Desktop and mobile, pricing, features, testimonials, FAQ and demo booking.">
+<meta name="theme-color" content="#f4f1fb">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d0620'/%3E%3Cpath d='M9 23V9l14 14V9' fill='none' stroke='%23c4b0ff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a calm, light case-study sheet that frames the dark product like a gallery wall. */
+:root{
+  --paper:#f4f1fb; --card:#ffffff; --ink:#140b2e; --muted:#5d5478; --line:#e2dcf1;
+  --violet:#6a3df0; --violet-soft:#ece5ff; --night:#0d0620;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Onest",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root{--paper:#0f0a1f;--card:#18112f;--ink:#f1ecff;--muted:#a99bcc;--line:#2c2350;--violet:#a98bff;--violet-soft:#241a46;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+.label{font:500 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:26px;font-size:.95rem}
+.top b{font:700 1.05rem var(--display)}
+.top a{text-decoration:none;color:var(--muted)}
+.top a:hover{color:var(--ink)}
+
+.intro{padding-block:clamp(40px,7vw,90px) 40px;display:grid;gap:28px}
+.intro h1{font-size:clamp(2.8rem,8vw,6.2rem);line-height:.95;font-weight:800}
+.intro h1 span{color:var(--violet)}
+.intro p{font-size:clamp(1.1rem,1.6vw,1.3rem);color:var(--muted);max-width:52ch;margin:0}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:12px;font:600 .98rem var(--body);text-decoration:none;border:1px solid var(--line);background:var(--card)}
+.btn.primary{background:var(--violet);border-color:transparent;color:#fff}
+@media (prefers-color-scheme:dark){.btn.primary{color:#140b2e}}
+.btn:hover{transform:translateY(-1px)}
+
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--line);margin-top:20px}
+.meta div{padding:22px 20px 22px 0;display:grid;gap:8px}
+.meta div+div{padding-left:20px;border-left:1px solid var(--line)}
+.meta strong{font-weight:600;font-size:1rem}
+
+.frame{margin-block:56px;border-radius:18px;overflow:hidden;background:var(--night);box-shadow:0 40px 80px -40px rgba(20,12,40,.45),0 0 0 1px var(--line)}
+.bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#1a0f38;border-bottom:1px solid rgba(196,176,255,.15)}
+.bar i{width:11px;height:11px;border-radius:50%;background:#3b2c66}
+.bar span{margin-left:14px;font:400 .78rem var(--mono);color:#a99bcc;background:#0d0620;padding:5px 12px;border-radius:7px;flex:1;max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewport{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
+.viewport iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0}
+.viewport a{position:absolute;inset:0}
+
+.cols{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(24px,5vw,80px);padding-block:56px;border-top:1px solid var(--line)}
+.cols h2{font-size:clamp(1.7rem,3vw,2.3rem)}
+.cols p{margin:0 0 16px;max-width:62ch}
+.cols ul{margin:0;padding-left:20px;display:grid;gap:8px;max-width:62ch}
+.decisions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.d{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.d h3{font-size:1.15rem;margin-bottom:8px}
+.d p{margin:0;color:var(--muted);font-size:.97rem}
+.sw{display:flex;gap:8px;margin-top:16px}
+.sw i{width:34px;height:34px;border-radius:9px;border:1px solid var(--line)}
+
+.phones{display:flex;gap:24px;justify-content:center;flex-wrap:wrap}
+.phone{width:300px;max-width:100%;border-radius:36px;padding:10px;background:#1a0f38;box-shadow:0 30px 60px -30px rgba(20,12,40,.5)}
+.phone .viewport{aspect-ratio:375/760;border-radius:28px}
+.phone iframe{width:375px;height:760px}
+
+.end{padding-block:72px 56px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+.end h2{font-size:clamp(1.8rem,4vw,2.8rem)}
+footer{padding-block:28px;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .meta div:nth-child(3){padding-left:0;border-left:0}
+  .meta div:nth-child(n+3){border-top:1px solid var(--line)}
+  .cols,.decisions{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top"><b>Portfolio</b><a href="nexora/">Live site ↗</a></nav>
+
+  <header class="intro">
+    <span class="label">Case study · SaaS landing page</span>
+    <h1>Nexora<span>.</span></h1>
+    <p>A conversion-focused website for a productivity platform that helps small businesses automate their admin work. The page has one job: get visitors to book a demo.</p>
+    <div class="actions">
+      <a class="btn primary" href="nexora/">View live site →</a>
+      <a class="btn" href="#process">Read the process</a>
+    </div>
+    <div class="meta">
+      <div><span class="label">Client</span><strong>B2B software startup</strong></div>
+      <div><span class="label">Timeline</span><strong>2 weeks</strong></div>
+      <div><span class="label">Deliverables</span><strong>Desktop &amp; mobile, prototype, handoff</strong></div>
+      <div><span class="label">Tools</span><strong>Figma, Webflow</strong></div>
+    </div>
+  </header>
+
+  <div class="frame">
+    <div class="bar"><i></i><i></i><i></i><span>lupu228.github.io/nexora</span></div>
+    <div class="viewport" data-w="1440"><iframe src="nexora/" title="Nexora landing page, desktop" loading="lazy" tabindex="-1"></iframe><a href="nexora/" aria-label="Open the live Nexora site"></a></div>
+  </div>
+
+  <section class="cols" id="process">
+    <div><span class="label">The brief</span><h2>Make the value obvious in five seconds.</h2></div>
+    <div>
+      <p>Nexora's buyers are owners and ops leads at teams of 2 to 50 people. They don't have time to read about "workflow orchestration". They want to know what gets taken off their plate and what it costs.</p>
+      <p>The brief covered:</p>
+      <ul>
+        <li>Landing page design for desktop and mobile</li>
+        <li>Pricing, features, testimonials, and FAQ sections</li>
+        <li>Interactive prototype and design handoff</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cols">
+    <div><span class="label">Key decisions</span><h2>Show the product, then remove doubts.</h2></div>
+    <div class="decisions">
+      <div class="d"><h3>Product as the hero</h3><p>A real dashboard sits next to the headline, showing hours saved and live automation runs. Visitors see the outcome before they read about it.</p></div>
+      <div class="d"><h3>Benefits in plain words</h3><p>"Get home on time" instead of "Optimize operations". Every feature is written as a task it takes off your list.</p></div>
+      <div class="d"><h3>One call to action</h3><p>Every button leads to the same 20-minute demo form, which asks for four fields and nothing more.</p></div>
+      <div class="d"><h3>Violet glass identity</h3><p>Deep violet surfaces, frosted panels, and soft 3D objects that respond to the cursor give a calm, premium feel.</p>
+        <div class="sw" aria-label="Palette"><i style="background:#0d0620"></i><i style="background:#24104f"></i><i style="background:#7c4dff"></i><i style="background:#c4b0ff"></i><i style="background:#5be3a1"></i></div></div>
+    </div>
+  </section>
+
+  <section class="cols">
+    <div><span class="label">Mobile</span><h2>Built for the phone first scroll.</h2><p style="margin-top:16px;color:var(--muted)">Single column, a full-screen menu, and the demo form within easy thumb reach.</p></div>
+    <div class="phones">
+      <div class="phone"><div class="viewport" data-w="375"><iframe src="nexora/" title="Nexora landing page, mobile" loading="lazy" tabindex="-1"></iframe><a href="nexora/" aria-label="Open the live Nexora site"></a></div></div>
+    </div>
+  </section>
+
+  <section class="cols">
+    <div><span class="label">Page structure</span><h2>Built around the questions buyers ask.</h2></div>
+    <div>
+      <ul>
+        <li><strong>Hero:</strong> what it is, who it's for, and proof in the dashboard</li>
+        <li><strong>Features:</strong> automations, tasks, and integrations with real examples</li>
+        <li><strong>How it works:</strong> three steps to show setup takes an afternoon</li>
+        <li><strong>Testimonials:</strong> quotes with a measurable before-and-after</li>
+        <li><strong>Pricing:</strong> three plans with a monthly and yearly switch</li>
+        <li><strong>FAQ:</strong> answers to setup, data, and cancellation worries</li>
+        <li><strong>Demo booking:</strong> a short form with a clear next step</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="end">
+    <h2>See it working.</h2>
+    <a class="btn primary" href="nexora/">Open the live site →</a>
+  </section>
+
+  <footer>© 2026 · Nexora is a concept project. Names, figures, and testimonials are illustrative.</footer>
+</div>
+<script>
+(function(){
+  function fit(){ document.querySelectorAll('.viewport').forEach(function(v){ var f=v.querySelector('iframe'); f.style.transform='scale('+(v.clientWidth/(+v.dataset.w))+')'; }); }
+  addEventListener('resize',fit); fit();
+})();
+</script>
+</body>
+</html>
