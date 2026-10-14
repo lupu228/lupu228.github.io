@@ -745,8 +745,8 @@ var works=[
   ['FitLife','UI/UX · Фитнес','2025','Тренировки, питание и прогресс в одном приложении — с кликабельным прототипом на 10 экранов.',['Mobile App','UX','Прототип'],'fitlife/',SHOT('fitlife','50% 10%'),'','7 дней']
 ];
 document.getElementById('cards').innerHTML=works.map(function(w,i){
-  return '<li class="rv '+(w[7]==='wide'?'wide':'')+'" style="--d:'+(i*90)+'ms"><a class="pcard '+(w[7]==='light'?'light':'')+'" href="'+w[5]+'">'+w[6]+'<div class="meta"><span>'+w[1]+' · '+w[2]+' · '+w[8]+'</span><span class="go"><svg><use href="#i-aur"/></svg></span></div>'+
-  '<div class="bottom"><div><h3>'+w[0]+'</h3><p>'+w[3]+'</p></div><div class="tags">'+w[4].map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div></div></a></li>';
+  return '<li class="rv '+(w[7]==='wide'?'wide':'')+'" style="--d:'+(i*90)+'ms"><a class="pcard '+(w[7]==='light'?'light':'')+'" href="'+w[5]+'">'+w[6]+'<div class="meta"><span>'+w[1]+' — '+w[2]+'</span><span class="go"><svg><use href="#i-aur"/></svg></span></div>'+
+  '<div class="bottom"><div><h3>'+w[0]+'</h3><p>'+w[3]+'</p></div><div class="tags">'+w[4].map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'<span class="tag">'+w[8]+'</span></div></div></a></li>';
 }).join('');
 
 var svcs=[['01','Разработка','Быстрые сайты и веб-приложения, которые легко поддерживать.'],['02','Продуктовый дизайн','Интерфейсы, которыми легко пользоваться и приятно смотреть.'],['03','Брендинг','Логотип, фирменный стиль и упаковка, которые запоминаются.'],['04','Консалтинг','Стратегия и аудит UX для команд, которые хотят расти.']];
