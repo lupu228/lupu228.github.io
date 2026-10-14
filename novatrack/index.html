@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NovaTrack — дашборд агентства · кейс Lumora</title>
+<meta name="description" content="Рабочее пространство агентства: проекты, клиенты, задачи и финансы в одном веб-приложении. Интерактивный концепт студии Lumora.">
+<meta name="theme-color" content="#f3f5fa">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NovaTrack — дашборд агентства · кейс Lumora">
+<meta property="og:description" content="Рабочее пространство агентства: проекты, клиенты, задачи и финансы в одном веб-приложении. Интерактивный концепт студии Lumora.">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231c54d6'/%3E%3Cpath d='M9 22V10l14 12V10' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='23' cy='10' r='2.4' fill='%230eaa8a'/%3E%3C/svg%3E">
+<style>:root{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed left rail + scrolling workspace; summary row first, detail panels below, tables scroll in their own frames */
+:root{
+  --bg:243 245 250; --surface:255 255 255; --surface2:236 241 248; --line:222 228 238;
+  --ink:16 23 42; --muted:98 110 132; --accent:28 84 214; --accent2:14 170 138;
+  --ok:15 150 100; --warn:206 128 10; --bad:214 60 60;
+  --display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:11 15 23; --surface:18 24 35; --surface2:26 33 47; --line:37 46 63;
+  --ink:229 234 243; --muted:139 151 171; --accent:102 145 255; --accent2:52 211 170;
+  --ok:52 199 140; --warn:245 176 64; --bad:248 113 113; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:11 15 23; --surface:18 24 35; --surface2:26 33 47; --line:37 46 63;
+  --ink:229 234 243; --muted:139 151 171; --accent:102 145 255; --accent2:52 211 170;
+  --ok:52 199 140; --warn:245 176 64; --bad:248 113 113; color-scheme:dark}
+html,body{height:100%}
+body{background:rgb(var(--bg));color:rgb(var(--ink));font-family:var(--body);font-size:14px;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;letter-spacing:-.01em}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgb(var(--muted))}
+:focus-visible{outline:2px solid rgb(var(--accent));outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.lift{box-shadow:0 1px 2px rgb(var(--ink)/.04),0 10px 30px -18px rgb(var(--ink)/.18)}
+.fade{animation:fade .25s ease-out}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+const c=v=>`rgb(var(--${v}) / <alpha-value>)`;
+tailwind.config={theme:{extend:{colors:{bg:c('bg'),surface:c('surface'),surface2:c('surface2'),line:c('line'),ink:c('ink'),muted:c('muted'),accent:c('accent'),accent2:c('accent2'),ok:c('ok'),warn:c('warn'),bad:c('bad')}}}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const {useState,useMemo,useEffect} = React;
+const TODAY = new Date('2026-10-10');
+const daysUntil = d => Math.round((new Date(d)-TODAY)/864e5);
+const eur = n => '€'+n.toLocaleString('ru-RU');
+const fmtDate = d => new Date(d).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
+
+/* ---------- sample data (example agency workspace) ---------- */
+const PEOPLE = {MR:'Марк Рейес',JS:'Йонас Шталь',AK:'Айко Като',DL:'Дарио Ленц',PO:'Прия Осеи',TB:'Том Брандт'};
+const PROJECTS = [
+ {id:'NT-1042',name:'Обновление бренда',client:'Halvorsen Legal',owners:['MR','JS'],status:'В графике',priority:'Высокий',progress:72,due:'2026-10-24',budget:18500,spent:12100},
+ {id:'NT-1047',name:'MVP клиентского портала',client:'Brightwater Clinics',owners:['AK','DL','PO'],status:'Под риском',priority:'Критичный',progress:48,due:'2026-10-17',budget:42000,spent:33900},
+ {id:'NT-1051',name:'Таргет на Q4',client:'Fernhill Coffee',owners:['TB'],status:'В графике',priority:'Средний',progress:35,due:'2026-11-28',budget:9600,spent:3100},
+ {id:'NT-1039',name:'Переезд сайта',client:'Ostra Logistics',owners:['DL','JS'],status:'Заблокирован',priority:'Высокий',progress:61,due:'2026-10-14',budget:27500,spent:21800},
+ {id:'NT-1055',name:'Письма онбординга',client:'Lumen Fitness',owners:['PO'],status:'Планирование',priority:'Низкий',progress:8,due:'2026-12-05',budget:5200,spent:400},
+ {id:'NT-1033',name:'Дизайн годового отчёта',client:'Kessler Foundation',owners:['MR'],status:'Готово',priority:'Средний',progress:100,due:'2026-10-03',budget:12000,spent:11250},
+ {id:'NT-1049',name:'SEO-контент спринт',client:'Fernhill Coffee',owners:['AK','TB'],status:'В графике',priority:'Средний',progress:57,due:'2026-11-07',budget:8800,spent:4600},
+ {id:'NT-1044',name:'UX-аудит приложения записи',client:'Brightwater Clinics',owners:['MR','AK'],status:'Под риском',priority:'Высокий',progress:66,due:'2026-10-20',budget:14000,spent:12600},
+ {id:'NT-1058',name:'Система презентаций',client:'Northpine Capital',owners:['JS'],status:'В графике',priority:'Низкий',progress:22,due:'2026-11-21',budget:7400,spent:1500},
+ {id:'NT-1036',name:'Настройка аналитики',client:'Ostra Logistics',owners:['PO','DL'],status:'Готово',priority:'Средний',progress:100,due:'2026-09-29',budget:6900,spent:7300},
+];
+const CLIENTS = [
+ {name:'Brightwater Clinics',segment:'Абонемент',health:'Внимание',ytd:118400,open:2,contact:'Elena Varga',touch:2,sat:7.4},
+ {name:'Halvorsen Legal',segment:'Проект',health:'Стабилен',ytd:41200,open:1,contact:'Nils Halvorsen',touch:4,sat:9.1},
+ {name:'Fernhill Coffee',segment:'Абонемент',health:'Стабилен',ytd:63900,open:2,contact:'Rosa Lind',touch:1,sat:8.8},
+ {name:'Ostra Logistics',segment:'Абонемент',health:'Под риском',ytd:88100,open:1,contact:'Marek Nowak',touch:12,sat:6.2},
+ {name:'Lumen Fitness',segment:'Пилот',health:'Стабилен',ytd:9800,open:1,contact:'Sade Adeyemi',touch:6,sat:8.4},
+ {name:'Kessler Foundation',segment:'Проект',health:'Стабилен',ytd:24600,open:0,contact:'Ines Kessler',touch:9,sat:9.4},
+ {name:'Northpine Capital',segment:'Пилот',health:'Внимание',ytd:7400,open:1,contact:'Owen Price',touch:15,sat:7.8},
+];
+const TASKS0 = [
+ {id:1,t:'Исправить цикл редиректа SSO',p:'NT-1047',who:'DL',col:'В работе',due:'2026-10-13'},
+ {id:2,t:'Согласовать окно переключения DNS',p:'NT-1039',who:'JS',col:'К работе',due:'2026-10-11'},
+ {id:3,t:'Компоновки логотипа v3',p:'NT-1042',who:'MR',col:'На проверке',due:'2026-10-15'},
+ {id:4,t:'Написать 6 вариантов объявлений',p:'NT-1051',who:'TB',col:'В работе',due:'2026-10-18'},
+ {id:5,t:'Итоги юзабилити-теста',p:'NT-1044',who:'AK',col:'К работе',due:'2026-10-16'},
+ {id:6,t:'Кластеры ключевых слов на Q4',p:'NT-1049',who:'AK',col:'Готово',due:'2026-10-08'},
+ {id:7,t:'Состояния формы записи пациента',p:'NT-1047',who:'PO',col:'На проверке',due:'2026-10-14'},
+ {id:8,t:'Текст приветственного письма',p:'NT-1055',who:'PO',col:'К работе',due:'2026-10-22'},
+ {id:9,t:'Проверка карты редиректов',p:'NT-1039',who:'DL',col:'Заблокирован',due:'2026-10-12'},
+ {id:10,t:'Мастер-слайды презентации',p:'NT-1058',who:'JS',col:'В работе',due:'2026-10-25'},
+ {id:11,t:'Брендбук в PDF',p:'NT-1042',who:'MR',col:'К работе',due:'2026-10-21'},
+];
+const COLS = ['К работе','В работе','На проверке','Заблокирован','Готово'];
+
+/* ---------- primitives ---------- */
+const STATUS = {
+ 'В графике':'bg-ok/10 text-ok','Под риском':'bg-warn/15 text-warn','Заблокирован':'bg-bad/10 text-bad',
+ 'Планирование':'bg-accent/10 text-accent','Готово':'bg-surface2 text-muted',
+ 'Стабилен':'bg-ok/10 text-ok','Внимание':'bg-warn/15 text-warn','Под риском ':'bg-bad/10 text-bad'};
+function Pill({s,map}){
+  const cls = (map||STATUS)[s] || 'bg-surface2 text-muted';
+  return <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap ${cls}`}>
+    <span className="h-1.5 w-1.5 rounded-full bg-current"/>{s}</span>;
+}
+const HEALTH = {'Стабилен':'bg-ok/10 text-ok','Внимание':'bg-warn/15 text-warn','Под риском':'bg-bad/10 text-bad'};
+const PRIO = {'Критичный':'text-bad','Высокий':'text-warn','Средний':'text-accent','Низкий':'text-muted'};
+function Prio({p}){
+  const n={'Критичный':4,'Высокий':3,'Средний':2,'Низкий':1}[p];
+  return <span className={`inline-flex items-center gap-2 text-xs font-medium ${PRIO[p]}`}>
+    <span className="flex items-end gap-0.5">{[1,2,3,4].map(i=><span key={i} className={`w-1 rounded-sm ${i<=n?'bg-current':'bg-line'}`} style={{height:3+i*2}}/>)}</span>{p}</span>;
+}
+function Avatar({k,size=28}){
+  if(k==='MR') return <img src="img/avatar.png" alt={PEOPLE[k]} title={PEOPLE[k]} className="inline-block rounded-full ring-2 ring-surface object-cover" style={{width:size,height:size}}/>;
+  const hues={MR:'accent',JS:'accent2',AK:'warn',DL:'bad',PO:'ok',TB:'muted'};
+  return <span title={PEOPLE[k]} className={`inline-grid place-items-center rounded-full ring-2 ring-surface font-semibold text-[11px] bg-${hues[k]}/15 text-${hues[k]}`} style={{width:size,height:size}}>{k}</span>;
+}
+const Thumb = ({p,size=44}) => <img src={`img/p${PROJECTS.indexOf(p)%4+1}.png`} alt="" aria-hidden="true" className="shrink-0 rounded-xl object-cover" style={{width:size,height:size}}/>;
+const Card =({className='',children}) => <section className={`lift rounded-2xl border border-line bg-surface ${className}`}>{children}</section>;
+function Bar({v,tone='accent'}){
+  return <div className="h-1.5 w-full rounded-full bg-surface2 overflow-hidden"><div className={`h-full rounded-full bg-${tone}`} style={{width:Math.min(v,100)+'%'}}/></div>;
+}
+function Icon({n,className='h-5 w-5'}){
+  const p={
+   grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+   folder:'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+   users:'M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 10a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM21 19v-1a4 4 0 0 0-3-3.9M15 3.1a3.5 3.5 0 0 1 0 6.8',
+   check:'M9 11l3 3 8-8M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9',
+   layers:'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',
+   search:'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3',
+   menu:'M4 7h16M4 12h16M4 17h16',
+   bell:'M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0',
+   moon:'M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z',
+   sun:'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4',
+   x:'M6 6l12 12M18 6L6 18', plus:'M12 5v14M5 12h14', arrow:'M5 12h14M13 6l6 6-6 6',
+   up:'M7 17L17 7M9 7h8v8', down:'M7 7l10 10M17 9v8H9', clock:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
+  }[n];
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><path d={p}/></svg>;
+}
+
+/* ---------- charts ---------- */
+function Spark({data,tone='accent'}){
+  const w=120,h=40,min=Math.min(...data),max=Math.max(...data);
+  const pts=data.map((v,i)=>[i*(w/(data.length-1)),h-4-((v-min)/(max-min||1))*(h-10)]);
+  const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const last=pts[pts.length-1]; const id='g'+tone+data.length+data[0];
+  return <svg viewBox={`0 0 ${w} ${h}`} className="w-28 h-10 overflow-visible" aria-hidden="true">
+    <defs><linearGradient id={id} x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor={`rgb(var(--${tone}))`} stopOpacity=".22"/><stop offset="1" stopColor={`rgb(var(--${tone}))`} stopOpacity="0"/></linearGradient></defs>
+    <path d={`${d} L${w} ${h} L0 ${h}Z`} fill={`url(#${id})`}/>
+    <path d={d} fill="none" stroke={`rgb(var(--${tone}))`} strokeWidth="2" strokeLinejoin="round"/>
+    <circle cx={last[0]} cy={last[1]} r="3.2" fill={`rgb(var(--${tone}))`} stroke="rgb(var(--surface))" strokeWidth="2"/>
+  </svg>;
+}
+function RevenueChart(){
+  const m=['Май','Июн','Июл','Авг','Сен','Окт'], rev=[62,71,68,79,84,86.4], cost=[41,44,47,49,52,53];
+  const W=560,H=230,L=40,B=30,T=10,top=100, y=v=>T+(H-T-B)*(1-v/top), slot=(W-L-8)/m.length;
+  const [hover,setHover]=useState(5);
+  return <div>
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label="Выручка и себестоимость по месяцам, май–октябрь 2026">
+      {[0,25,50,75,100].map(t=><g key={t}><line x1={L} x2={W-8} y1={y(t)} y2={y(t)} stroke="rgb(var(--line))" strokeDasharray={t?'3 4':''}/>
+        <text x={L-8} y={y(t)+4} textAnchor="end" fontSize="11" fill="rgb(var(--muted))" fontFamily="var(--mono)">{t}</text></g>)}
+      {m.map((mo,i)=>{const cx=L+slot*i+slot/2, bw=Math.min(16,slot/4), on=i===hover;
+        return <g key={mo} onMouseEnter={()=>setHover(i)} onFocus={()=>setHover(i)} tabIndex="0" style={{cursor:'pointer',outline:'none'}}>
+          <rect x={L+slot*i} y={T} width={slot} height={H-T-B} fill={on?'rgb(var(--surface2))':'transparent'} rx="8"/>
+          <rect x={cx-bw-2} y={y(rev[i])} width={bw} height={y(0)-y(rev[i])} rx="4" fill="rgb(var(--accent))" opacity={on?1:.85}/>
+          <rect x={cx+2} y={y(cost[i])} width={bw} height={y(0)-y(cost[i])} rx="4" fill="rgb(var(--accent2))" opacity={on?1:.85}/>
+          <text x={cx} y={H-10} textAnchor="middle" fontSize="11.5" fill={on?'rgb(var(--ink))':'rgb(var(--muted))'} fontWeight={on?600:400}>{mo}</text>
+        </g>;})}
+    </svg>
+    <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+      <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-accent"/>Выручка <b className="num">€{rev[hover]} тыс.</b></span>
+      <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-accent2"/>Себестоимость <b className="num">€{cost[hover]} тыс.</b></span>
+      <span className="text-muted">Маржа <b className="num text-ink">{Math.round((1-cost[hover]/rev[hover])*100)}%</b> · {m[hover]}</span>
+    </div>
+  </div>;
+}
+function Donut({parts}){
+  const total=parts.reduce((a,p)=>a+p.v,0), r=52, C=2*Math.PI*r; let acc=0;
+  return <svg viewBox="0 0 140 140" className="w-36 h-36 shrink-0" role="img" aria-label="Распределение проектов по статусу">
+    <circle cx="70" cy="70" r={r} fill="none" stroke="rgb(var(--surface2))" strokeWidth="14"/>
+    {parts.map(p=>{const len=p.v/total*C, el=<circle key={p.k} cx="70" cy="70" r={r} fill="none" stroke={`rgb(var(--${p.tone}))`} strokeWidth="14" strokeDasharray={`${Math.max(len-3,0)} ${C}`} strokeDashoffset={-acc} transform="rotate(-90 70 70)" strokeLinecap="round"/>; acc+=len; return el;})}
+    <text x="70" y="68" textAnchor="middle" fontSize="26" fontFamily="var(--display)" fontWeight="700" fill="rgb(var(--ink))">{total}</text>
+    <text x="70" y="88" textAnchor="middle" fontSize="11" fill="rgb(var(--muted))">активных</text>
+  </svg>;
+}
+
+/* ---------- views ---------- */
+function Overview({go,openProject}){
+  const kpis=[
+   {k:'Активные проекты',v:'8',d:'+2',up:true,s:[5,6,6,7,6,8],note:'к прошлому месяцу'},
+   {k:'Выручка за октябрь',v:'€86,4K',d:'+2,9%',up:true,s:[62,71,68,79,84,86],note:'к сентябрю'},
+   {k:'Оплачиваемая загрузка',v:'78%',d:'−4 п.п.',up:false,s:[83,85,81,82,80,78],tone:'warn',note:'цель 80%'},
+   {k:'Сдано в срок',v:'92%',d:'+3 п.п.',up:true,s:[84,86,88,87,89,92],tone:'accent2',note:'за 90 дней'},
+  ];
+  const live=PROJECTS.filter(p=>p.status!=='Готово');
+  const deadlines=[...live].sort((a,b)=>new Date(a.due)-new Date(b.due)).slice(0,5);
+  const util=[['MR',91],['AK',86],['DL',94],['JS',72],['PO',64],['TB',58]];
+  const feed=[
+   ['09:42','ok','Fernhill Coffee оплатил счёт #2291','€4 800'],
+   ['09:15','bad','Ostra Logistics заблокирован: ждём доступ к DNS',null],
+   ['Вчера','accent','Компоновки логотипа v3 отправлены на проверку','NT-1042'],
+   ['Вчера','warn','Бюджет портала Brightwater превысил 80%','NT-1047'],
+   ['8 окт','accent2','Кластеры ключевых слов на Q4 готовы','NT-1049'],
+  ];
+  return <div className="space-y-5 fade">
+    <div className="relative overflow-hidden rounded-3xl bg-accent/[.07] ring-1 ring-accent/10 px-5 pt-6 sm:px-8 sm:pt-8 md:min-h-[220px]">
+      <div aria-hidden="true" className="absolute -right-16 -top-24 h-72 w-72 rounded-full bg-accent2/10"/>
+      <div aria-hidden="true" className="absolute right-44 -bottom-28 h-56 w-56 rounded-full bg-accent/10"/>
+      <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-2">
+        <div className="min-w-0 pb-6 sm:pb-8 md:max-w-[55%]">
+          <p className="eyebrow">Суббота, 10 октября</p>
+          <h1 className="mt-1 text-2xl sm:text-[30px] font-bold">Доброе утро, Марк</h1>
+          <p className="mt-2 text-muted max-w-xl">Выручка выросла на <b className="text-ink">2,9%</b> к сентябрю. Сегодня нужны вы в двух проектах: переезд Ostra заблокирован, а портал Brightwater сдаётся через 7 дней при готовности 48%.</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button onClick={()=>go('projects','Под риском')} className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/25 hover:bg-accent/90">Проекты под риском</button>
+            <button onClick={()=>go('tasks')} className="rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-semibold hover:bg-surface2">Доска задач</button>
+          </div>
+        </div>
+        <img src="img/agent.png" alt="Иллюстрация: сотрудник за рабочим столом" className="relative self-center md:self-end w-[260px] sm:w-[300px] lg:w-[330px] h-auto select-none" draggable="false"/>
+      </div>
+    </div>
+
+    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+      {kpis.map(k=><Card key={k.k} className="p-5">
+        <p className="text-sm text-muted">{k.k}</p>
+        <div className="mt-2 flex items-end justify-between gap-3">
+          <div><p className="text-[26px] font-bold leading-none" style={{fontFamily:'var(--display)'}}>{k.v}</p>
+            <p className="mt-2 text-xs"><span className={`inline-flex items-center gap-0.5 font-semibold ${k.up?'text-ok':'text-warn'}`}><Icon n={k.up?'up':'down'} className="h-3.5 w-3.5"/>{k.d}</span> <span className="text-muted">{k.note}</span></p></div>
+          <Spark data={k.s} tone={k.tone||'accent'}/>
+        </div>
+      </Card>)}
+    </div>
+
+    <div className="grid gap-5 xl:grid-cols-3">
+      <Card className="p-5 xl:col-span-2 min-w-0">
+        <div className="flex flex-wrap items-baseline justify-between gap-2"><h2 className="text-lg font-semibold">Выручка и себестоимость</h2><span className="text-xs text-muted">2026 · тыс. евро · наведите на месяц</span></div>
+        <div className="mt-4"><RevenueChart/></div>
+      </Card>
+      <Card className="p-5">
+        <h2 className="text-lg font-semibold">Состояние проектов</h2>
+        <p className="text-xs text-muted">Без учёта 2 сданных в этом месяце</p>
+        <div className="mt-4 flex items-center gap-5">
+          <Donut parts={[{k:'В графике',v:4,tone:'ok'},{k:'Под риском',v:2,tone:'warn'},{k:'Заблокирован',v:1,tone:'bad'},{k:'Планирование',v:1,tone:'accent'}]}/>
+          <ul className="space-y-2.5 text-sm flex-1">
+            {[['В графике',4,'ok'],['Под риском',2,'warn'],['Заблокирован',1,'bad'],['Планирование',1,'accent']].map(([k,v,t])=>
+              <li key={k}><button onClick={()=>go('projects',k)} className="flex w-full items-center justify-between rounded-lg px-2 py-1 hover:bg-surface2"><span className="flex items-center gap-2"><span className={`h-2.5 w-2.5 rounded-full bg-${t}`}/>{k}</span><b className="num">{v}</b></button></li>)}
+          </ul>
+        </div>
+      </Card>
+    </div>
+
+    <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+      <Card className="p-5">
+        <div className="flex items-center justify-between"><h2 className="text-lg font-semibold">Ближайшие дедлайны</h2><button onClick={()=>go('projects')} className="text-sm font-semibold text-accent hover:underline">Все проекты</button></div>
+        <ul className="mt-3 divide-y divide-line">
+          {deadlines.map(p=>{const d=daysUntil(p.due);
+            return <li key={p.id}><button onClick={()=>openProject(p)} className="flex w-full items-center gap-3 py-3 text-left hover:bg-surface2/60 rounded-lg px-1">
+              <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl text-center leading-none ${d<=4?'bg-bad/10 text-bad':d<=10?'bg-warn/15 text-warn':'bg-surface2 text-muted'}`}><span><b className="num text-[15px] block">{d}</b><span className="text-[10px]">дн.</span></span></div>
+              <div className="min-w-0 flex-1"><p className="font-semibold truncate">{p.name}</p><p className="text-xs text-muted truncate">{p.client} · готово {p.progress}%</p></div>
+              <Pill s={p.status}/></button></li>;})}
+        </ul>
+      </Card>
+      <Card className="p-5">
+        <h2 className="text-lg font-semibold">Загрузка команды</h2>
+        <p className="text-xs text-muted">Оплачиваемые часы за неделю · цель 80%</p>
+        <ul className="mt-4 space-y-3.5">
+          {util.map(([k,v])=><li key={k} className="flex items-center gap-3">
+            <Avatar k={k}/><div className="flex-1 min-w-0"><div className="flex justify-between text-sm"><span className="truncate">{PEOPLE[k]}</span><span className={`num ${v>90?'text-bad':v<65?'text-warn':''}`}>{v}%</span></div>
+            <div className="relative mt-1.5"><Bar v={v} tone={v>90?'bad':v<65?'warn':'accent'}/><span className="absolute top-[-3px] h-3 w-px bg-ink/50" style={{left:'80%'}}/></div></div></li>)}
+        </ul>
+      </Card>
+      <Card className="p-5 lg:col-span-2 xl:col-span-1">
+        <h2 className="text-lg font-semibold">Активность</h2>
+        <ol className="mt-3 space-y-0">
+          {feed.map(([t,tone,txt,tag],i)=><li key={i} className="grid grid-cols-[64px_16px_1fr] gap-2">
+            <span className="text-xs text-muted pt-0.5 num">{t}</span>
+            <span className="relative flex justify-center"><span className={`mt-1 h-2.5 w-2.5 rounded-full ring-4 ring-surface bg-${tone} z-10`}/>{i<feed.length-1&&<span className="absolute top-3 bottom-0 w-px bg-line"/>}</span>
+            <p className="pb-4 text-sm">{txt}{tag&&<span className="ml-1 font-semibold text-accent num text-xs">{tag}</span>}</p></li>)}
+        </ol>
+      </Card>
+    </div>
+  </div>;
+}
+
+function Projects({initial,openProject}){
+  const [q,setQ]=useState(initial.q||''); const [st,setSt]=useState(initial.status||'Все');
+  const [sort,setSort]=useState({k:'due',dir:1});
+  useEffect(()=>{setQ(initial.q||'');setSt(initial.status||'Все')},[initial]);
+  const filters=['Все','В графике','Под риском','Заблокирован','Планирование','Готово'];
+  const rows=useMemo(()=>{
+    let r=PROJECTS.filter(p=>(st==='Все'||p.status===st)&&(p.name+p.client+p.id).toLowerCase().includes(q.toLowerCase()));
+    const val=p=>sort.k==='due'?new Date(p.due):sort.k==='burn'?p.spent/p.budget:p[sort.k];
+    return [...r].sort((a,b)=>(val(a)>val(b)?1:-1)*sort.dir);
+  },[q,st,sort]);
+  const count=s=>s==='Все'?PROJECTS.length:PROJECTS.filter(p=>p.status===s).length;
+  const Th=({k,children,cls=''})=><th className={`px-4 py-3 font-semibold ${cls}`}><button onClick={()=>setSort(s=>({k,dir:s.k===k?-s.dir:1}))} className="inline-flex items-center gap-1 hover:text-ink">{children}{sort.k===k&&<span aria-hidden="true">{sort.dir>0?'↑':'↓'}</span>}</button></th>;
+  return <div className="space-y-5 fade">
+    <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow">Рабочее пространство</p><h1 className="text-2xl font-bold">Проекты</h1></div>
+      <button className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent/90"><Icon n="plus" className="h-4 w-4"/>Новый проект</button></div>
+    <Card className="overflow-hidden">
+      <div className="flex flex-col gap-3 border-b border-line p-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap gap-1.5" role="tablist">{filters.map(f=><button key={f} role="tab" aria-selected={st===f} onClick={()=>setSt(f)} className={`rounded-full px-3 py-1.5 text-sm font-medium ${st===f?'bg-ink text-surface':'text-muted hover:bg-surface2'}`}>{f} <span className="num text-xs opacity-70">{count(f)}</span></button>)}</div>
+        <label className="relative block lg:w-72"><span className="sr-only">Фильтр проектов</span><Icon n="search" className="absolute left-3 top-2.5 h-4 w-4 text-muted"/>
+          <input id="proj-q" value={q} onChange={e=>setQ(e.target.value)} placeholder="Название, клиент или ID" className="w-full rounded-xl border border-line bg-bg py-2 pl-9 pr-3 text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent/40"/></label>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[860px] text-sm">
+          <thead className="text-left text-xs text-muted bg-surface2/60"><tr><Th k="name">Проект</Th><Th k="status">Статус</Th><Th k="priority">Приоритет</Th><Th k="progress">Прогресс</Th><Th k="burn">Бюджет</Th><Th k="due">Срок</Th><th className="px-4 py-3 font-semibold">Команда</th></tr></thead>
+          <tbody className="divide-y divide-line">
+            {rows.map(p=>{const d=daysUntil(p.due), burn=Math.round(p.spent/p.budget*100);
+              return <tr key={p.id} onClick={()=>openProject(p)} className="cursor-pointer hover:bg-surface2/50">
+                <td className="px-4 py-3.5"><button className="flex items-center gap-3 text-left" onClick={e=>{e.stopPropagation();openProject(p)}}><Thumb p={p}/><span><span className="block font-semibold">{p.name}</span><span className="block text-xs text-muted"><span className="num">{p.id}</span> · {p.client}</span></span></button></td>
+                <td className="px-4"><Pill s={p.status}/></td>
+                <td className="px-4"><Prio p={p.priority}/></td>
+                <td className="px-4 w-40"><div className="flex items-center gap-2"><Bar v={p.progress} tone={p.status==='Готово'?'muted':'accent'}/><span className="num text-xs w-9 text-right">{p.progress}%</span></div></td>
+                <td className="px-4"><span className={`num ${burn>p.progress+15&&p.status!=='Готово'?'text-bad font-semibold':''}`}>{burn}%</span> <span className="text-xs text-muted num">из {eur(p.budget)}</span></td>
+                <td className="px-4 whitespace-nowrap"><p className="num">{fmtDate(p.due)}</p><p className={`text-xs ${p.status==='Готово'?'text-muted':d<0?'text-bad':d<=7?'text-warn':'text-muted'}`}>{p.status==='Готово'?'Сдан':d<0?`просрочен на ${-d} дн.`:`через ${d} дн.`}</p></td>
+                <td className="px-4"><div className="flex -space-x-2">{p.owners.map(o=><Avatar key={o} k={o}/>)}</div></td>
+              </tr>;})}
+            {!rows.length&&<tr><td colSpan="7" className="px-4 py-12 text-center text-muted">Нет проектов по запросу «{q}» в разделе «{st}». <button className="font-semibold text-accent" onClick={()=>{setQ('');setSt('Все')}}>Сбросить фильтры</button></td></tr>}
+          </tbody>
+        </table>
+      </div>
+      <p className="border-t border-line px-4 py-3 text-xs text-muted">Показано {rows.length} из {PROJECTS.length}. Бюджет подсвечивается красным, если расходы опережают прогресс на 15+ п.п.</p>
+    </Card>
+  </div>;
+}
+
+function Clients(){
+  const [seg,setSeg]=useState('Все');
+  const rows=CLIENTS.filter(c=>seg==='Все'||c.segment===seg);
+  const tot=rows.reduce((a,c)=>a+c.ytd,0);
+  return <div className="space-y-5 fade">
+    <div><p className="eyebrow">Рабочее пространство</p><h1 className="text-2xl font-bold">Клиенты</h1></div>
+    <div className="grid gap-4 sm:grid-cols-3">
+      {[['Выручка с начала года',eur(tot)],['Средняя удовлетворённость',(rows.reduce((a,c)=>a+c.sat,0)/(rows.length||1)).toFixed(1).replace('.',',')+' / 10'],['Нужно связаться',rows.filter(c=>c.touch>=10||c.health!=='Стабилен').length+' клиент(а)']].map(([k,v])=>
+        <Card key={k} className="p-5"><p className="text-sm text-muted">{k}</p><p className="mt-1 text-2xl font-bold num">{v}</p></Card>)}
+    </div>
+    <Card className="overflow-hidden">
+      <div className="flex flex-wrap gap-1.5 border-b border-line p-4">{['Все','Абонемент','Проект','Пилот'].map(f=><button key={f} onClick={()=>setSeg(f)} aria-pressed={seg===f} className={`rounded-full px-3 py-1.5 text-sm font-medium ${seg===f?'bg-ink text-surface':'text-muted hover:bg-surface2'}`}>{f}</button>)}</div>
+      <div className="overflow-x-auto"><table className="w-full min-w-[760px] text-sm">
+        <thead className="text-left text-xs text-muted bg-surface2/60"><tr>{['Клиент','Сегмент','Состояние','Выручка за год','Открытые проекты','CSAT','Последний контакт'].map(h=><th key={h} className="px-4 py-3 font-semibold">{h}</th>)}</tr></thead>
+        <tbody className="divide-y divide-line">{rows.map(c=><tr key={c.name} className="hover:bg-surface2/50">
+          <td className="px-4 py-3.5"><div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-accent/10 text-accent font-bold text-xs">{c.name.split(' ').map(w=>w[0]).join('')}</span><div><p className="font-semibold">{c.name}</p><p className="text-xs text-muted">{c.contact}</p></div></div></td>
+          <td className="px-4 text-muted">{c.segment}</td>
+          <td className="px-4"><Pill s={c.health} map={HEALTH}/></td>
+          <td className="px-4 num">{eur(c.ytd)}</td>
+          <td className="px-4 num">{c.open}</td>
+          <td className="px-4"><div className="flex items-center gap-2 w-28"><Bar v={c.sat*10} tone={c.sat>=8.5?'ok':c.sat>=7?'warn':'bad'}/><span className="num text-xs">{c.sat}</span></div></td>
+          <td className={`px-4 num ${c.touch>=10?'text-bad font-semibold':''}`}>{c.touch} дн. назад</td>
+        </tr>)}</tbody></table></div>
+    </Card>
+  </div>;
+}
+
+function Tasks(){
+  const [tasks,setTasks]=useState(TASKS0); const [mine,setMine]=useState(false);
+  const move=(id,dir)=>setTasks(ts=>ts.map(t=>t.id===id?{...t,col:COLS[Math.min(COLS.length-1,Math.max(0,COLS.indexOf(t.col)+dir))]}:t));
+  const tone={'К работе':'muted','В работе':'accent','На проверке':'accent2','Заблокирован':'bad','Готово':'ok'};
+  return <div className="space-y-5 fade">
+    <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow">Текущий спринт · 6–19 октября</p><h1 className="text-2xl font-bold">Доска задач</h1></div>
+      <label className="inline-flex items-center gap-2 text-sm cursor-pointer"><input id="mine" type="checkbox" checked={mine} onChange={e=>setMine(e.target.checked)} className="h-4 w-4 accent-[rgb(var(--accent))]"/>Только мои задачи (Марк)</label></div>
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      {COLS.map(col=>{const list=tasks.filter(t=>t.col===col&&(!mine||t.who==='MR'));
+        return <div key={col} className="rounded-2xl bg-surface2/70 p-3 min-w-0">
+          <div className="flex items-center justify-between px-1 pb-2"><span className="flex items-center gap-2 text-sm font-semibold"><span className={`h-2 w-2 rounded-full bg-${tone[col]}`}/>{col}</span><span className="num text-xs text-muted">{list.length}</span></div>
+          <div className="space-y-2.5">{list.map(t=>{const d=daysUntil(t.due);
+            return <article key={t.id} className="rounded-xl border border-line bg-surface p-3">
+              <p className="text-xs text-muted num">{t.p}</p><p className="mt-0.5 font-semibold leading-snug">{t.t}</p>
+              <div className="mt-3 flex items-center justify-between"><Avatar k={t.who} size={24}/>
+                <span className={`inline-flex items-center gap-1 text-xs ${col==='Готово'?'text-muted':d<=1?'text-bad':d<=4?'text-warn':'text-muted'}`}><Icon n="clock" className="h-3.5 w-3.5"/>{fmtDate(t.due)}</span></div>
+              <div className="mt-2 flex gap-1.5">
+                <button disabled={col===COLS[0]} onClick={()=>move(t.id,-1)} className="flex-1 rounded-lg border border-line py-1 text-xs text-muted hover:bg-surface2 disabled:opacity-30">← Назад</button>
+                <button disabled={col==='Готово'} onClick={()=>move(t.id,1)} className="flex-1 rounded-lg border border-line py-1 text-xs font-semibold hover:bg-surface2 disabled:opacity-30">Вперёд →</button></div>
+            </article>;})}
+            {!list.length&&<p className="px-1 py-6 text-center text-xs text-muted">Пусто</p>}</div>
+        </div>;})}
+    </div>
+  </div>;
+}
+
+function Library(){
+  const Spec=({t,children,cls=''})=><Card className={`p-5 ${cls}`}><p className="eyebrow mb-4">{t}</p>{children}</Card>;
+  return <div className="space-y-5 fade">
+    <div><p className="eyebrow">Дизайн-система</p><h1 className="text-2xl font-bold">Библиотека компонентов</h1><p className="text-muted mt-1 max-w-2xl">Строительные блоки, из которых собран каждый экран NovaTrack. Все цвета берутся из токенов темы, поэтому каждый элемент работает и в светлой, и в тёмной теме.</p></div>
+    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <Spec t="Кнопки"><div className="flex flex-wrap gap-2">
+        <button className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white">Основная</button>
+        <button className="rounded-xl border border-line px-4 py-2.5 text-sm font-semibold">Вторичная</button>
+        <button className="rounded-xl px-4 py-2.5 text-sm font-semibold text-accent hover:bg-accent/10">Текстовая</button>
+        <button className="rounded-xl bg-bad/10 px-4 py-2.5 text-sm font-semibold text-bad">Удалить</button></div></Spec>
+      <Spec t="Статусы"><div className="flex flex-wrap gap-2">{['В графике','Под риском','Заблокирован','Планирование','Готово'].map(s=><Pill key={s} s={s}/>)}</div></Spec>
+      <Spec t="Приоритет"><div className="flex flex-wrap gap-4">{['Критичный','Высокий','Средний','Низкий'].map(p=><Prio key={p} p={p}/>)}</div></Spec>
+      <Spec t="Плитка KPI"><div className="flex items-end justify-between"><div><p className="text-sm text-muted">Сдано в срок</p><p className="mt-1 text-[26px] font-bold" style={{fontFamily:'var(--display)'}}>92%</p><p className="text-xs text-ok font-semibold">+3 п.п.</p></div><Spark data={[84,86,88,87,89,92]} tone="accent2"/></div></Spec>
+      <Spec t="Поля ввода"><div className="space-y-3">
+        <label className="block text-sm font-medium" htmlFor="lib-a">Название проекта<input id="lib-a" defaultValue="Обновление бренда" className="mt-1 w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"/></label>
+        <label className="block text-sm font-medium" htmlFor="lib-b">Бюджет (EUR)<input id="lib-b" defaultValue="-200" className="mt-1 w-full rounded-xl border border-bad bg-bg px-3 py-2 text-sm num focus:outline-none"/></label>
+        <p className="text-xs text-bad -mt-2">Бюджет должен быть больше €0.</p></div></Spec>
+      <Spec t="Прогресс и аватары"><div className="space-y-4"><Bar v={72}/><Bar v={48} tone="warn"/><Bar v={100} tone="ok"/><div className="flex -space-x-2">{Object.keys(PEOPLE).map(k=><Avatar key={k} k={k}/>)}</div></div></Spec>
+      <Spec t="Шрифтовая шкала" cls="md:col-span-2 xl:col-span-3"><div className="grid gap-4 sm:grid-cols-4 items-baseline">
+        <p className="text-[28px] font-bold" style={{fontFamily:'var(--display)'}}>Заголовок 28</p><p className="text-lg font-semibold" style={{fontFamily:'var(--display)'}}>Подзаголовок 18</p><p>Текст 14 · Inter</p><p className="num text-sm">€86 400 · mono</p></div></Spec>
+    </div>
+  </div>;
+}
+
+function Drawer({p,onClose}){
+  useEffect(()=>{const k=e=>e.key==='Escape'&&onClose();addEventListener('keydown',k);return()=>removeEventListener('keydown',k)},[]);
+  if(!p) return null; const burn=Math.round(p.spent/p.budget*100); const ts=TASKS0.filter(t=>t.p===p.id);
+  return <div className="fixed inset-0 z-50 flex justify-end">
+    <div className="absolute inset-0 bg-ink/30" onClick={onClose}/>
+    <aside className="relative h-full w-full max-w-md overflow-y-auto bg-surface p-6 shadow-2xl fade" role="dialog" aria-label={p.name}>
+      <div className="flex items-start justify-between gap-3"><div className="flex items-center gap-4"><Thumb p={p} size={56}/><div><p className="num text-xs text-muted">{p.id}</p><h2 className="text-xl font-bold">{p.name}</h2><p className="text-muted">{p.client}</p></div></div>
+        <button onClick={onClose} className="rounded-lg p-2 hover:bg-surface2" aria-label="Закрыть"><Icon n="x"/></button></div>
+      <div className="mt-4 flex flex-wrap gap-2"><Pill s={p.status}/><Prio p={p.priority}/></div>
+      <dl className="mt-6 grid grid-cols-2 gap-4 text-sm">
+        <div><dt className="text-muted">Срок</dt><dd className="num font-semibold">{fmtDate(p.due)} 2026</dd></div>
+        <div><dt className="text-muted">Прогресс</dt><dd className="num font-semibold">{p.progress}%</dd></div>
+        <div><dt className="text-muted">Бюджет</dt><dd className="num font-semibold">{eur(p.budget)}</dd></div>
+        <div><dt className="text-muted">Потрачено</dt><dd className={`num font-semibold ${burn>p.progress+15?'text-bad':''}`}>{eur(p.spent)} ({burn}%)</dd></div>
+      </dl>
+      <div className="mt-5 space-y-2"><p className="text-xs text-muted">Выполнено и израсходовано</p><Bar v={p.progress}/><Bar v={burn} tone={burn>p.progress+15?'bad':'accent2'}/></div>
+      <h3 className="mt-7 font-semibold">Команда</h3>
+      <ul className="mt-2 space-y-2">{p.owners.map(o=><li key={o} className="flex items-center gap-3 text-sm"><Avatar k={o}/>{PEOPLE[o]}</li>)}</ul>
+      <h3 className="mt-7 font-semibold">Открытые задачи</h3>
+      <ul className="mt-2 divide-y divide-line text-sm">{ts.length?ts.map(t=><li key={t.id} className="flex justify-between gap-3 py-2.5"><span>{t.t}</span><span className="text-xs text-muted whitespace-nowrap">{t.col}</span></li>):<li className="py-2.5 text-muted">Открытых задач нет.</li>}</ul>
+    </aside>
+  </div>;
+}
+
+/* ---------- shell ---------- */
+const NAV=[['overview','Обзор','grid'],['projects','Проекты','folder'],['clients','Клиенты','users'],['tasks','Задачи','check'],['library','Компоненты','layers']];
+function App(){
+  const [view,setView]=useState(()=>{try{const h=location.hash.slice(1);return NAV.some(n=>n[0]===h)?h:'overview'}catch(e){return 'overview'}});
+  const [pInit,setPInit]=useState({}); const [open,setOpen]=useState(null); const [nav,setNav]=useState(false); const [gq,setGq]=useState('');
+  const [theme,setTheme]=useState(()=>{try{return localStorage.getItem('nt-theme')}catch(e){return null}});
+  useEffect(()=>{if(theme)document.documentElement.dataset.theme=theme;try{theme&&localStorage.setItem('nt-theme',theme)}catch(e){}},[theme]);
+  const isDark=theme?theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  const go=(v,status)=>{setView(v);if(v==='projects')setPInit({status:status||'Все',q:''});setNav(false);try{history.replaceState(null,'','#'+v)}catch(e){}window.scrollTo(0,0)};
+  const counts={projects:PROJECTS.filter(p=>p.status!=='Готово').length,tasks:TASKS0.filter(t=>t.col!=='Готово').length};
+  return <div className="min-h-full lg:pl-64">
+    {nav&&<div className="fixed inset-0 z-30 bg-ink/30 lg:hidden" onClick={()=>setNav(false)}/>}
+    <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-line bg-surface px-4 py-5 transition-transform lg:translate-x-0 ${nav?'translate-x-0':'-translate-x-full'}`}>
+      <div className="flex items-center gap-2.5 px-2"><svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden="true"><rect width="32" height="32" rx="9" fill="rgb(var(--accent))"/><path d="M9 22V10l14 12V10" stroke="white" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round"/><circle cx="23" cy="10" r="2.4" fill="rgb(var(--accent2))"/></svg>
+        <span className="text-xl font-bold" style={{fontFamily:'var(--display)'}}>NovaTrack</span></div>
+      <p className="eyebrow mt-8 px-3">Рабочее пространство</p>
+      <nav className="mt-2 space-y-1">{NAV.map(([k,l,i])=><button key={k} onClick={()=>go(k)} aria-current={view===k?'page':undefined}
+        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${view===k?'bg-accent text-white':'text-muted hover:bg-surface2 hover:text-ink'}`}>
+        <Icon n={i}/><span className="flex-1 text-left">{l}</span>{counts[k]&&<span className={`num rounded-full px-2 text-xs ${view===k?'bg-white/20':'bg-surface2'}`}>{counts[k]}</span>}</button>)}</nav>
+      <div className="relative mt-auto overflow-hidden rounded-2xl bg-accent/[.08] p-4 pr-20">
+        <img src="img/rocket.png" alt="" aria-hidden="true" className="absolute -right-4 top-1 w-24 h-auto rotate-6 select-none" draggable="false"/>
+        <p className="text-sm font-semibold leading-snug">NovaTrack Pro</p>
+        <p className="mt-1 text-xs text-muted">Порталы клиентов, счета и безлимитные отчёты.</p>
+        <button className="mt-3 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:bg-accent/90">Подключить</button>
+      </div>
+    </aside>
+
+    <header className="sticky z-20 flex items-center gap-3 border-b border-line bg-bg/85 px-4 py-3 backdrop-blur sm:px-6" style={{top:'env(safe-area-inset-top,0px)'}}>
+      <button className="rounded-lg p-2 hover:bg-surface2 lg:hidden" onClick={()=>setNav(true)} aria-label="Открыть меню"><Icon n="menu"/></button>
+      <form className="relative flex-1 max-w-md" onSubmit={e=>{e.preventDefault();setView('projects');setPInit({q:gq,status:'Все'})}}>
+        <label htmlFor="gq" className="sr-only">Поиск проектов</label><Icon n="search" className="absolute left-3 top-2.5 h-4 w-4 text-muted"/>
+        <input id="gq" value={gq} onChange={e=>setGq(e.target.value)} placeholder="Поиск проектов — нажмите Enter" className="w-full rounded-xl border border-line bg-surface py-2 pl-9 pr-3 text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent/40"/></form>
+      <div className="ml-auto flex items-center gap-1">
+        <button onClick={()=>setTheme(isDark?'light':'dark')} className="rounded-lg p-2 text-muted hover:bg-surface2 hover:text-ink" aria-label="Сменить тему"><Icon n={isDark?'sun':'moon'}/></button>
+        <button className="relative rounded-lg p-2 text-muted hover:bg-surface2 hover:text-ink" aria-label="Уведомления: 3 непрочитанных"><Icon n="bell"/><span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-bad ring-2 ring-bg"/></button>
+        <span className="ml-2 hidden sm:block text-right leading-tight"><span className="block text-sm font-semibold">Марк Рейес</span><span className="text-xs text-muted">Руководитель проектов</span></span>
+        <span className="ml-2"><Avatar k="MR" size={34}/></span>
+      </div>
+    </header>
+
+    <main className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6">
+      {view==='overview'&&<Overview go={go} openProject={setOpen}/>}
+      {view==='projects'&&<Projects initial={pInit} openProject={setOpen}/>}
+      {view==='clients'&&<Clients/>}
+      {view==='tasks'&&<Tasks/>}
+      {view==='library'&&<Library/>}
+      <p className="mt-8 text-center text-xs text-muted mb-12">Концепт NovaTrack от <a href="../" className="underline">студии Lumora</a> · все клиенты, люди и цифры условные</p>
+    </main>
+    {open&&<Drawer p={open} onClose={()=>setOpen(null)}/>}
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Lumora"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Lumora</a>
+</body>
+</html>

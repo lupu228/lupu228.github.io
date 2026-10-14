@@ -1,17 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Nexora is a workspace for small teams: tasks, client requests and repeat admin in one place, with no-code automations.">
-<meta property="og:title" content="Nexora — Plan. Automate. Get home on time.">
-<meta property="og:description" content="Landing page concept for a productivity platform for small businesses.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nexora — автоматизация рутины для малых команд</title>
+<meta name="description" content="Nexora собирает задачи, заявки клиентов и повторяющуюся рутину в одном месте и автоматизирует её. Концепт-лендинг студии Lumora.">
 <meta name="theme-color" content="#0d0620">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nexora — автоматизация рутины для малых команд">
+<meta property="og:description" content="Nexora собирает задачи, заявки клиентов и повторяющуюся рутину в одном месте и автоматизирует её. Концепт-лендинг студии Lumora.">
+<meta property="og:locale" content="ru_RU">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d0620'/%3E%3Cpath d='M9 23V9l14 14V9' fill='none' stroke='%23c4b0ff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<title>Nexora</title>
+<style>:root{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: split hero (thesis left, live product right) → feature rail → features → proof → pricing → FAQ → demo booking. Committed single dark-violet look, per the reference. */
 :root{
@@ -19,7 +24,7 @@
   --glow:#a77bff; --fg:#f1ecff; --muted:#a99bcc; --line:rgba(196,176,255,.16);
   --glass:rgba(54,28,112,.38); --glass-2:rgba(80,46,160,.28);
   --ok:#5be3a1; --warn:#ffb86b; --bad:#ff6b8b;
-  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --display:"Manrope",ui-sans-serif,system-ui,sans-serif;
   --body:"Onest",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
   --r:14px; color-scheme:dark;
@@ -63,7 +68,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backdrop-filt
 .hero-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,4vw,56px);align-items:center}
 .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid rgba(196,176,255,.35);border-radius:999px;font:500 .7rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lilac);background:rgba(124,77,255,.1)}
 .pill i{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
-.hero h1{font-size:clamp(3rem,7.4vw,6rem);line-height:.95;font-weight:800;margin:24px 0 22px}
+.hero h1{font-size:clamp(2rem,3.4vw,3.5rem);line-height:1.02;font-weight:800;margin:24px 0 22px}
 .hero h1 span{display:block}
 .hero h1 .fade{background:linear-gradient(90deg,var(--fg) 30%,var(--glow));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lede{margin:0 0 32px}
@@ -148,7 +153,7 @@ html:not(.gl) canvas.obj{display:none}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:s}
 .step{padding-top:22px;border-top:1px solid rgba(196,176,255,.35)}
-.step::before{counter-increment:s;content:"Step " counter(s);font:500 .72rem var(--mono);color:var(--lilac);letter-spacing:.1em;text-transform:uppercase}
+.step::before{counter-increment:s;content:"Шаг " counter(s);font:500 .72rem var(--mono);color:var(--lilac);letter-spacing:.1em;text-transform:uppercase}
 .step h3{font-size:1.3rem;margin:10px 0 6px}
 .step p{color:var(--muted);margin:0}
 
@@ -234,26 +239,24 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   #obj-star{width:110px!important;height:110px!important;top:-60px!important;left:auto!important;right:-10px}
 }
 </style>
-</head>
-<body>
 
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top" aria-label="Nexora home">
+    <a class="logo" href="#top" aria-label="Nexora — наверх">
       <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7dcff"/><stop offset="1" stop-color="#8d63ff"/></linearGradient></defs><path d="M6 26V6l20 20V6" fill="none" stroke="url(#lg)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       nexora
     </a>
     <ul>
-      <li><a href="#features">Product</a></li>
-      <li><a href="#how">How it works</a></li>
-      <li><a href="#stories">Customers</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#features">Продукт</a></li>
+      <li><a href="#how">Как это работает</a></li>
+      <li><a href="#stories">Клиенты</a></li>
+      <li><a href="#pricing">Тарифы</a></li>
+      <li><a href="#faq">Вопросы</a></li>
     </ul>
     <div class="nav-cta">
-      <a class="login" href="#demo">Log in</a>
-      <a class="btn btn-glass" href="#demo">Book a demo</a>
-      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      <a class="login" href="#demo">Войти</a>
+      <a class="btn btn-glass" href="#demo">Записаться</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Открыть меню" aria-expanded="false"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
     </div>
   </div>
 </header>
@@ -263,16 +266,16 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <span class="pill"><i></i>Workspace for small teams</span>
-          <h1><span>Plan.</span><span>Automate.</span><span class="fade">Get home on time.</span></h1>
-          <p class="lede">Nexora puts your tasks, client requests, and repeat admin in one place, then automates the busywork. Small teams get back about 9 hours a week, starting in their first month.</p>
+          <span class="pill"><i></i>Пространство для малых команд</span>
+          <h1><span>Планируйте.</span><span>Автоматизируйте.</span><span class="fade">Уходите домой вовремя.</span></h1>
+          <p class="lede">Nexora собирает задачи, заявки клиентов и повторяющуюся рутину в одном месте и берёт её на себя. Малые команды экономят около 9 часов в неделю уже в первый месяц.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#demo">Book a 20-min demo
+            <a class="btn btn-primary" href="#demo">Демо за 20 минут
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            <a class="btn btn-glass" href="#pricing">See pricing</a>
+            <a class="btn btn-glass" href="#pricing">Смотреть тарифы</a>
           </div>
           <div class="trust">
-            <small>Used by 4,200+ teams of 2–50 people</small>
+            <small>Нам доверяют 4 200+ команд от 2 до 50 человек</small>
             <div class="trust-row"><span>Brightwell</span><span>Oakline&nbsp;Dental</span><span>Kettle&nbsp;&amp;&nbsp;Co</span><span>Northpath</span></div>
           </div>
         </div>
@@ -285,21 +288,21 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
           <canvas class="obj" id="obj-pillar" data-obj="pillar" style="width:190px;height:330px;right:-128px;bottom:-110px" aria-hidden="true"></canvas>
           <canvas class="obj" id="obj-coin" data-obj="coin" style="width:150px;height:150px;left:-72px;bottom:-62px" aria-hidden="true"></canvas>
 
-          <div class="dash" role="img" aria-label="Nexora dashboard showing weekly hours saved, automation activity, and recent runs">
+          <div class="dash" role="img" aria-label="Дашборд Nexora: сэкономленные часы, активность сценариев и последние запуски">
             <aside class="side">
               <div class="logo"><svg viewBox="0 0 32 32"><path d="M6 26V6l20 20V6" fill="none" stroke="#c4b0ff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>nexora</div>
-              <a class="on"><b></b>Overview</a><a><b></b>Tasks</a><a><b></b>Automations</a><a><b></b>Clients</a><a><b></b>Invoices</a><a><b></b>Reports</a>
+              <a class="on"><b></b>Обзор</a><a><b></b>Задачи</a><a><b></b>Сценарии</a><a><b></b>Клиенты</a><a><b></b>Счета</a><a><b></b>Отчёты</a>
             </aside>
             <div class="main">
               <div class="kpis">
-                <div class="kpi"><span>Hours saved / wk</span><strong>9.4</strong><em>+18%</em></div>
-                <div class="kpi"><span>Tasks automated</span><strong>1,286</strong><em>+24%</em></div>
-                <div class="kpi"><span>Invoices sent</span><strong>64</strong><em>+9%</em></div>
-                <div class="kpi"><span>On-time rate</span><strong>97.2%</strong><em>+3%</em></div>
+                <div class="kpi"><span>Часов в неделю</span><strong>9,4</strong><em>+18%</em></div>
+                <div class="kpi"><span>Задач автоматизировано</span><strong>1 286</strong><em>+24%</em></div>
+                <div class="kpi"><span>Счетов отправлено</span><strong>64</strong><em>+9%</em></div>
+                <div class="kpi"><span>В срок</span><strong>97,2%</strong><em>+3%</em></div>
               </div>
               <div class="row2">
                 <div class="panel">
-                  <h4>Automation activity <small>Last 30 days</small></h4>
+                  <h4>Активность сценариев <small>30 дней</small></h4>
                   <svg class="chart" viewBox="0 0 300 130" aria-hidden="true">
                     <defs><linearGradient id="ar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a77bff" stop-opacity=".7"/><stop offset="1" stop-color="#a77bff" stop-opacity="0"/></linearGradient></defs>
                     <g stroke="rgba(196,176,255,.1)"><line x1="26" y1="10" x2="296" y2="10"/><line x1="26" y1="40" x2="296" y2="40"/><line x1="26" y1="70" x2="296" y2="70"/><line x1="26" y1="100" x2="296" y2="100"/></g>
@@ -307,27 +310,27 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
                     <path d="M30 88 L60 70 L90 76 L120 52 L150 58 L180 34 L210 44 L240 22 L270 38 L292 30 L292 100 L30 100Z" fill="url(#ar)"/>
                     <path d="M30 88 L60 70 L90 76 L120 52 L150 58 L180 34 L210 44 L240 22 L270 38 L292 30" fill="none" stroke="#c4b0ff" stroke-width="2" stroke-linejoin="round"/>
                     <circle cx="240" cy="22" r="4" fill="#fff" stroke="#7c4dff" stroke-width="2"/>
-                    <text x="30" y="122">Sep 10</text><text x="128" y="122">Sep 24</text><text x="250" y="122">Oct 9</text>
+                    <text x="30" y="122">10 сен</text><text x="128" y="122">24 сен</text><text x="250" y="122">9 окт</text>
                   </svg>
                 </div>
                 <div class="panel">
-                  <h4>Top automations</h4>
+                  <h4>Популярные сценарии</h4>
                   <div class="list">
-                    <div><span>Invoice reminders</span><span>412 runs</span></div>
-                    <div><span>New client intake</span><span>298 runs</span></div>
-                    <div><span>Weekly status report</span><span>186 runs</span></div>
-                    <div><span>Booking follow-up</span><span>141 runs</span></div>
+                    <div><span>Напоминания о счетах</span><span>412 запусков</span></div>
+                    <div><span>Приём новых клиентов</span><span>298 запусков</span></div>
+                    <div><span>Еженедельный отчёт</span><span>186 запусков</span></div>
+                    <div><span>Напоминание о записи</span><span>141 запуск</span></div>
                   </div>
                 </div>
               </div>
               <div class="panel tbl-wrap">
-                <h4>Recent runs <small>View all</small></h4>
+                <h4>Последние запуски <small>Все</small></h4>
                 <table class="tbl">
-                  <tr><th>Automation</th><th>Status</th><th>Duration</th><th>When</th></tr>
-                  <tr><td>Invoice reminders</td><td><span class="st ok">Done</span></td><td>12s</td><td>4m ago</td></tr>
-                  <tr><td>New client intake</td><td><span class="st ok">Done</span></td><td>48s</td><td>22m ago</td></tr>
-                  <tr><td>Supplier sync</td><td><span class="st warn">Retrying</span></td><td>1m 06s</td><td>41m ago</td></tr>
-                  <tr><td>Weekly status report</td><td><span class="st ok">Done</span></td><td>9s</td><td>1h ago</td></tr>
+                  <tr><th>Сценарий</th><th>Статус</th><th>Время</th><th>Когда</th></tr>
+                  <tr><td>Напоминания о счетах</td><td><span class="st ok">Готово</span></td><td>12 с</td><td>4 мин назад</td></tr>
+                  <tr><td>Приём новых клиентов</td><td><span class="st ok">Готово</span></td><td>48 с</td><td>22 мин назад</td></tr>
+                  <tr><td>Синхронизация поставщиков</td><td><span class="st warn">Повтор</span></td><td>1 мин 06 с</td><td>41 мин назад</td></tr>
+                  <tr><td>Еженедельный отчёт</td><td><span class="st ok">Готово</span></td><td>9 с</td><td>1 ч назад</td></tr>
                 </table>
               </div>
             </div>
@@ -336,10 +339,10 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
       </div>
 
       <div class="rail">
-        <div><svg viewBox="0 0 30 30"><circle cx="9" cy="9" r="4"/><circle cx="21" cy="9" r="4"/><circle cx="15" cy="21" r="4"/></svg><h3>No-code automations</h3><p>Pick a trigger, add steps, switch it on. Nothing to install.</p></div>
-        <div><svg viewBox="0 0 30 30"><path d="M15 3v24M3 15h24M7 7l16 16M23 7L7 23"/></svg><h3>Plugs into your tools</h3><p>Gmail, Outlook, Stripe, Xero, Slack and 60 more.</p></div>
-        <div><svg viewBox="0 0 30 30"><path d="M3 25h24M6 20l6-7 5 4 8-10"/></svg><h3>Live reporting</h3><p>See workload, overdue items, and cash in, as they happen.</p></div>
-        <div><svg viewBox="0 0 30 30"><path d="M15 3l10 4v8c0 6-4.5 10-10 12C9.5 25 5 21 5 15V7z"/></svg><h3>Secure by default</h3><p>EU hosting, SSO, and daily backups on every plan.</p></div>
+        <div><svg viewBox="0 0 30 30"><circle cx="9" cy="9" r="4"/><circle cx="21" cy="9" r="4"/><circle cx="15" cy="21" r="4"/></svg><h3>Сценарии без кода</h3><p>Выберите триггер, добавьте шаги и включите. Ничего не нужно устанавливать.</p></div>
+        <div><svg viewBox="0 0 30 30"><path d="M15 3v24M3 15h24M7 7l16 16M23 7L7 23"/></svg><h3>Связь с вашими сервисами</h3><p>Gmail, Outlook, Stripe, Xero, Slack и ещё 60 интеграций.</p></div>
+        <div><svg viewBox="0 0 30 30"><path d="M3 25h24M6 20l6-7 5 4 8-10"/></svg><h3>Отчёты в реальном времени</h3><p>Загрузка команды, просрочки и поступления — сразу, как только они происходят.</p></div>
+        <div><svg viewBox="0 0 30 30"><path d="M15 3l10 4v8c0 6-4.5 10-10 12C9.5 25 5 21 5 15V7z"/></svg><h3>Безопасность по умолчанию</h3><p>Серверы в ЕС, SSO и ежедневные бэкапы на любом тарифе.</p></div>
       </div>
     </div>
   </section>
@@ -347,37 +350,37 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   <section id="features">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">Product</span>
-        <h2>The admin work that eats your week, handled.</h2>
-        <p class="lede">Most small teams lose a day a week to chasing invoices, copying data between apps, and writing status updates. Nexora does that part.</p>
+        <span class="eyebrow">Продукт</span>
+        <h2>Рутина, которая съедает вашу неделю, — под контролем.</h2>
+        <p class="lede">Малые команды теряют день в неделю на напоминания об оплате, перенос данных между сервисами и отчёты о статусе. Nexora берёт это на себя.</p>
       </div>
       <div class="feat">
         <article class="card w4">
-          <span class="tag">Automations</span>
-          <h3>Build a workflow in about five minutes</h3>
-          <p>Start from 80 templates written for agencies, clinics, trades, and retail, or build your own with plain-language steps.</p>
-          <div class="flow" aria-label="Example workflow">
-            <span class="node">Invoice is 3 days overdue</span><span class="arrow">→</span>
-            <span class="node hot">Send polite reminder</span><span class="arrow">→</span>
-            <span class="node">Still unpaid after 7 days</span><span class="arrow">→</span>
-            <span class="node hot">Assign follow-up call</span>
+          <span class="tag">Сценарии</span>
+          <h3>Сценарий за пять минут</h3>
+          <p>Начните с 80 шаблонов для агентств, клиник, сферы услуг и розницы или соберите свой из шагов на понятном языке.</p>
+          <div class="flow" aria-label="Пример сценария">
+            <span class="node">Счёт просрочен на 3 дня</span><span class="arrow">→</span>
+            <span class="node hot">Вежливое напоминание</span><span class="arrow">→</span>
+            <span class="node">Не оплачен через 7 дней</span><span class="arrow">→</span>
+            <span class="node hot">Назначить звонок</span>
           </div>
         </article>
         <article class="card w2">
-          <span class="tag">Average result</span>
-          <div class="big">9.4h</div>
-          <p>saved per person, per week, across teams in their first 90 days.</p>
+          <span class="tag">Средний результат</span>
+          <div class="big">9,4 ч</div>
+          <p>экономии на человека в неделю за первые 90 дней работы.</p>
         </article>
         <article class="card w3">
-          <span class="tag">Tasks &amp; projects</span>
-          <h3>One list for the whole team</h3>
-          <p>Client requests from email and forms land as tasks with an owner and a due date. Nothing gets lost in an inbox.</p>
-          <div class="chips"><span>Kanban</span><span>Timeline</span><span>Recurring tasks</span><span>Client portal</span></div>
+          <span class="tag">Задачи и проекты</span>
+          <h3>Один список на всю команду</h3>
+          <p>Заявки из почты и форм превращаются в задачи с ответственным и сроком. Ничего не теряется во входящих.</p>
+          <div class="chips"><span>Канбан</span><span>Таймлайн</span><span>Повторяющиеся задачи</span><span>Портал клиента</span></div>
         </article>
         <article class="card w3">
-          <span class="tag">Integrations</span>
-          <h3>Works with the apps you already pay for</h3>
-          <p>Two-way sync keeps contacts, invoices, and calendars matched. Change it in one place and it updates everywhere.</p>
+          <span class="tag">Интеграции</span>
+          <h3>Работает с сервисами, за которые вы уже платите</h3>
+          <p>Двусторонняя синхронизация контактов, счетов и календарей. Меняете в одном месте — обновляется везде.</p>
           <div class="chips"><span>Gmail</span><span>Outlook</span><span>Stripe</span><span>Xero</span><span>QuickBooks</span><span>Slack</span><span>+60</span></div>
         </article>
       </div>
@@ -387,13 +390,13 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   <section id="how" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">How it works</span>
-        <h2>Live in an afternoon.</h2>
+        <span class="eyebrow">Как это работает</span>
+        <h2>Запуск за один день.</h2>
       </div>
       <div class="steps">
-        <div class="step"><h3>Connect your apps</h3><p>Sign in to your email, calendar, and accounting tool. Nexora imports clients and open work.</p></div>
-        <div class="step"><h3>Switch on templates</h3><p>We suggest automations based on what your team does most. Turn on the ones you want.</p></div>
-        <div class="step"><h3>Watch the hours add up</h3><p>Your dashboard shows time saved and what each automation did, so you can trust it.</p></div>
+        <div class="step"><h3>Подключите сервисы</h3><p>Войдите в почту, календарь и бухгалтерию. Nexora импортирует клиентов и текущие задачи.</p></div>
+        <div class="step"><h3>Включите шаблоны</h3><p>Мы предложим сценарии под то, что ваша команда делает чаще всего. Включите нужные.</p></div>
+        <div class="step"><h3>Следите за экономией</h3><p>Дашборд показывает сэкономленное время и что сделал каждый сценарий — всё прозрачно.</p></div>
       </div>
     </div>
   </section>
@@ -401,23 +404,23 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   <section id="stories" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">Customers</span>
-        <h2>Small teams, fewer late nights.</h2>
+        <span class="eyebrow">Клиенты</span>
+        <h2>Малые команды, меньше переработок.</h2>
       </div>
       <div class="quotes">
         <figure class="quote lead">
-          <blockquote>We used to spend Friday afternoons chasing payments. Now Nexora sends the reminders and we spend Fridays with clients.</blockquote>
-          <figcaption class="who"><i>MR</i><div>Maya Russo<small>Founder, Kettle &amp; Co · 12-person design studio</small></div></figcaption>
-          <span class="metric">Paid on time: 71% → 94% in 3 months</span>
+          <blockquote>Раньше мы тратили вечер пятницы на напоминания об оплате. Теперь их отправляет Nexora, а пятницы мы проводим с клиентами.</blockquote>
+          <figcaption class="who"><i>МР</i><div>Майя Руссо<small>Основатель Kettle &amp; Co · дизайн-студия, 12 человек</small></div></figcaption>
+          <span class="metric">Оплата в срок: 71% → 94% за 3 месяца</span>
         </figure>
         <div class="quote-stack">
           <figure class="quote">
-            <blockquote>Patient intake used to take three tools and a spreadsheet. It's one form now and it files itself.</blockquote>
-            <figcaption class="who"><i>DO</i><div>Dr. Daniel Okafor<small>Practice lead, Oakline Dental</small></div></figcaption>
+            <blockquote>Запись пациентов раньше требовала трёх сервисов и таблицы. Теперь это одна форма, которая всё раскладывает сама.</blockquote>
+            <figcaption class="who"><i>ДО</i><div>Даниэль Окафор<small>Руководитель клиники, Oakline Dental</small></div></figcaption>
           </figure>
           <figure class="quote">
-            <blockquote>Setup took one afternoon. The weekly report alone saves me two hours.</blockquote>
-            <figcaption class="who"><i>LH</i><div>Lena Hartmann<small>Ops manager, Northpath</small></div></figcaption>
+            <blockquote>Настройка заняла полдня. Один только еженедельный отчёт экономит мне два часа.</blockquote>
+            <figcaption class="who"><i>ЛХ</i><div>Лена Хартман<small>Операционный менеджер, Northpath</small></div></figcaption>
           </figure>
         </div>
       </div>
@@ -427,35 +430,35 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   <section id="pricing" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">Pricing</span>
-        <h2>Simple pricing, per person.</h2>
-        <p class="lede">Every plan includes a 14-day free trial. No card needed to start.</p>
+        <span class="eyebrow">Тарифы</span>
+        <h2>Простые цены за пользователя.</h2>
+        <p class="lede">14 дней бесплатно на любом тарифе. Карта для старта не нужна.</p>
       </div>
-      <div class="toggle" role="group" aria-label="Billing period">
-        <button type="button" id="bill-m" aria-pressed="false">Monthly</button>
-        <button type="button" id="bill-y" aria-pressed="true">Yearly <em>−20%</em></button>
+      <div class="toggle" role="group" aria-label="Период оплаты">
+        <button type="button" id="bill-m" aria-pressed="false">Помесячно</button>
+        <button type="button" id="bill-y" aria-pressed="true">За год <em>−20%</em></button>
       </div>
       <div class="plans">
         <div class="plan">
           <h3>Starter</h3>
-          <div class="price">€<span data-m="12" data-y="9">9</span><small>/ user / mo</small></div>
-          <p>For teams getting organised.</p>
-          <ul><li>Unlimited tasks &amp; projects</li><li>10 active automations</li><li>5 integrations</li><li>Email support</li></ul>
-          <a class="btn" href="#demo">Start free trial</a>
+          <div class="price">€<span data-m="12" data-y="9">9</span><small>/ польз. / мес</small></div>
+          <p>Для команд, которые наводят порядок.</p>
+          <ul><li>Безлимит задач и проектов</li><li>10 активных сценариев</li><li>5 интеграций</li><li>Поддержка по email</li></ul>
+          <a class="btn" href="#demo">Попробовать бесплатно</a>
         </div>
         <div class="plan pop">
-          <h3>Growth <small>Most popular</small></h3>
-          <div class="price">€<span data-m="24" data-y="19">19</span><small>/ user / mo</small></div>
-          <p>For teams automating daily admin.</p>
-          <ul><li>Everything in Starter</li><li>Unlimited automations</li><li>All 66 integrations</li><li>Client portal &amp; forms</li><li>Live reporting dashboard</li></ul>
-          <a class="btn btn-primary" href="#demo">Book a demo</a>
+          <h3>Growth <small>Популярный</small></h3>
+          <div class="price">€<span data-m="24" data-y="19">19</span><small>/ польз. / мес</small></div>
+          <p>Для команд, автоматизирующих ежедневную рутину.</p>
+          <ul><li>Всё из Starter</li><li>Безлимит сценариев</li><li>Все 66 интеграций</li><li>Портал клиента и формы</li><li>Отчёты в реальном времени</li></ul>
+          <a class="btn btn-primary" href="#demo">Записаться на демо</a>
         </div>
         <div class="plan">
           <h3>Scale</h3>
-          <div class="price">€<span data-m="39" data-y="32">32</span><small>/ user / mo</small></div>
-          <p>For growing teams with more people and process.</p>
-          <ul><li>Everything in Growth</li><li>SSO &amp; user roles</li><li>Audit log</li><li>Dedicated onboarding</li><li>Priority support</li></ul>
-          <a class="btn" href="#demo">Talk to sales</a>
+          <div class="price">€<span data-m="39" data-y="32">32</span><small>/ польз. / мес</small></div>
+          <p>Для растущих команд с большим числом людей и процессов.</p>
+          <ul><li>Всё из Growth</li><li>SSO и роли пользователей</li><li>Журнал действий</li><li>Персональное внедрение</li><li>Приоритетная поддержка</li></ul>
+          <a class="btn" href="#demo">Связаться с продажами</a>
         </div>
       </div>
     </div>
@@ -464,16 +467,16 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   <section id="faq" style="padding-top:0">
     <div class="wrap faq-grid">
       <div class="sec-head">
-        <span class="eyebrow">FAQ</span>
-        <h2>Questions teams ask before the demo.</h2>
-        <p class="lede">Something else on your mind? Ask us on the demo call.</p>
+        <span class="eyebrow">Вопросы</span>
+        <h2>Что спрашивают перед демо.</h2>
+        <p class="lede">Остались вопросы? Задайте их на демо-звонке.</p>
       </div>
       <div>
-        <details open><summary>Do we need a developer to set it up?</summary><p>No. Automations are built from plain steps like "when an invoice is overdue, send a reminder". Most teams are running within one afternoon.</p></details>
-        <details><summary>Can we move our data from another tool?</summary><p>Yes. We import from Trello, Asana, Monday, and CSV files. On Growth and Scale we'll do the import for you.</p></details>
-        <details><summary>Where is our data stored?</summary><p>In EU data centres in Frankfurt and Dublin, encrypted at rest and in transit, with daily backups. We're GDPR compliant.</p></details>
-        <details><summary>What happens after the free trial?</summary><p>You choose a plan or your workspace pauses. Nothing is charged automatically, and your data stays available for 30 days.</p></details>
-        <details><summary>Can we cancel any time?</summary><p>Yes. Monthly plans stop at the end of the month. Yearly plans can be refunded pro rata in the first 60 days.</p></details>
+        <details open><summary>Нужен ли разработчик для настройки?</summary><p>Нет. Сценарии собираются из простых шагов вроде «если счёт просрочен — отправить напоминание». Большинство команд запускаются за полдня.</p></details>
+        <details><summary>Можно перенести данные из другого сервиса?</summary><p>Да. Импортируем из Trello, Asana, Monday и CSV. На тарифах Growth и Scale сделаем перенос за вас.</p></details>
+        <details><summary>Где хранятся наши данные?</summary><p>В дата-центрах ЕС во Франкфурте и Дублине, с шифрованием при хранении и передаче и ежедневными бэкапами. Соответствуем GDPR.</p></details>
+        <details><summary>Что будет после пробного периода?</summary><p>Вы выбираете тариф, или пространство ставится на паузу. Автоматических списаний нет, данные хранятся ещё 30 дней.</p></details>
+        <details><summary>Можно отменить в любой момент?</summary><p>Да. Месячная подписка заканчивается в конце месяца. Годовую можно вернуть пропорционально в первые 60 дней.</p></details>
       </div>
     </div>
   </section>
@@ -484,23 +487,23 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
         <div class="star float d2 fallback" style="right:-20px;bottom:-24px;width:110px;opacity:.9"></div>
         <canvas class="obj" data-obj="star" style="width:180px;height:180px;right:-40px;bottom:-50px" aria-hidden="true"></canvas>
         <div>
-          <span class="eyebrow">Book a demo</span>
-          <h2 style="margin-top:14px">See your week, automated.</h2>
-          <p class="lede">A 20-minute call with a product specialist. Bring one task your team repeats every week and we'll build the automation live.</p>
-          <ul class="perks"><li>Tailored to your industry and team size</li><li>Free migration plan for your current tools</li><li>No sales pressure, no card</li></ul>
+          <span class="eyebrow">Запись на демо</span>
+          <h2 style="margin-top:14px">Ваша неделя — без рутины.</h2>
+          <p class="lede">20-минутный звонок со специалистом. Возьмите одну задачу, которую команда повторяет каждую неделю, — и мы соберём сценарий прямо при вас.</p>
+          <ul class="perks"><li>Под вашу сферу и размер команды</li><li>Бесплатный план переезда с текущих сервисов</li><li>Без навязчивых продаж и без карты</li></ul>
         </div>
         <form id="demo-form" novalidate>
           <div class="f2">
-            <label for="d-name">Full name<input id="d-name" name="name" required autocomplete="name" placeholder="Maya Russo"></label>
-            <label for="d-email">Work email<input id="d-email" name="email" type="email" required autocomplete="email" placeholder="maya@kettle.co"></label>
+            <label for="d-name">Имя и фамилия<input id="d-name" name="name" required autocomplete="name" placeholder="Майя Руссо"></label>
+            <label for="d-email">Рабочий email<input id="d-email" name="email" type="email" required autocomplete="email" placeholder="maya@kettle.co"></label>
           </div>
           <div class="f2">
-            <label for="d-company">Company<input id="d-company" name="company" autocomplete="organization" placeholder="Kettle & Co"></label>
-            <label for="d-size">Team size
+            <label for="d-company">Компания<input id="d-company" name="company" autocomplete="organization" placeholder="Kettle & Co"></label>
+            <label for="d-size">Размер команды
               <select id="d-size" name="size"><option>2–10</option><option selected>11–25</option><option>26–50</option><option>50+</option></select>
             </label>
           </div>
-          <button class="btn btn-primary" type="submit" style="justify-content:center">Request my demo</button>
+          <button class="btn btn-primary" type="submit" style="justify-content:center">Записаться на демо</button>
           <div id="demo-ok" class="ok-msg" hidden role="status"></div>
         </form>
       </div>
@@ -511,8 +514,8 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
 <footer>
   <div class="wrap foot">
     <a class="logo" href="#top" style="font-size:1.1rem"><svg viewBox="0 0 32 32" style="width:20px;height:20px" aria-hidden="true"><path d="M6 26V6l20 20V6" fill="none" stroke="#c4b0ff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>nexora</a>
-    <nav><a href="#features">Product</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#demo">Contact</a></nav>
-    <span>© 2026 Nexora. Concept design.</span>
+    <nav><a href="#features">Продукт</a><a href="#pricing">Тарифы</a><a href="#faq">Вопросы</a><a href="#demo">Демо</a><a href="case/">О проекте</a></nav>
+    <span>© 2026 Nexora · концепт студии <a href="../" style="text-decoration:underline">Lumora</a></span>
   </div>
 </footer>
 
@@ -560,7 +563,7 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
       var gr=x.createRadialGradient(190,170,20,256,256,260); gr.addColorStop(0,'#c7aeff'); gr.addColorStop(.55,'#7444f2'); gr.addColorStop(1,'#3a1898');
       x.fillStyle=gr; x.fillRect(0,0,512,512);
       x.strokeStyle='rgba(235,225,255,.55)'; x.lineWidth=14; x.beginPath(); x.arc(256,256,200,0,7); x.stroke();
-      x.fillStyle='#fff'; x.font='800 250px "Bricolage Grotesque", system-ui, sans-serif'; x.textAlign='center'; x.textBaseline='middle';
+      x.fillStyle='#fff'; x.font='800 250px "Manrope", system-ui, sans-serif'; x.textAlign='center'; x.textBaseline='middle';
       x.shadowColor='rgba(30,0,80,.55)'; x.shadowBlur=18; x.shadowOffsetY=8; x.fillText('€',256,268);
       var tex=new T.CanvasTexture(c); tex.encoding=T.sRGBEncoding;
       var face=new T.MeshPhysicalMaterial({map:tex,roughness:.25,metalness:.15,clearcoat:1,clearcoatRoughness:.1}), side=glossy(0xa58bff,.2);
@@ -606,12 +609,15 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   f.addEventListener('submit',function(e){
     e.preventDefault();
     var name=f.name.value.trim(), email=f.email.value.trim();
-    if(!name){ ok.hidden=false; ok.textContent='Add your name so we know who to expect.'; f.name.focus(); return; }
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ ok.hidden=false; ok.textContent='Enter a work email like name@company.com.'; f.email.focus(); return; }
+    if(!name){ ok.hidden=false; ok.textContent='Укажите имя, чтобы мы знали, кого ждать.'; f.name.focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ ok.hidden=false; ok.textContent='Введите рабочий email, например name@company.ru.'; f.email.focus(); return; }
     ok.hidden=false;
-    ok.textContent='Thanks, '+name.split(' ')[0]+'. This is a prototype, so no request was sent. In the live site, a specialist would email '+email+' within one business day.';
+    ok.textContent='Спасибо, '+name.split(' ')[0]+'! Это концепт-проект студии Lumora, поэтому заявка никуда не отправлена. На рабочем сайте специалист написал бы на '+email+' в течение одного рабочего дня.';
   });
 })();
 </script>
+
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Lumora"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Lumora</a>
 </body>
 </html>

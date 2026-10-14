@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lume Skincare — айдентика и магазин · кейс Lumora</title>
+<meta name="description" content="Фирменный стиль и интернет-магазин для бренда натуральной косметики: логотип, палитра, карточка товара, мобильная оплата и соцсети.">
+<meta name="theme-color" content="#f7f4ec">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lume Skincare — айдентика и магазин · кейс Lumora">
+<meta property="og:description" content="Фирменный стиль и интернет-магазин для бренда натуральной косметики: логотип, палитра, карточка товара, мобильная оплата и соцсети.">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232a241f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23f7f4ec'%3EL%3C/text%3E%3C/svg%3E">
+<style>:root{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a quiet case-study scroll — monitor hero, then identity, product page, mobile checkout, social kit. Single warm-light brand world by choice. */
+:root{
+  --paper:#f7f4ec;   /* storefront ground */
+  --oat:#ebe1cf;     /* labels, soft panels */
+  --clay:#c7a87d;    /* product photography backdrop */
+  --amber:#6e3b1f;   /* glass, accent */
+  --ink:#2a241f;     /* text */
+  --muted:#7a6f63;
+  --line:#dcd3c3;
+  --wall:#efede8;
+  --stone:#d9d5cd;
+  --display:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"Lora","Iowan Old Style",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;margin:0;line-height:1.05}
+p{margin:0}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+section{padding-block:clamp(56px,9vw,110px)}
+section + section{border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px 48px;margin-bottom:clamp(32px,5vw,56px);align-items:end}
+.sec-head h2{font-size:clamp(34px,4.6vw,56px)}
+.sec-head p{color:var(--muted);max-width:52ch}
+
+/* ---------- top / intro ---------- */
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:28px;gap:16px;flex-wrap:wrap}
+.brandmark{font-family:var(--display);font-size:24px;letter-spacing:.32em;font-weight:500;display:inline-flex;align-items:flex-end;gap:2px}
+.intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px 64px;padding-block:clamp(32px,6vw,72px) clamp(40px,6vw,64px);align-items:end}
+.intro h1{font-size:clamp(64px,11vw,148px);font-weight:400;letter-spacing:-.01em}
+.intro h1 em{font-style:italic;color:var(--amber)}
+.intro .lede{font-size:clamp(19px,1.8vw,23px);line-height:1.45;max-width:30ch}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding-block:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta div{display:grid;gap:6px;min-width:0}
+.meta b{font-weight:400;font-size:16px}
+
+/* ---------- monitor hero ---------- */
+.stage{max-width:1280px;margin:clamp(40px,6vw,64px) auto 0;background:var(--wall)}
+.monitor{position:relative;aspect-ratio:1280/1040;max-width:100%}
+.monitor > img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.screen{position:absolute;left:11.172%;top:12.115%;width:78.125%;height:60.096%;background:var(--paper);overflow:hidden;container-type:inline-size}
+/* mini storefront, sized in container units */
+.mini{padding:4.4cqw 4.4cqw 0;height:100%;display:flex;flex-direction:column}
+.mini nav{display:flex;justify-content:space-between;align-items:center}
+.mini .logo{font-family:var(--display);font-size:2.3cqw;letter-spacing:.3em;font-weight:500}
+.mini .links{display:flex;gap:3.2cqw;font-size:1.05cqw}
+.mini .hero{display:grid;grid-template-columns:1fr 1fr 2fr;gap:2cqw;margin-top:9cqw;font-size:1.05cqw;line-height:1.3}
+.mini .hero p{max-width:13cqw}
+.mini .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8cqw;margin:6.5cqw -3.6cqw 0}
+.mini .cell{display:grid;gap:1cqw}
+.mini .ph{aspect-ratio:4/5}
+.mini .cap{font-size:1.05cqw;line-height:1.25}
+.mini .cap span{color:var(--muted)}
+
+/* product photography tile */
+.ph{background:var(--clay);position:relative;overflow:hidden;max-width:100%}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ph.zoom img{transform:scale(var(--z,1.8));transform-origin:var(--o,50% 50%)}
+/* collection band */
+.lineup{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.lineup .ph{aspect-ratio:4/5}
+.lineup figure{margin:0;display:grid;gap:12px}
+.lineup figcaption{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.lineup figcaption span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---------- brief ---------- */
+.brief{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px}
+.brief h2{font-size:clamp(30px,3.6vw,44px);max-width:16ch}
+.scope{display:grid;gap:0;margin-top:8px}
+.scope li{list-style:none;display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding-block:16px;border-top:1px solid var(--line)}
+.scope ul{padding:0;margin:0}
+.weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:56px}
+.week{padding-top:16px;border-top:1px solid var(--ink);display:grid;gap:8px;align-content:start}
+.week h3{font-size:24px}
+.week p{color:var(--muted);font-size:15px}
+
+/* ---------- identity ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tile{background:var(--oat);aspect-ratio:1;display:grid;place-items:center;position:relative;max-width:100%}
+.tile .label{position:absolute;left:16px;bottom:14px}
+.tile.dark{background:var(--ink);color:var(--paper)}
+.tile.dark .label{color:#b8ab99}
+.tile.clay{background:var(--clay)}
+.word{font-family:var(--display);font-weight:500;letter-spacing:.34em;font-size:clamp(40px,5.5vw,68px);padding-left:.34em;position:relative}
+.word i{position:absolute;left:50%;top:-.28em;width:.5em;height:.25em;border:1.5px solid currentColor;border-bottom:0;border-radius:.5em .5em 0 0;transform:translateX(-10%)}
+.monogram{width:44%;aspect-ratio:1;border:1.5px solid currentColor;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:clamp(36px,5vw,64px);font-style:italic}
+.palette{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-top:16px}
+.sw{display:grid;gap:10px}
+.sw div{aspect-ratio:3/4;border:1px solid #0000000f}
+.sw b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1}
+.sw span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.typespec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}
+.spec{background:#fff8;border:1px solid var(--line);padding:28px;display:grid;gap:14px;align-content:start;min-width:0}
+.spec .big{font-size:clamp(56px,7vw,92px);line-height:.9}
+.spec .scale{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:14px}
+.spec .scale div{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.spec .scale span:last-child{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+
+/* ---------- product page ---------- */
+.browser{border:1px solid var(--line);background:var(--paper);box-shadow:0 40px 80px -50px #3b2a1866}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);background:#efe9dd}
+.bar .url{flex:1;min-width:0;font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--paper);padding:5px 12px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.store-nav{display:flex;justify-content:space-between;align-items:center;padding:22px clamp(16px,3vw,40px);gap:16px;flex-wrap:wrap}
+.store-nav .links{display:flex;gap:28px;font-size:15px}
+.store-nav .logo{font-family:var(--display);font-size:22px;letter-spacing:.3em;font-weight:500}
+#bagcount{transition:color .3s}
+#bagcount.bump{color:var(--amber)}
+.pdp{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);padding:8px clamp(16px,3vw,40px) clamp(32px,4vw,48px)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gallery .main{grid-column:1/-1;aspect-ratio:5/5.4}
+.gallery .main svg{width:42%}
+.gallery .thumb{aspect-ratio:1}
+.texture{background:radial-gradient(ellipse at 40% 45%,#f3d9a6 0 18%,#d79a4a 30%,#9c5a26 52%,transparent 54%),linear-gradient(170deg,#cfb48e,#bea073)}
+.ingred{background:var(--oat);display:grid;place-items:center;text-align:center;padding:12px;font-family:var(--display);font-size:clamp(15px,1.6vw,20px);line-height:1.15}
+.info{display:grid;gap:22px;align-content:start;min-width:0}
+.info h3{font-size:clamp(34px,3.6vw,46px)}
+.price{font-size:20px;font-variant-numeric:tabular-nums}
+.info .desc{color:#4b4239;max-width:44ch}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{font:inherit;font-size:15px;background:transparent;border:1px solid var(--line);color:var(--ink);padding:10px 18px;cursor:pointer;border-radius:999px}
+.opt[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.buy{display:grid;grid-template-columns:auto 1fr;gap:8px}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.qty button{font:inherit;background:none;border:0;width:40px;height:46px;cursor:pointer;color:var(--ink);font-size:18px}
+.qty output{min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
+.add{font:inherit;font-size:16px;background:var(--amber);color:#fbf4ea;border:0;border-radius:999px;cursor:pointer;padding:0 22px;height:48px;transition:background .2s}
+.add:hover{background:#5a2f17}
+button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.note{font-family:var(--mono);font-size:12px;color:var(--muted)}
+details{border-top:1px solid var(--line);padding-block:14px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--muted)}
+details[open] summary::after{content:"–"}
+details p{color:#4b4239;font-size:15px;margin-top:10px;max-width:50ch}
+
+/* ---------- phones ---------- */
+.phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,40px);justify-items:center}
+.phonewrap{display:grid;gap:14px;justify-items:center;width:100%;max-width:290px}
+.phone{width:100%;aspect-ratio:9/19;background:#141210;border-radius:38px;padding:9px;box-shadow:0 30px 60px -36px #3b2a18aa}
+.ps{background:var(--paper);height:100%;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;font-size:13px;padding:14px 16px 16px;gap:12px}
+.ps .status{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;padding:0 6px}
+.ps .phd{display:flex;justify-content:space-between;align-items:center}
+.ps .phd .logo{font-family:var(--display);letter-spacing:.3em;font-size:16px;font-weight:500}
+.steps{display:flex;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.steps span.on{color:var(--ink)}
+.steps span+span::before{content:"›";margin-right:6px;color:var(--line)}
+.ps h4{font-family:var(--display);font-weight:500;font-size:24px;margin:0}
+.line{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding-block:8px;border-bottom:1px solid var(--line)}
+.line .ph{aspect-ratio:4/5}
+.line small{display:block;color:var(--muted);font-size:11px}
+.prog{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:100%;background:var(--amber)}
+.tot{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.tot.big{font-size:15px;border-top:1px solid var(--line);padding-top:10px}
+.cta{margin-top:auto;background:var(--ink);color:var(--paper);text-align:center;border-radius:999px;padding:13px;font-size:14px}
+.cta.amber{background:var(--amber)}
+.field{border:1px solid var(--line);border-radius:10px;padding:7px 11px;background:#fffdf8}
+.field small{display:block;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.radio{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 11px}
+.radio.on{border-color:var(--ink)}
+.radio i{width:14px;height:14px;border-radius:50%;border:1px solid var(--muted);flex:none}
+.radio.on i{border:4px solid var(--ink)}
+.radio span{flex:1}
+.express{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.express div{border-radius:10px;padding:11px;text-align:center;background:var(--ink);color:var(--paper);font-size:12px}
+.express div+div{background:#5b3a8c00;border:1px solid var(--ink);color:var(--ink)}
+.or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px;font-family:var(--mono)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.lock{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center}
+
+/* ---------- social ---------- */
+.social{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.post{aspect-ratio:1;position:relative;overflow:hidden;max-width:100%}
+.post .ph{position:absolute;inset:0}
+.post.split{display:grid;grid-template-columns:1fr 1fr;background:var(--oat)}
+.post.split .ov{position:static}
+.post.split .ph{position:relative;inset:auto}
+.post.launch{display:grid;grid-template-rows:minmax(0,1fr) auto}
+.post.launch .ph{position:relative;inset:auto}
+.post.launch .ph img{object-position:50% 85%}
+.post.launch .ov{bottom:auto}
+.bar2{background:var(--paper);padding:14px clamp(16px,2.4vw,28px);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.bar2 q{font-family:var(--display);font-size:clamp(20px,2vw,26px);quotes:none}
+.post .ov{position:absolute;inset:0;padding:clamp(16px,2.4vw,28px);display:flex;flex-direction:column;justify-content:space-between}
+.post .ov .logo{font-family:var(--display);letter-spacing:.3em;font-size:15px;font-weight:500}
+.post q{font-family:var(--display);font-size:clamp(24px,2.8vw,36px);line-height:1.08;quotes:none;max-width:12ch}
+.post.ing{background:var(--amber);color:#f6ead9}
+.post.ing .big{font-family:var(--display);font-style:italic;font-size:clamp(44px,5.6vw,76px);line-height:.95}
+.post.ing .label{color:#e2c9a8}
+.post.launch .ov{color:var(--ink)}
+.tag{display:inline-block;border:1px solid currentColor;border-radius:999px;padding:4px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.caption{margin-top:10px}
+
+/* ---------- outro ---------- */
+.outro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:40px;align-items:end}
+.outro h2{font-size:clamp(36px,5vw,64px);font-weight:400}
+.outro h2 em{color:var(--amber)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tools span{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+footer{padding-block:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .intro,.sec-head,.brief,.typespec,.outro,.pdp{grid-template-columns:minmax(0,1fr)}
+  .meta,.weeks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .phones{grid-template-columns:minmax(0,1fr)}
+  .social,.idgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .palette{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .social,.idgrid{grid-template-columns:minmax(0,1fr)}
+  .scope li{grid-template-columns:minmax(0,1fr);gap:4px}
+  .store-nav .links{gap:16px;font-size:14px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .monitor{animation:rise 1s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{transform:translateY(14px)}to{transform:none}}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="brandmark">LUME</span>
+    <span class="label">Кейс · Айдентика и e-commerce</span>
+  </header>
+
+  <div class="intro">
+    <h1>Lume <em>Skincare</em></h1>
+    <p class="lede">Цельный фирменный стиль и интернет-магазин для бренда натуральной косметики.</p>
+  </div>
+
+  <div class="meta">
+    <div><span class="label">Клиент</span><b>Независимый бренд косметики</b></div>
+    <div><span class="label">Сроки</span><b>4 недели</b></div>
+    <div><span class="label">Инструменты</span><b>Figma, Photoshop, Shopify</b></div>
+    <div><span class="label">Результат</span><b>Айдентика, магазин, оплата, набор для соцсетей</b></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="monitor">
+    <img src="img/hero.jpg" alt="Магазин Lume на экране монитора">
+    <div class="screen">
+      <div class="mini">
+        <nav><span class="logo">LUME</span><span class="links"><span>Магазин</span><span>О нас</span><span>Журнал</span><span>Корзина (0)</span></span></nav>
+        <div class="hero"><span>Все средства</span><p>Бережный уход на растительных маслах и глинах. Небольшие партии, баланс и восстановление.</p><span></span></div>
+        <div class="grid" id="miniGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="brief">
+    <div style="display:grid;gap:20px;align-content:start">
+      <span class="label">Задача</span>
+      <h2>Создать премиальный бренд, которому доверяют, и удобный магазин.</h2>
+      <p style="color:var(--muted);max-width:44ch">Lume выпускает четыре средства небольшими партиями. Бренд должен был выглядеть так же продуманно, как ощущаются сами средства, а магазин — проводить нового покупателя от карточки товара до оплаты с телефона без лишних шагов.</p>
+    </div>
+    <ul class="scope">
+      <li><span class="label">Айдентика</span><span>Логотип и фирменный стиль, включая систему этикеток для туб, флаконов с пипеткой и баночек.</span></li>
+      <li><span class="label">Система</span><span>Палитра и типографика с правилами для упаковки и сайта.</span></li>
+      <li><span class="label">Магазин</span><span>Карточки товаров и путь покупателя на Shopify.</span></li>
+      <li><span class="label">Мобайл</span><span>Адаптивная мобильная оплата и стартовый набор публикаций для соцсетей.</span></li>
+    </ul>
+  </div>
+  <div class="weeks">
+    <div class="week"><span class="label">Неделя 1</span><h3>Исследование</h3><p>Интервью с основателем, анализ конкурентов, мудборды. Поиск логотипа.</p></div>
+    <div class="week"><span class="label">Неделя 2</span><h3>Система</h3><p>Палитра, шрифтовая шкала и шаблоны этикеток для всех четырёх средств.</p></div>
+    <div class="week"><span class="label">Неделя 3</span><h3>Дизайн магазина</h3><p>Сценарии в Figma: каталог, карточка товара, корзина и оформление.</p></div>
+    <div class="week"><span class="label">Неделя 4</span><h3>Сборка и запуск</h3><p>Тема Shopify, настройка оплаты, набор для запуска в соцсетях.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Коллекция</h2>
+    <p>Четыре формулы, одна полка. Каждое средство снято на одном глиняном фоне в мягком боковом свете, поэтому линейка читается как семья — и в каталоге, и в ленте.</p>
+  </div>
+  <div class="lineup" id="lineup"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Фирменный стиль</h2>
+    <p>Логотип набран классической антиквой с широкой разрядкой. Небольшая дуга над U — первый луч света, момент, когда начинается уход. Знак читается и в 6 мм на шве тубы, и во всю ширину витрины.</p>
+  </div>
+  <div class="idgrid">
+    <div class="tile"><span class="word">LUME<i></i></span><span class="label">Основной логотип</span></div>
+    <div class="tile dark"><span class="monogram">L</span><span class="label">Монограмма · печать и фавикон</span></div>
+    <div class="tile clay" style="overflow:hidden"><div class="ph zoom" style="position:absolute;inset:0;--z:2.3;--o:50% 68%"><img src="img/p4.jpg" alt="Крупный план этикетки баночки Lume"></div><span class="label" style="color:#4a3a2a;z-index:1">Система этикеток</span></div>
+  </div>
+
+  <div class="palette" id="palette"></div>
+
+  <div class="typespec">
+    <div class="spec">
+      <span class="label">Заголовки · Cormorant Garamond</span>
+      <span class="big" style="font-family:var(--display)">Аа Роза</span>
+      <div class="scale">
+        <div><span style="font-family:var(--display);font-size:40px;line-height:1">Название средства</span><span>40 / 500</span></div>
+        <div><span style="font-family:var(--display);font-size:26px">Заголовок раздела</span><span>26 / 500</span></div>
+        <div><span style="font-family:var(--display);font-size:20px;letter-spacing:.3em">LUME</span><span>20 / +300</span></div>
+      </div>
+    </div>
+    <div class="spec">
+      <span class="label">Текст · Lora &nbsp;·&nbsp; Детали · Plex Mono</span>
+      <span class="big" style="font-family:var(--body);font-weight:300">Аа Овёс</span>
+      <div class="scale">
+        <div><span style="font-size:17px">Масло семян шиповника холодного отжима, богатое витамином A.</span><span>17 / 400</span></div>
+        <div><span style="font-size:15px;color:var(--muted)">Нанесите 3–4 капли на влажную кожу.</span><span>15 / 400</span></div>
+        <div><span class="label" style="color:var(--ink)">30 мл · 1.0 fl oz</span><span>11 / mono</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Карточка товара</h2>
+    <p>Один продукт на экран, снятый на том же глиняном фоне. Цена, объём и кнопка покупки видны на ноутбуке без прокрутки. Состав и способ применения спрятаны в короткие раскрывающиеся блоки. Попробуйте выбрать объём и количество.</p>
+  </div>
+  <div class="browser">
+    <div class="bar"><span class="url">lume-skin.com/products/rosehip-renewal-oil</span></div>
+    <div class="store-nav"><span class="logo">LUME</span><span class="links"><span>Магазин</span><span>О нас</span><span>Журнал</span><span id="bagcount">Корзина (0)</span></span></div>
+    <div class="pdp">
+      <div class="gallery">
+        <div class="ph main"><img src="img/p2.jpg" alt="Масло Rosehip Renewal во флаконе из янтарного стекла"></div>
+        <div class="ph thumb zoom" style="--z:2.4;--o:50% 52%"><img src="img/p2.jpg" alt="Деталь этикетки"></div>
+        <div class="thumb texture" aria-label="Текстура масла"></div>
+        <div class="thumb ingred">Шиповник<br>Облепиха<br>Сквалан</div>
+      </div>
+      <div class="info">
+        <span class="label">Масло для лица · Ночь</span>
+        <h3>Rosehip Renewal Oil</h3>
+        <span class="price" id="price">€42.00</span>
+        <p class="desc">Лёгкое ночное масло, которое выравнивает текстуру и возвращает сияние. Холодный отжим, небольшие партии и янтарное стекло для свежести.</p>
+        <div style="display:grid;gap:10px">
+          <span class="label">Объём</span>
+          <div class="opts" role="group" aria-label="Объём">
+            <button class="opt" id="sz30" aria-pressed="true" data-p="42">30 мл</button>
+            <button class="opt" id="sz50" aria-pressed="false" data-p="58">50 мл</button>
+          </div>
+        </div>
+        <div class="buy">
+          <div class="qty"><button id="qminus" aria-label="Уменьшить количество">−</button><output id="qty">1</output><button id="qplus" aria-label="Увеличить количество">+</button></div>
+          <button class="add" id="add">В корзину · €42.00</button>
+        </div>
+        <span class="note">Бесплатная доставка от €60 · Отправка за 1–2 дня</span>
+        <div>
+          <details open><summary>Ключевые ингредиенты</summary><p>Масло семян шиповника (витамин A, линолевая кислота), масло облепихи, растительный сквалан. Без отдушек и эфирных масел.</p></details>
+          <details><summary>Как применять</summary><p>Разогрейте 3–4 капли в ладонях и вбейте в чистую, слегка влажную кожу перед сном. При сухой коже сверху нанесите крем.</p></details>
+          <details><summary>Доставка и возврат</summary><p>Заказы отправляем из студии в течение двух рабочих дней. Невскрытые средства можно вернуть в течение 30 дней.</p></details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Мобильная оплата</h2>
+    <p>Три шага, каждый помещается на один экран. Быстрая оплата — первой, шкала бесплатной доставки мягко подталкивает к корзине от €60, а выбор доставки — это две понятные опции вместо выпадающего списка. Показан пример заказа.</p>
+  </div>
+  <div class="phones" id="phones"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Соцсети</h2>
+    <p>Стартовый набор шаблонов 1080 × 1080 в Photoshop: главный продукт, ингредиент в фокусе и новинка. Каждый использует тот же глиняный фон и шрифты, поэтому лента выглядит как одна полка.</p>
+  </div>
+  <div class="social">
+    <div>
+      <div class="post split"><div class="ov"><span class="logo">LUME</span><q>Неспешный уход, небольшими партиями.</q></div>
+        <div class="ph"><img src="img/p2.jpg" alt="Масло Rosehip Renewal"></div></div>
+      <p class="label caption">Главный продукт</p>
+    </div>
+    <div>
+      <div class="post ing"><div class="ov"><span class="logo">LUME</span>
+        <div style="display:grid;gap:14px"><span class="label">Ингредиент в фокусе</span><span class="big">Шипов&shy;ник</span><span style="font-size:15px;max-width:26ch">Масло семян холодного отжима, естественно богатое витамином A. Входит в наше масло Renewal.</span></div></div></div>
+      <p class="label caption">Ингредиент в фокусе</p>
+    </div>
+    <div>
+      <div class="post launch"><div class="ph"><img src="img/p4.jpg" alt="Баночка маски Mugwort Clay"></div>
+        <div class="ov"><div style="display:flex;justify-content:space-between;align-items:center"><span class="logo">LUME</span><span class="tag">Новинка</span></div></div>
+        <div class="bar2"><q>Mugwort Clay Mask</q><span class="label" style="color:var(--ink)">100 мл · €36</span></div></div>
+      <p class="label caption">Новинка</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="outro">
+    <h2>Бренд, который ощущается <em>сделанным вручную</em>, и магазин, который не мешает покупать.</h2>
+    <div style="display:grid;gap:16px">
+      <span class="label">Инструменты</span>
+      <div class="tools"><span>Figma</span><span>Photoshop</span><span>Shopify</span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<div class="wrap"><footer><span class="brandmark" style="font-size:18px">LUME</span><span class="label">Айдентика · Дизайн магазина · 4 недели · <a href="../" style="color:inherit">Студия Lumora</a></span></footer></div>
+
+<script>
+const P=[
+  {img:'p1.jpg', name:'Oat Barrier Cream', size:'60 мл', price:34},
+  {img:'p2.jpg',name:'Rosehip Renewal Oil', size:'30 мл', price:42},
+  {img:'p3.jpg',name:'Niacinamide Clarifying Serum', size:'50 мл', price:38},
+  {img:'p4.jpg',  name:'Mugwort Clay Mask', size:'100 мл', price:36}
+];
+const tile=(p,extra='')=>`<div class="ph ${extra}"><img src="img/${p.img}" alt="${p.name}" loading="lazy"></div>`;
+
+// monitor storefront grid
+document.getElementById('miniGrid').innerHTML=P.map(p=>`<div class="cell">${tile(p)}<div class="cap">${p.name}<br><span>€${p.price}.00</span></div></div>`).join('');
+
+// collection band
+document.getElementById('lineup').innerHTML=P.map(p=>`<figure>${tile(p)}<figcaption><span>${p.name}</span><span>${p.size} · €${p.price}</span></figcaption></figure>`).join('');
+
+// palette
+const pal=[['Бумага','#F7F4EC','Фон страниц'],['Овёс','#EBE1CF','Этикетки, панели'],['Глина','#C7A87D','Фон для фото'],['Янтарь','#6E3B1F','Стекло, действия'],['Чернила','#2A241F','Текст']];
+document.getElementById('palette').innerHTML=pal.map(([n,h,u])=>`<div class="sw"><div style="background:${h}"></div><b>${n}</b><span>${h} · ${u}</span></div>`).join('');
+
+// product page
+let unit=42,q=1,bag=0;
+const eur=n=>'€'+n.toFixed(2);
+const $=id=>document.getElementById(id);
+function render(){ $('price').textContent=eur(unit); $('qty').textContent=q; $('add').textContent='В корзину · '+eur(unit*q); }
+['sz30','sz50'].forEach(id=>$(id).addEventListener('click',e=>{
+  document.querySelectorAll('.opt').forEach(b=>b.setAttribute('aria-pressed',b===e.currentTarget));
+  unit=+e.currentTarget.dataset.p; render();
+}));
+$('qminus').onclick=()=>{q=Math.max(1,q-1);render()};
+$('qplus').onclick=()=>{q=Math.min(9,q+1);render()};
+$('add').onclick=()=>{
+  bag+=q; const b=$('bagcount'); b.textContent=`Корзина (${bag})`; b.classList.add('bump');
+  $('add').textContent='Добавлено в корзину'; setTimeout(()=>{b.classList.remove('bump');render()},1400);
+};
+
+// phones
+const phoneTop=(step)=>`<div class="status"><span>9:41</span><span>●●● ▮</span></div>
+  <div class="phd"><span class="logo">LUME</span><span style="font-size:12px">Корзина (2)</span></div>
+  <div class="steps">${['Корзина','Доставка','Оплата'].map((s,n)=>`<span class="${n===step?'on':''}">${s}</span>`).join('')}</div>`;
+const mini=p=>tile(p);
+const phones=[
+ ['Корзина', `${phoneTop(0)}<h4>Ваша корзина</h4>
+   <div class="line">${mini(P[1])}<div>Rosehip Renewal Oil<small>30 мл · 1 шт.</small></div><span>€42</span></div>
+   <div class="line">${mini(P[0])}<div>Oat Barrier Cream<small>60 мл · 1 шт.</small></div><span>€34</span></div>
+   <div style="display:grid;gap:6px"><span style="font-size:12px">Доставка для вас бесплатна</span><div class="prog"><i></i></div></div>
+   <div class="tot"><span>Товары</span><span>€76.00</span></div>
+   <div class="tot" style="color:var(--muted)"><span>Доставка</span><span>Бесплатно</span></div>
+   <div class="cta">Оформить · €76.00</div>`],
+ ['Доставка', `${phoneTop(1)}<h4>Доставка</h4>
+   <div class="field"><small>Email</small>maria.ivanova@example.com</div>
+   <div class="row2"><div class="field"><small>Имя</small>Мария</div><div class="field"><small>Фамилия</small>Иванова</div></div>
+   <div class="field"><small>Адрес</small>ул. Лесная, 12</div>
+   <div class="row2"><div class="field"><small>Город</small>Москва</div><div class="field"><small>Индекс</small>125047</div></div>
+   <div class="radio on"><i></i><span>Обычная · 3–5 дней</span><b style="font-weight:400">Бесплатно</b></div>
+   <div class="radio"><i></i><span>Экспресс · 1–2 дня</span><b style="font-weight:400">€6</b></div>
+   <div class="cta">Перейти к оплате</div>`],
+ ['Оплата', `${phoneTop(2)}<h4>Оплата</h4>
+   <div class="express"><div>Быстрая оплата</div><div>Кошелёк</div></div>
+   <div class="or">или картой</div>
+   <div class="field"><small>Номер карты</small>•••• •••• •••• ••••</div>
+   <div class="row2"><div class="field"><small>Срок</small>ММ / ГГ</div><div class="field"><small>CVC</small>•••</div></div>
+   <div class="field"><small>Имя на карте</small>MARIA IVANOVA</div>
+   <div class="tot big"><span>Итого</span><span>€76.00</span></div>
+   <div class="cta amber">Оплатить €76.00</div>
+   <div class="lock">Безопасная оплата · Shopify Payments</div>`]
+];
+document.getElementById('phones').innerHTML=phones.map(([n,h],i)=>`<div class="phonewrap"><div class="phone"><div class="ps">${h}</div></div><span class="label">Шаг ${i+1} · ${n}</span></div>`).join('');
+</script>
+
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Lumora"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Lumora</a>
+</body>
+</html>

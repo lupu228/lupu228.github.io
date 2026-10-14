@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FitLife — фитнес-приложение · кейс Lumora</title>
+<meta name="description" content="Кейс фитнес-приложения: тренировки, питание и прогресс в одном месте. Кликабельный прототип, дизайн-система и ход работы.">
+<meta name="theme-color" content="#10120f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FitLife — фитнес-приложение · кейс Lumora">
+<meta property="og:description" content="Кейс фитнес-приложения: тренировки, питание и прогресс в одном месте. Кликабельный прототип, дизайн-система и ход работы.">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23d2f53a'/%3E%3Cpath d='M10 11v10M7.5 13v6M22 11v10M24.5 13v6M10 16h12' stroke='%23141a06' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>:root{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..900&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: case-study column on a graphite ground. The live prototype is the hero object; brief, scope, system and process stack below. Single dark look, taken from the app itself. */
+:root{
+  --bg:#10120f; --surface:#171a15; --card:#21251e; --card2:#2a2f26; --line:#33392e;
+  --fg:#eef2e7; --muted:#99a190; --lime:#d2f53a; --lime-ink:#141a06; --blue:#3e5ff0;
+  --display:"Unbounded","Arial Narrow",Arial,sans-serif;
+  --body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.6 var(--body);padding-inline:16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-stretch:118%;text-wrap:balance;margin:0;line-height:1.02}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.label{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:22px;border-bottom:1px solid var(--line)}
+.wordmark{font:900 18px/1 var(--display);font-stretch:125%;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.wordmark i{width:26px;height:26px;border-radius:50%;background:var(--lime);display:grid;place-items:center}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:start;padding-block:56px 72px}
+.hero h1{font-size:clamp(32px,4.6vw,60px);font-weight:700;letter-spacing:-.01em}
+.hero h1 em{display:block;font-style:normal;color:var(--lime)}
+.lede{font-size:18px;color:var(--muted);max-width:52ch;margin-top:22px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:36px}
+.meta div{background:var(--surface);padding:16px 18px;display:grid;gap:8px}
+.meta b{font:600 15px/1.3 var(--body)}
+.jump{margin-top:36px}
+.jump .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.jump button,.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 14px;font-size:13px;transition:background .15s,color .15s,border-color .15s}
+.jump button:hover{border-color:var(--muted)}
+.jump button.on{background:var(--lime);color:var(--lime-ink);border-color:var(--lime);font-weight:600}
+.hint{font-size:13px;color:var(--muted);margin-top:14px}
+
+/* phone */
+.device{position:relative;width:360px;max-width:100%;height:740px;border-radius:46px;background:#050604;padding:10px;box-shadow:0 0 0 1px var(--line),0 40px 80px -30px rgba(210,245,58,.18)}
+.phone{position:relative;width:100%;height:100%;border-radius:37px;overflow:hidden;background:#151713;color:var(--fg);font-size:14px}
+.status{position:absolute;top:0;left:0;right:0;height:40px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font:600 13px/1 var(--body);z-index:5;pointer-events:none}
+.status.dark{color:var(--lime-ink)}
+.screen{position:absolute;inset:0;overflow-y:auto;padding:52px 18px 24px;opacity:0;visibility:hidden;transform:translateX(14px);transition:opacity .28s,transform .28s,visibility 0s .28s;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.on{opacity:1;visibility:visible;transform:none;transition:opacity .28s,transform .28s}
+.screen.tabbed{padding-bottom:104px}
+@media (prefers-reduced-motion:reduce){.screen,.screen.on{transition:none;transform:none}}
+
+.p-btn{display:block;width:100%;border:0;border-radius:999px;background:var(--lime);color:var(--lime-ink);font:700 15px/1 var(--body);padding:17px}
+.p-btn.ghost{background:var(--card);color:var(--fg)}
+.p-h{font:850 26px/1.05 var(--display);font-stretch:112%}
+.p-sub{color:var(--muted);font-size:13px;margin-top:8px}
+.card{background:var(--card);border-radius:22px;padding:16px}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:0;background:var(--card);display:grid;place-items:center;flex:none}
+.icon-btn svg,.tabbar svg{width:20px;height:20px}
+svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* splash */
+.s-splash{background:var(--lime);color:var(--lime-ink);display:grid;place-items:center;text-align:center;padding:0}
+.logo{width:150px;height:150px;border-radius:50%;border:3px solid var(--lime-ink);display:grid;place-items:center;position:relative}
+.logo svg{width:84px;height:84px;stroke-width:2.6}
+.logo-txt{font:900 22px/1 var(--display);font-stretch:125%;letter-spacing:.08em;margin-top:22px}
+.tap{margin-top:70px;font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.7;background:none;border:0;color:inherit;padding:12px}
+
+/* onboarding */
+.coach{display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:18px;padding-bottom:12px}
+.avatar{width:132px;height:132px;border-radius:50%;border:3px solid var(--lime);background:var(--img-coach) center/116%;align-self:center;margin-bottom:auto;margin-top:90px}
+.steps{display:flex;gap:6px;margin-bottom:22px}
+.steps i{height:4px;flex:1;border-radius:4px;background:var(--card2)}
+.steps i.done{background:var(--lime)}
+.opts{display:grid;gap:10px;margin:24px 0}
+.opt{display:flex;justify-content:space-between;align-items:center;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:16px;width:100%}
+.opt small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none}
+.opt[aria-pressed="true"]{border-color:var(--lime)}
+.opt[aria-pressed="true"] .dot{border:6px solid var(--lime)}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}
+.days .opt{flex-direction:column;align-items:flex-start;gap:16px}
+.days b{font:850 28px/1 var(--display)}
+.field{display:grid;gap:6px;margin-bottom:12px}
+.field label{font-size:12px;color:var(--muted)}
+.field input{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--fg);font:inherit}
+.field input:focus{border-color:var(--lime);outline:none}
+.fine{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+
+/* dashboard */
+.hello{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.hello .me{width:40px;height:40px;border-radius:50%;background:var(--lime);color:var(--lime-ink);display:grid;place-items:center;font:800 14px/1 var(--display)}
+.hello div{flex:1;min-width:0}
+.hello small{color:var(--muted);font-size:12px;display:block}
+.hello strong{font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.tile{background:var(--card);border-radius:18px;padding:12px;display:grid;gap:10px}
+.tile b{font:800 17px/1 var(--display);font-variant-numeric:tabular-nums}
+.tile small{color:var(--muted);font-size:11px}
+.tile svg{width:18px;height:18px;color:var(--lime)}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 12px}
+.sec-h h4{margin:0;font:800 17px/1 var(--display);font-stretch:110%}
+.sec-h span{font-size:12px;color:var(--muted)}
+.bars{display:flex;align-items:flex-end;gap:8px;height:150px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end;background:none;border:0;padding:0}
+.bar i{width:100%;border-radius:12px;background:var(--card2);transition:background .2s,height .4s}
+.bar.on i{background:linear-gradient(to bottom,var(--lime),#9bbd17)}
+.bar span{font-size:11px;color:var(--muted)}
+.bar.on span{color:var(--fg)}
+.bar-val{display:flex;justify-content:space-between;margin-bottom:12px;font-size:12px;color:var(--muted)}
+.bar-val b{color:var(--fg);font:800 20px/1 var(--display);font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}
+.chip{white-space:nowrap;color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--lime);color:var(--lime-ink);border-color:var(--lime);font-weight:600}
+.plan{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--card);border:0;border-radius:20px;padding:10px;margin-bottom:8px}
+.thumb{width:62px;height:62px;border-radius:14px;flex:none;background:repeating-linear-gradient(135deg,var(--card2) 0 6px,#31372c 6px 12px);display:grid;place-items:center;color:var(--lime)}
+.thumb svg{width:26px;height:26px}
+.plan div{flex:1;min-width:0}
+.plan small{color:var(--muted);font-size:12px;display:block}
+.go{width:32px;height:32px;border-radius:50%;background:var(--lime);color:var(--lime-ink);display:grid;place-items:center;flex:none}
+.go svg{width:16px;height:16px;stroke-width:2.4}
+
+/* workout */
+.w-hero{margin:-52px -18px 0;height:300px;padding:52px 18px 18px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(to top,#151713 5%,rgba(21,23,19,0) 55%),linear-gradient(to bottom,rgba(21,23,19,.55),rgba(21,23,19,0) 30%),var(--img-w1) center 18%/cover}
+.w-hero .icon-btn{background:rgba(38,43,34,.7);backdrop-filter:blur(6px)}
+.w-hero h3{font-size:30px;font-weight:850;position:relative}
+.timer{display:flex;align-items:center;gap:12px;margin:16px 0}
+.timer b{font:800 34px/1 var(--display);font-variant-numeric:tabular-nums;flex:1}
+.progress{height:6px;border-radius:6px;background:var(--card2);overflow:hidden;margin-top:6px}
+.progress i{display:block;height:100%;background:var(--lime);transition:width .3s}
+.ex{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:18px;padding:10px 12px;margin-bottom:8px}
+.ex div{flex:1;min-width:0}
+.ex small{display:block;color:var(--muted);font-size:12px}
+.ex.done strong{text-decoration:line-through;color:var(--muted)}
+.check{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:none;display:grid;place-items:center;flex:none;color:transparent}
+.check svg{width:14px;height:14px;stroke-width:3}
+.ex.done .check{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
+
+/* nutrition */
+.ring{position:relative;width:200px;height:200px;margin:8px auto 4px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{stroke-width:16;fill:none}
+.ring .c-track{stroke:var(--card2)}
+.ring .c-val{stroke:var(--lime);transition:stroke-dashoffset .5s}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font:850 38px/1 var(--display);font-variant-numeric:tabular-nums}
+.ring small{color:var(--muted);font-size:12px}
+.macros{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.macro{background:var(--card);border-radius:16px;padding:12px}
+.macro small{color:var(--muted);font-size:11px;display:block}
+.macro b{font:800 15px/1.4 var(--display);font-variant-numeric:tabular-nums}
+.meal{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:18px;padding:12px;margin-bottom:8px}
+.meal div{flex:1}
+.meal small{display:block;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.add{width:34px;height:34px;border-radius:50%;border:0;background:var(--card2);display:grid;place-items:center}
+.add svg{width:16px;height:16px;stroke-width:2.4}
+.add:hover{background:var(--lime);color:var(--lime-ink)}
+
+/* stats */
+.seg{display:flex;background:var(--card);border-radius:999px;padding:4px;margin:16px 0}
+.seg button{flex:1;border:0;background:none;border-radius:999px;padding:10px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--lime);color:var(--lime-ink);font-weight:700}
+.activity{background:var(--blue);border-radius:24px;padding:16px;color:#fff}
+.activity .range{font-size:12px;opacity:.8;margin-bottom:12px;text-align:center}
+.activity svg{width:100%;height:96px;display:block}
+.activity svg rect{fill:#fff;stroke:none}
+.act-foot{display:flex;justify-content:space-between;margin-top:10px;font-size:12px}
+.act-foot b{display:block;font:800 16px/1.2 var(--display);font-variant-numeric:tabular-nums}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.stat-grid .card{display:grid;gap:12px}
+.stat-grid b{font:850 30px/1 var(--display);font-variant-numeric:tabular-nums}
+.stat-grid small{color:var(--muted);font-size:12px}
+.delta{font:600 11px/1 var(--mono);color:var(--lime)}
+
+/* calendar */
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin:16px 0 12px}
+.cal-head b{font:800 18px/1 var(--display);font-stretch:110%}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal span{font-size:11px;color:var(--muted);padding-bottom:4px}
+.day{aspect-ratio:1;border-radius:50%;border:0;background:var(--card);font-size:13px;font-variant-numeric:tabular-nums;max-width:100%}
+.day.trained{background:var(--card2);box-shadow:inset 0 0 0 1.5px var(--lime)}
+.day.sel{background:var(--lime);color:var(--lime-ink);font-weight:700;box-shadow:none}
+.day.future{color:#5c6353}
+.legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin:12px 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:18px;overflow:hidden;margin-top:6px}
+.summary div{background:var(--card);padding:12px}
+.summary small{display:block;color:var(--muted);font-size:11px}
+.summary b{font:800 16px/1.4 var(--display);font-variant-numeric:tabular-nums}
+
+/* tab bar */
+.tabbar{position:absolute;left:14px;right:14px;bottom:16px;height:64px;border-radius:999px;background:rgba(38,43,34,.92);backdrop-filter:blur(10px);display:flex;justify-content:space-around;align-items:center;padding:0 8px;z-index:6;transition:transform .3s,opacity .3s}
+.tabbar.off{transform:translateY(100px);opacity:0;pointer-events:none}
+.tabbar button{width:46px;height:46px;border-radius:50%;border:0;background:none;display:grid;place-items:center;color:var(--muted)}
+.tabbar button[aria-current="page"]{background:var(--lime);color:var(--lime-ink)}
+
+/* case study sections */
+section.cs{border-top:1px solid var(--line);padding-block:64px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px}
+section.cs h2{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.cs .label{margin-bottom:14px;display:block}
+.prose{max-width:62ch;display:grid;gap:16px;font-size:16px;color:#cfd5c7}
+.prose strong{color:var(--fg)}
+.scope{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scope article{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;gap:10px;align-content:start}
+.scope h3{font-size:20px;font-weight:800}
+.scope p{color:var(--muted)}
+.scope .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.scope .links button{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font-size:12px}
+.scope .links button:hover{border-color:var(--lime);color:var(--lime)}
+
+.sys{display:grid;gap:28px}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.sw{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.sw i{display:block;height:84px}
+.sw div{padding:10px 12px;background:var(--surface);display:grid;gap:4px}
+.sw b{font-size:13px}
+.sw code{font:400 11px/1 var(--mono);color:var(--muted)}
+.specimen{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.specimen > div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:10px}
+.spec-big{font:850 52px/0.95 var(--display);font-stretch:118%}
+.spec-body{font:500 22px/1.2 var(--body)}
+.spec-mono{font:600 22px/1.2 var(--mono)}
+.comps{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.comps .p-btn{width:auto;padding:14px 26px}
+.comps .tile{width:120px}
+.comps .tabbar{position:static;width:auto;gap:4px}
+
+.weeks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.weeks article{border-top:3px solid var(--line);padding-top:18px;display:grid;gap:10px;align-content:start}
+.weeks article:last-child{border-color:var(--lime)}
+.weeks h3{font-size:19px;font-weight:800}
+.weeks ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:4px}
+
+.decisions{display:grid;gap:0}
+.decisions article{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:24px;padding-block:22px;border-bottom:1px solid var(--line)}
+.decisions article:first-child{padding-top:0}
+.decisions h3{font-size:20px;font-weight:800}
+.decisions p{color:#cfd5c7;max-width:62ch}
+
+/* photo treatments */
+.plan.feature{flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:6px;height:178px;padding:16px;border-radius:22px;background:linear-gradient(to top,rgba(10,12,9,.9),rgba(10,12,9,.05) 75%),var(--img-chest) center/cover}
+.plan.feature strong{font:800 19px/1.15 var(--display);font-stretch:108%;max-width:24ch}
+.r-hero{height:230px;background:linear-gradient(to top,#151713 6%,rgba(21,23,19,0) 60%),linear-gradient(to right,rgba(21,23,19,.6),rgba(21,23,19,0) 60%),var(--img-rep) 70% 20%/cover}
+.showcase{padding-block:0 80px}
+.showcase figure{margin:0;display:grid;gap:14px}
+.showcase img{display:block;width:100%;border-radius:24px;border:1px solid var(--line)}
+.showcase figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;color:var(--muted);font-size:13px}
+
+footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--muted);font-size:13px}
+
+@media (max-width:920px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:40px}
+  .device{margin:0 auto}
+  section.cs{grid-template-columns:minmax(0,1fr);gap:20px;padding-block:48px}
+}
+@media (max-width:620px){
+  .meta,.scope,.weeks{grid-template-columns:minmax(0,1fr)}
+  .decisions article{grid-template-columns:minmax(0,1fr);gap:8px}
+  .device{height:700px;border-radius:40px;padding:8px}
+  .phone{border-radius:32px}
+}
+</style>
+<style>:root{--img-w1:url("img/w1.jpg");--img-rep:url("img/rep.jpg");--img-chest:url("img/chest.jpg");--img-coach:url("img/coach.jpg")}
+/* Unbounded is wider than Archivo Expanded: ease display sizes for Cyrillic */
+.p-h{font-size:22px;font-weight:700}.w-hero h3{font-size:24px;font-weight:700}section.cs h2{font-size:clamp(22px,2.6vw,32px);font-weight:700}.decisions h3,.scope h3,.weeks h3{font-size:17px;font-weight:700}.spec-big{font-size:44px;font-weight:700}.plan.feature strong{font-size:16px;font-weight:700}.logo-txt{font-size:20px}.wordmark{font-size:16px}.days b{font-size:24px}.ring b{font-size:32px}.stat-grid b{font-size:26px}</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="wordmark"><i><svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--lime-ink);stroke-width:2.6"><path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/></svg></i>FITLIFE</div>
+    <span class="label">Кейс · UI/UX</span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="label">Концепт фитнес-приложения</span>
+      <h1 style="margin-top:18px">Тренировки, питание и прогресс — <em>в одном месте.</em></h1>
+      <p class="lede">FitLife — концепт фитнес-приложения для тех, кто хочет управлять тренировками, питанием и прогрессом, не переключаясь между тремя приложениями. Задача — сделать ежедневный трекинг простым, мотивирующим и понятным.</p>
+      <div class="meta">
+        <div><span class="label">Клиент</span><b>Фитнес-стартап</b></div>
+        <div><span class="label">Сроки</span><b>3 недели</b></div>
+        <div><span class="label">Инструменты</span><b>Figma, Illustrator</b></div>
+      </div>
+      <div class="jump" aria-label="Экраны прототипа">
+        <span class="label">Перейти к экрану</span>
+        <div class="row">
+          <button data-go="splash">Заставка</button>
+          <button data-go="coach">Онбординг</button>
+          <button data-go="signup">Аккаунт</button>
+          <button data-go="home">Главная</button>
+          <button data-go="workout">Тренировка</button>
+          <button data-go="nutrition">Питание</button>
+          <button data-go="stats">Статистика</button>
+          <button data-go="calendar">Календарь</button>
+        </div>
+        <p class="hint">Телефон — рабочий прототип. Пройдите по нему как новый пользователь или сразу перейдите к нужному экрану.</p>
+      </div>
+    </div>
+
+    <div class="device">
+      <div class="phone" id="phone">
+        <div class="status" id="status"><span>9:41</span><span>●●● 5G ▮</span></div>
+
+        <!-- Splash -->
+        <div class="screen s-splash on" data-screen="splash">
+          <div style="display:grid;justify-items:center">
+            <div class="logo"><svg viewBox="0 0 24 24"><path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/></svg></div>
+            <div class="logo-txt">FITLIFE</div>
+            <div class="label" style="color:var(--lime-ink);opacity:.7;margin-top:10px">Просто начни</div>
+            <button class="tap" data-go="coach">Нажмите, чтобы начать →</button>
+          </div>
+        </div>
+
+        <!-- Coach intro -->
+        <div class="screen" data-screen="coach">
+          <div class="coach">
+            <div class="avatar" role="img" aria-label="Портрет тренера"></div>
+            <h2 class="p-h" style="text-align:center">Привет, я твой<br>личный тренер</h2>
+            <p class="p-sub" style="text-align:center;margin:0 20px 30px">Три коротких вопроса — и я составлю план под твою неделю.</p>
+            <button class="p-btn" data-go="goal">Поехали!</button>
+          </div>
+        </div>
+
+        <!-- Goal -->
+        <div class="screen" data-screen="goal">
+          <div class="steps"><i class="done"></i><i></i><i></i></div>
+          <span class="label">Вопрос 1 из 3</span>
+          <h2 class="p-h" style="margin-top:10px">Какая у тебя главная цель?</h2>
+          <div class="opts" data-group="goal">
+            <button class="opt" aria-pressed="false"><span><strong>Похудеть</strong><small>Дефицит калорий + кардио</small></span><i class="dot"></i></button>
+            <button class="opt" aria-pressed="true"><span><strong>Набрать мышцы</strong><small>Силовые планы, норма белка</small></span><i class="dot"></i></button>
+            <button class="opt" aria-pressed="false"><span><strong>Быть в форме</strong><small>Шаги, мобильность, лёгкие занятия</small></span><i class="dot"></i></button>
+          </div>
+          <button class="p-btn" data-go="level">Далее</button>
+        </div>
+
+        <!-- Level -->
+        <div class="screen" data-screen="level">
+          <div class="steps"><i class="done"></i><i class="done"></i><i></i></div>
+          <span class="label">Вопрос 2 из 3</span>
+          <h2 class="p-h" style="margin-top:10px">Сколько дней в неделю можешь тренироваться?</h2>
+          <div class="days" data-group="days">
+            <button class="opt" aria-pressed="false"><b>2</b><small>Мягкий старт</small></button>
+            <button class="opt" aria-pressed="true"><b>3–4</b><small>Баланс</small></button>
+            <button class="opt" aria-pressed="false"><b>5+</b><small>На максимум</small></button>
+          </div>
+          <div class="opts" data-group="where" style="margin-top:0">
+            <button class="opt" aria-pressed="true"><span><strong>В зале</strong><small>Полный набор снарядов</small></span><i class="dot"></i></button>
+            <button class="opt" aria-pressed="false"><span><strong>Дома</strong><small>Гантели или свой вес</small></span><i class="dot"></i></button>
+          </div>
+          <button class="p-btn" data-go="signup">Далее</button>
+        </div>
+
+        <!-- Signup -->
+        <div class="screen" data-screen="signup">
+          <div class="steps"><i class="done"></i><i class="done"></i><i class="done"></i></div>
+          <span class="label">Последний шаг</span>
+          <h2 class="p-h" style="margin-top:10px">План готов. Сохрани его.</h2>
+          <p class="p-sub" style="margin-bottom:22px">Набор массы · 3–4 дня · Зал. План на 12 недель.</p>
+          <form id="signupForm">
+            <div class="field"><label for="su-name">Имя</label><input id="su-name" value="Алекс Морозов" autocomplete="off"></div>
+            <div class="field"><label for="su-email">Email</label><input id="su-email" type="email" value="alex@example.com" autocomplete="off"></div>
+            <button class="p-btn" type="submit" style="margin-top:18px">Создать аккаунт</button>
+          </form>
+          <p class="fine">Цель и расписание можно изменить в любой момент.</p>
+        </div>
+
+        <!-- Home -->
+        <div class="screen tabbed" data-screen="home">
+          <div class="hello">
+            <span class="me" id="initials">АМ</span>
+            <div><small>С возвращением 👋</small><strong id="helloName">Алекс Морозов</strong></div>
+            <button class="icon-btn" aria-label="Уведомления"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10 20a2 2 0 0 0 4 0"/></svg></button>
+          </div>
+          <h2 class="p-h" style="font-size:22px">Сегодня</h2>
+          <div class="tiles">
+            <div class="tile"><svg viewBox="0 0 24 24"><path d="M13 4a1.5 1.5 0 1 0 0 .1M9 21l2-6 3 2v4M8 11l3-3 3 2 3 1"/></svg><b>5 728</b><small>Шаги</small></div>
+            <div class="tile"><svg viewBox="0 0 24 24"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 1 1 2 2 3 2 0-2-1-4 0-6"/></svg><b>2 145</b><small>ккал</small></div>
+            <div class="tile"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><b>72</b><small>уд/мин</small></div>
+          </div>
+          <div class="card">
+            <div class="bar-val"><span>Сожжено калорий · <span id="barDay">Пт</span></span><b id="barKcal">2 145</b></div>
+            <div class="bars" id="bars"></div>
+          </div>
+          <div class="sec-h"><h4>Планы тренировок</h4><span>Неделя 3 из 12</span></div>
+          <div class="chips" data-group="plans">
+            <button class="chip" aria-pressed="true" data-filter="all">Все</button>
+            <button class="chip" aria-pressed="false" data-filter="upper">Верх тела</button>
+            <button class="chip" aria-pressed="false" data-filter="lower">Ноги</button>
+            <button class="chip" aria-pressed="false" data-filter="core">Пресс</button>
+          </div>
+          <div id="plans">
+            <button class="plan feature" data-cat="upper" data-go="workout"><span class="label" style="color:var(--lime)">Тренировка груди</span><strong>Недельная программа для сильной груди</strong></button>
+            <button class="plan" data-cat="all upper lower" data-go="workout"><span class="thumb" style="background:var(--img-w1) center 20%/cover"></span><div><strong>Всё тело</strong><small>6 упражнений · 45 мин</small></div><span class="go"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button>
+            <button class="plan" data-cat="upper" data-go="workout"><span class="thumb" style="background:var(--img-rep) 60% 30%/cover"></span><div><strong>Грудь и плечи</strong><small>5 упражнений · 40 мин</small></div><span class="go"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button>
+            <button class="plan" data-cat="lower" data-go="workout"><span class="thumb" style="background:var(--img-w1) 50% 90%/220%"></span><div><strong>День ног</strong><small>6 упражнений · 50 мин</small></div><span class="go"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button>
+            <button class="plan" data-cat="core" data-go="workout"><span class="thumb" style="background:var(--img-rep) 70% 85%/200%"></span><div><strong>Огонь для пресса</strong><small>4 упражнения · 20 мин</small></div><span class="go"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span></button>
+          </div>
+        </div>
+
+        <!-- Workout -->
+        <div class="screen tabbed" data-screen="workout">
+          <div class="w-hero">
+            <button class="icon-btn" data-go="home" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <div style="position:relative"><span class="label">Гиря + гантели · 45 мин</span><h3 style="margin-top:8px">Тренировка<br>всего тела</h3></div>
+          </div>
+          <div class="timer">
+            <b id="clock">00:00</b>
+            <button class="p-btn" id="startBtn" style="width:auto;padding:14px 26px">Старт</button>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Прогресс</span><span id="exCount">0 из 6 выполнено</span></div>
+          <div class="progress"><i id="exBar" style="width:0%"></i></div>
+          <div id="exList" style="margin-top:14px"></div>
+        </div>
+
+        <!-- Nutrition -->
+        <div class="screen tabbed" data-screen="nutrition">
+          <span class="label">Питание · Сегодня</span>
+          <h2 class="p-h" style="margin-top:8px;font-size:22px">Рацион за день</h2>
+          <div class="ring">
+            <svg viewBox="0 0 200 200"><circle class="c-track" cx="100" cy="100" r="84"/><circle class="c-val" id="ringVal" cx="100" cy="100" r="84"/></svg>
+            <div><b id="kcalLeft">1 200</b><small>ккал осталось из 2 400</small></div>
+          </div>
+          <div class="macros">
+            <div class="macro"><small>Белки</small><b id="mP">74 / 150 г</b><div class="progress"><i id="mPb"></i></div></div>
+            <div class="macro"><small>Углеводы</small><b id="mC">135 / 270 г</b><div class="progress"><i id="mCb"></i></div></div>
+            <div class="macro"><small>Жиры</small><b id="mF">40 / 80 г</b><div class="progress"><i id="mFb"></i></div></div>
+          </div>
+          <div class="sec-h"><h4>Приёмы пищи</h4><span>Нажмите +, чтобы добавить</span></div>
+          <div id="meals"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="screen tabbed" data-screen="stats">
+          <h2 class="p-h">Статистика</h2>
+          <div class="seg" data-group="range">
+            <button aria-pressed="false" data-range="daily">День</button>
+            <button aria-pressed="true" data-range="weekly">Неделя</button>
+            <button aria-pressed="false" data-range="monthly">Месяц</button>
+          </div>
+          <div class="activity">
+            <div class="range" id="rangeLbl">4 – 10 октября 2026</div>
+            <strong>Физическая активность</strong>
+            <svg id="wave" viewBox="0 0 300 96" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div class="act-foot"><span>Активные минуты<b id="actMin">312</b></span><span style="text-align:right">Дистанция<b id="actKm">41,6 км</b></span></div>
+          </div>
+          <div class="stat-grid">
+            <div class="card"><small>Шаги в среднем</small><b id="stSteps">9 748</b><span class="delta" id="stStepsD">+12% к прошлой неделе</span></div>
+            <div class="card"><small>Калории в среднем</small><b id="stKcal">700</b><span class="delta" id="stKcalD">+4% к прошлой неделе</span></div>
+            <div class="card"><small>Пульс в среднем</small><b id="stHr">80,5</b><span class="delta">уд/мин</span></div>
+            <div class="card"><small>Тренировки</small><b id="stWo">4</b><span class="delta" id="stWoD">Цель: 3–4</span></div>
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="screen tabbed" data-screen="calendar">
+          <div class="w-hero r-hero">
+            <button class="icon-btn" data-go="home" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <div><h3>Отчёты</h3><span class="label">Календарь</span></div>
+          </div>
+          <div class="cal-head"><b>Октябрь 2026</b><span class="label" id="streak">Серия: 3 дня</span></div>
+          <div class="cal" id="cal"></div>
+          <div class="legend"><span><i style="box-shadow:inset 0 0 0 1.5px var(--lime);background:var(--card2)"></i>Тренировка</span><span><i style="background:var(--lime)"></i>Выбрано</span></div>
+          <div class="label" id="selLbl">Суббота, 10 октября</div>
+          <div class="summary" style="margin-top:10px">
+            <div><small>Тренировка</small><b id="sumW">Всё тело</b></div>
+            <div><small>Калории</small><b id="sumK">450</b></div>
+            <div><small>Время</small><b id="sumT">52 мин</b></div>
+          </div>
+        </div>
+
+        <nav class="tabbar off" id="tabbar" aria-label="Разделы приложения">
+          <button data-go="home" aria-label="Главная"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></button>
+          <button data-go="workout" aria-label="Тренировка"><svg viewBox="0 0 24 24"><path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/></svg></button>
+          <button data-go="nutrition" aria-label="Питание"><svg viewBox="0 0 24 24"><path d="M12 7c-2-3-8-2-7 4 1 5 4 9 7 9s6-4 7-9c1-6-5-7-7-4zM12 7c0-2 1-3 3-4"/></svg></button>
+          <button data-go="stats" aria-label="Статистика"><svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></button>
+          <button data-go="calendar" aria-label="Календарь"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></button>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase">
+    <figure>
+      <img src="img/showcase.jpg" alt="Экраны FitLife: заставка, онбординг с тренером, главная, тренировка, статистика и календарь" width="808" height="632" loading="lazy">
+      <figcaption><span class="label">Финальные экраны</span><span>Заставка · Онбординг · Главная · Тренировка · Статистика · Отчёты</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="cs">
+    <div><span class="label">Задача</span><h2>Сделать трекинг привычкой, а не обязанностью.</h2></div>
+    <div class="prose">
+      <p>Первые пользователи стартапа жонглировали трекером тренировок, счётчиком калорий и шагомером в телефоне. По отдельности каждое приложение было неплохим. Вместе — три входа, три набора цифр и никакого ответа на вопрос <strong>«как у меня дела на этой неделе?»</strong></p>
+      <p>Задача — одно приложение для тренировок, питания и прогресса с ежедневной отметкой настолько короткой, чтобы люди действительно её делали. Успех — это пользователь, который открывает приложение, видит цифры за сегодня, добавляет приём пищи или начинает тренировку и укладывается меньше чем в минуту.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div><span class="label">Объём работ</span><h2>Четыре части, один прототип.</h2></div>
+    <div class="scope">
+      <article><h3>Онбординг и аккаунт</h3><p>Знакомство с тренером и три вопроса, которые формируют план. Регистрация — в самом конце, когда план уже есть что сохранять.</p><div class="links"><button data-go="coach">Знакомство</button><button data-go="goal">Вопросы</button><button data-go="signup">Аккаунт</button></div></article>
+      <article><h3>Тренировки и питание</h3><p>Шаги, калории и пульс за сегодня — сверху, сожжённые за неделю калории — столбиками, планы фильтруются по группам мышц. В питании сразу видно, сколько калорий осталось и баланс БЖУ.</p><div class="links"><button data-go="home">Главная</button><button data-go="workout">Тренировка</button><button data-go="nutrition">Питание</button></div></article>
+      <article><h3>Отслеживание прогресса</h3><p>Статистика за день, неделю и месяц, плюс календарь, где видно, в какие дни были тренировки и сколько времени и калорий ушло на каждую.</p><div class="links"><button data-go="stats">Статистика</button><button data-go="calendar">Календарь</button></div></article>
+      <article><h3>Компоненты и прототип</h3><p>Небольшой набор плиток, чипсов, кнопок-таблеток и плавающей панели вкладок для всех экранов — и всё это собрано в кликабельный прототип выше.</p><div class="links"><button data-go="splash">Начать сначала</button></div></article>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div><span class="label">Дизайн-система</span><h2>Один акцент — одна задача.</h2></div>
+    <div class="sys">
+      <div class="swatches">
+        <div class="sw"><i style="background:#d2f53a"></i><div><b>Вольт</b><code>#D2F53A · действия, сегодня</code></div></div>
+        <div class="sw"><i style="background:#151713"></i><div><b>Графит</b><code>#151713 · фон приложения</code></div></div>
+        <div class="sw"><i style="background:#21251e"></i><div><b>Поверхность</b><code>#21251E · карточки</code></div></div>
+        <div class="sw"><i style="background:#3e5ff0"></i><div><b>Пульс</b><code>#3E5FF0 · данные активности</code></div></div>
+        <div class="sw"><i style="background:#99a190"></i><div><b>Мох</b><code>#99A190 · второстепенный текст</code></div></div>
+      </div>
+      <div class="specimen">
+        <div><span class="label">Заголовки · Unbounded</span><div class="spec-big">9 748</div></div>
+        <div><span class="label">Текст · Onest</span><div class="spec-body">Тренировка всего тела<br><span style="color:var(--muted);font-size:15px">6 упражнений · 45 мин</span></div></div>
+        <div><span class="label">Подписи · JetBrains Mono</span><div class="spec-mono">НЕДЕЛЯ 3 / 12</div></div>
+      </div>
+      <div class="comps" aria-label="Примеры компонентов">
+        <button class="p-btn" data-go="coach">Поехали!</button>
+        <button class="chip" aria-pressed="true" style="padding:10px 16px">Верх тела</button>
+        <button class="chip" aria-pressed="false" style="padding:10px 16px">Ноги</button>
+        <div class="tile"><b>2 145</b><small>ккал</small></div>
+        <span class="go"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div><span class="label">Ключевые решения</span><h2>Почему всё выглядит именно так.</h2></div>
+    <div class="decisions">
+      <article><h3>Лаймовый — для того, что можно нажать</h3><p>Зелёный «вольт» зарезервирован за главной кнопкой, выбранной вкладкой и сегодняшним значением. Всё остальное — в графите, поэтому взгляд сразу находит следующее действие.</p></article>
+      <article><h3>Сначала цифры, потом навигация</h3><p>Главная открывается шагами, калориями и пульсом. Большинство визитов на этом и заканчивается — ответ на вопрос «как я?» виден до прокрутки.</p></article>
+      <article><h3>Сначала план, потом аккаунт</h3><p>Просьба оставить email до того, как показана ценность, отпугивает людей. Три вопроса онбординга сначала строят план, а экран регистрации предлагает его сохранить.</p></article>
+      <article><h3>Панель вкладок под пальцем</h3><p>Плавающая панель-таблетка находится в зоне большого пальца даже на крупных телефонах и держит на виду пять разделов: главная, тренировка, питание, статистика и календарь.</p></article>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div><span class="label">Процесс</span><h2>Три недели — от идеи до прототипа.</h2></div>
+    <div class="weeks">
+      <article><span class="label">Неделя 1</span><h3>Исследование и сценарии</h3><ul><li>Разбор трекеров-конкурентов</li><li>Сценарии ежедневной отметки и онбординга</li><li>Черновые вайрфреймы</li></ul></article>
+      <article><span class="label">Неделя 2</span><h3>Визуальный дизайн</h3><ul><li>Цвет, шрифты и стиль иконок</li><li>Логотип в Illustrator</li><li>Ключевые экраны и компоненты</li></ul></article>
+      <article><span class="label">Неделя 3</span><h3>Прототип и передача</h3><ul><li>Остальные экраны и состояния</li><li>Кликабельный прототип</li><li>Библиотека компонентов для разработчиков</li></ul></article>
+    </div>
+  </section>
+
+  <footer><span>FitLife · UI/UX-концепт фитнес-приложения · <a href="../" style="color:inherit">Студия Lumora</a></span><span>Figma · Illustrator · 3 недели</span></footer>
+</div>
+
+<script>
+(function(){
+  const phone=document.getElementById('phone'), tabbar=document.getElementById('tabbar'), status=document.getElementById('status');
+  const TABBED=['home','workout','nutrition','stats','calendar'];
+  const fmt=n=>Math.round(n).toLocaleString('ru-RU');
+
+  function go(id){
+    phone.querySelectorAll('.screen').forEach(s=>{const on=s.dataset.screen===id;s.classList.toggle('on',on);if(on)s.scrollTop=0;});
+    tabbar.classList.toggle('off',!TABBED.includes(id));
+    tabbar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'page':'false'));
+    status.classList.toggle('dark',id==='splash');
+    document.querySelectorAll('.jump button').forEach(b=>b.classList.toggle('on',b.dataset.go===id||(id==='goal'||id==='level')&&b.dataset.go==='coach'));
+  }
+  document.addEventListener('click',e=>{
+    const t=e.target.closest('[data-go]'); if(!t) return;
+    e.preventDefault(); go(t.dataset.go);
+    if(!phone.contains(t)){const r=phone.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)phone.scrollIntoView({behavior:'smooth',block:'center'});}
+  });
+
+  // single-choice groups (onboarding options, chips, segmented control)
+  document.querySelectorAll('[data-group]').forEach(g=>g.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b||!g.contains(b)) return;
+    g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+    if(g.dataset.group==='plans') filterPlans(b.dataset.filter);
+    if(g.dataset.group==='range') setRange(b.dataset.range);
+  }));
+
+  // signup
+  document.getElementById('signupForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=document.getElementById('su-name').value.trim()||'Алекс Морозов';
+    document.getElementById('helloName').textContent=name;
+    document.getElementById('initials').textContent=name.split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    go('home');
+  });
+
+  // weekly bars
+  const week=[['Пн',1820],['Вт',2410],['Ср',1960],['Чт',2280],['Пт',2145],['Сб',1700],['Вс',1240]];
+  const max=Math.max(...week.map(w=>w[1]));
+  const bars=document.getElementById('bars');
+  week.forEach(([d,v],i)=>{
+    const b=document.createElement('button');b.className='bar'+(i===4?' on':'');b.setAttribute('aria-label',d+' '+fmt(v)+' ккал');
+    b.innerHTML=`<i style="height:${Math.round(v/max*100*0.82)}%"></i><span>${d}</span>`;
+    b.onclick=()=>{bars.querySelectorAll('.bar').forEach(x=>x.classList.toggle('on',x===b));document.getElementById('barDay').textContent=d;document.getElementById('barKcal').textContent=fmt(v);};
+    bars.appendChild(b);
+  });
+
+  function filterPlans(f){document.querySelectorAll('#plans .plan').forEach(p=>p.hidden=!(f==='all'||p.dataset.cat.split(' ').includes(f)));}
+
+  // workout
+  const ex=[['Махи гирей','3 × 15 повторов'],['Жим над головой','3 × 10 повторов · 12 кг'],['Гоблет-присед','4 × 12 повторов · 16 кг'],['Тяга в наклоне','3 × 10 повторов · 14 кг'],['Выпады в шаге','3 × 20 шагов'],['Планка','3 × 45 с']];
+  const exList=document.getElementById('exList');
+  ex.forEach(([n,s])=>{
+    const row=document.createElement('div');row.className='ex';
+    const bg=['var(--img-w1) 30% 40%/240%','var(--img-rep) 60% 25%/160%','var(--img-w1) 50% 90%/220%','var(--img-chest) 55% 40%/300%','var(--img-rep) 70% 80%/200%','var(--img-w1) 60% 15%/180%'][exList.children.length];
+    row.innerHTML=`<span class="thumb" style="width:46px;height:46px;border-radius:12px;background:${bg}"></span><div><strong>${n}</strong><small>${s}</small></div><button class="check" aria-label="Отметить «${n}» выполненным"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></button>`;
+    row.querySelector('.check').onclick=()=>{row.classList.toggle('done');updEx();};
+    exList.appendChild(row);
+  });
+  function updEx(){const d=exList.querySelectorAll('.ex.done').length;document.getElementById('exCount').textContent=d+' из '+ex.length+' выполнено';document.getElementById('exBar').style.width=(d/ex.length*100)+'%';}
+  let secs=0,timer=null;const clock=document.getElementById('clock'),startBtn=document.getElementById('startBtn');
+  startBtn.onclick=()=>{
+    if(timer){clearInterval(timer);timer=null;startBtn.textContent='Продолжить';startBtn.classList.remove('ghost');return;}
+    timer=setInterval(()=>{secs++;clock.textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0');},1000);
+    startBtn.textContent='Пауза';startBtn.classList.add('ghost');
+  };
+
+  // nutrition
+  const TARGET=2400, C=2*Math.PI*84;
+  const meals=[['Завтрак','Овсянка, банан, протеин',520],['Обед','Боул с курицей и рисом',680],['Перекус','Греческий йогурт',0],['Ужин','Лосось, картофель, зелень',0]];
+  const portion=[0,0,180,620];
+  const mealsEl=document.getElementById('meals'), ring=document.getElementById('ringVal');
+  ring.style.strokeDasharray=C;
+  meals.forEach((m,i)=>{
+    const row=document.createElement('div');row.className='meal';
+    row.innerHTML=`<div><strong>${m[0]}</strong><small>${m[1]} · <span>${m[2]?fmt(m[2])+' ккал':'не добавлено'}</span></small></div><button class="add" aria-label="Добавить: ${m[0]}"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>`;
+    row.querySelector('.add').onclick=()=>{m[2]+=portion[i]||150;row.querySelector('small span').textContent=fmt(m[2])+' ккал';updFood();};
+    mealsEl.appendChild(row);
+  });
+  function updFood(){
+    const eaten=meals.reduce((a,m)=>a+m[2],0), r=Math.min(eaten/TARGET,1);
+    ring.style.strokeDashoffset=C*(1-r);
+    document.getElementById('kcalLeft').textContent=fmt(Math.max(TARGET-eaten,0));
+    [['P',150,0.25/4],['C',270,0.45/4],['F',80,0.3/9]].forEach(([k,goal,f])=>{
+      const g=Math.round(eaten*f);document.getElementById('m'+k).textContent=g+' / '+goal+' г';document.getElementById('m'+k+'b').style.width=Math.min(g/goal*100,100)+'%';
+    });
+  }
+  updFood();
+
+  // stats
+  const RANGES={
+    daily:{lbl:'Суббота, 10 октября 2026',n:24,seed:3,min:'58',km:'6,9 км',steps:'5 728',sd:'+8% ко вчера',kcal:'2 145',kd:'+3% ко вчера',hr:'72,0',wo:'1',wd:'Всё тело'},
+    weekly:{lbl:'4 – 10 октября 2026',n:42,seed:7,min:'312',km:'41,6 км',steps:'9 748',sd:'+12% к прошлой неделе',kcal:'700',kd:'+4% к прошлой неделе',hr:'80,5',wo:'4',wd:'Цель: 3–4'},
+    monthly:{lbl:'Сентябрь 2026',n:60,seed:11,min:'1 284',km:'176 км',steps:'8 912',sd:'+6% к августу',kcal:'664',kd:'+2% к августу',hr:'79,1',wo:'15',wd:'Цель: 14'}
+  };
+  function setRange(k){
+    const d=RANGES[k];let s=d.seed;const rnd=()=>(s=(s*9301+49297)%233280)/233280;
+    const w=300/d.n;let svg='';
+    for(let i=0;i<d.n;i++){const h=10+Math.abs(Math.sin(i/3.2+d.seed))*55+rnd()*28;svg+=`<rect x="${(i*w+w*0.2).toFixed(1)}" y="${(48-h/2).toFixed(1)}" width="${(w*0.6).toFixed(1)}" height="${h.toFixed(1)}" rx="${(w*0.3).toFixed(1)}"/>`;}
+    document.getElementById('wave').innerHTML=svg;
+    const set=(id,v)=>document.getElementById(id).textContent=v;
+    set('rangeLbl',d.lbl);set('actMin',d.min);set('actKm',d.km);set('stSteps',d.steps);set('stStepsD',d.sd);set('stKcal',d.kcal);set('stKcalD',d.kd);set('stHr',d.hr);set('stWo',d.wo);set('stWoD',d.wd);
+  }
+  setRange('weekly');
+
+  // calendar
+  const cal=document.getElementById('cal');
+  const trained={1:['Верх тела',380,44],2:['День ног',460,50],5:['Пресс',210,20],6:['Всё тело',430,48],8:['Грудь и плечи',390,40],9:['День ног',470,52],10:['Всё тело',450,52]};
+  ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(d=>{const s=document.createElement('span');s.textContent=d;cal.appendChild(s);});
+  const first=(new Date(2026,9,1).getDay()+6)%7;
+  for(let i=0;i<first;i++)cal.appendChild(document.createElement('i'));
+  const WD=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+  for(let d=1;d<=31;d++){
+    const b=document.createElement('button');b.className='day'+(trained[d]?' trained':'')+(d>10?' future':'')+(d===10?' sel':'');b.textContent=d;
+    b.onclick=()=>{
+      cal.querySelectorAll('.day').forEach(x=>x.classList.toggle('sel',x===b));
+      document.getElementById('selLbl').textContent=WD[new Date(2026,9,d).getDay()]+', '+d+' октября';
+      const t=trained[d];
+      document.getElementById('sumW').textContent=t?t[0]:(d>10?'Запланировано':'День отдыха');
+      document.getElementById('sumK').textContent=t?t[1]:'—';
+      document.getElementById('sumT').textContent=t?t[2]+' мин':'—';
+    };
+    cal.appendChild(b);
+  }
+})();
+</script>
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Lumora"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Lumora</a>
+</body>
+</html>

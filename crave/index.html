@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Crave — доставка еды · кейс Lumora</title>
+<meta name="description" content="Кейс мобильного приложения доставки еды: поиск ресторанов, меню, корзина, оформление и отслеживание заказа. Кликабельный прототип и UI-кит.">
+<meta name="theme-color" content="#D93D22">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Crave — доставка еды · кейс Lumora">
+<meta property="og:description" content="Кейс мобильного приложения доставки еды: поиск ресторанов, меню, корзина, оформление и отслеживание заказа. Кликабельный прототип и UI-кит.">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D93D22'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23FFC94A'/%3E%3Ccircle cx='25' cy='10' r='4' fill='%23D93D22'/%3E%3C/svg%3E">
+<style>:root{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: case-study page — brief on the left, live prototype on the right, then a wall of every screen, then the UI kit */
+:root{
+  --bg:#FBF6F2; --surface:#FFFFFF; --fg:#24161A; --muted:#6E5E61; --line:#EADDD6;
+  --accent:#D93D22; --accent-ink:#FFFFFF; --butter:#FFC94A; --leaf:#2F8F5B; --plum:#3B1F2B;
+  /* app palette — the product itself is a light app, so these stay fixed in both page themes */
+  --a-bg:#FFFFFF; --a-soft:#F7F1EE; --a-ink:#24161A; --a-mute:#74666A; --a-line:#EFE5E0; --a-red:#D93D22; --a-butter:#FFC94A; --a-leaf:#2F8F5B;
+  --f-display:"Rubik", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Manrope", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1013; --surface:#251A1D; --fg:#F6ECE8; --muted:#B5A3A5; --line:#3A2A2E; --accent:#FF6A4D; --accent-ink:#1A1013; --plum:#F6ECE8; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1A1013; --surface:#251A1D; --fg:#F6ECE8; --muted:#B5A3A5; --line:#3A2A2E; --accent:#FF6A4D; --accent-ink:#1A1013; --plum:#F6ECE8; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;padding:0 20px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:48px 80px;display:grid;gap:88px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.02em}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,7vw,88px);font-weight:800;line-height:.95;margin-top:14px}
+.hero h1 span{color:var(--accent)}
+.lede{font-size:19px;max-width:34ch;margin:22px 0 0;color:var(--fg)}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 32px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line);max-width:560px}
+.meta dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.meta dd{margin:4px 0 0;font-weight:500}
+.meta ul{margin:0;padding-left:18px}
+.goal{grid-column:1/-1;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.goal dd{font-family:var(--f-display);font-size:20px;font-weight:700;line-height:1.25}
+.proto{display:grid;justify-items:center;gap:14px}
+.proto-hint{font-size:13px;color:var(--muted);display:flex;gap:10px;align-items:center}
+.proto-hint button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:5px 12px;cursor:pointer}
+
+/* flow strip */
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px}
+.flow button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:7px 14px;cursor:pointer}
+.flow button[aria-current="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.flow i{color:var(--muted);font-style:normal}
+
+/* section heads */
+.sh{display:grid;gap:10px;max-width:640px}
+.sh h2{font-size:clamp(30px,4vw,44px);font-weight:800}
+.sh p{margin:0;color:var(--muted)}
+
+/* screen wall */
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:48px 28px;justify-items:center;margin-top:36px}
+.wall figure{margin:0;display:grid;gap:14px;justify-items:center}
+.wall figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:280px}
+.wall figcaption b{display:block;color:var(--fg);font-family:var(--f-display);font-size:17px}
+.wall figure:nth-child(even){transform:translateY(40px)}
+
+/* phone */
+.phone{width:300px;height:640px;border-radius:44px;background:var(--a-bg);box-shadow:0 0 0 9px #17100F,0 30px 60px -20px rgba(60,20,20,.35);position:relative;overflow:hidden;color:var(--a-ink);font-family:var(--f-body);font-size:13px;line-height:1.35;flex:none}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden}
+.status{display:flex;justify-content:space-between;align-items:center;padding:14px 26px 6px;font-size:12px;font-weight:700;flex:none}
+.status .dots{display:flex;gap:4px;align-items:center}
+.status .dots i{width:14px;height:8px;border-radius:2px;background:currentColor;display:block}
+.status .dots i:first-child{width:12px;border-radius:1px;clip-path:polygon(0 100%,100% 0,100% 100%)}
+.body{flex:1;overflow:hidden auto;padding:6px 18px 16px;display:flex;flex-direction:column;gap:14px;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.row{display:flex;align-items:center;gap:10px}
+.sp{justify-content:space-between}
+.h-app{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1.05;letter-spacing:-.02em;margin:0}
+.h-sec{font-family:var(--f-display);font-weight:700;font-size:16px;margin:0}
+.mute{color:var(--a-mute)}
+.small{font-size:11px}
+.link{color:var(--a-red);font-weight:600;font-size:12px}
+.icon-btn{width:34px;height:34px;border-radius:12px;background:var(--a-soft);display:grid;place-items:center;border:0;color:var(--a-ink);cursor:pointer;flex:none}
+.icon-btn svg,.nav svg{width:18px;height:18px}
+.search{display:flex;align-items:center;gap:8px;background:var(--a-soft);border-radius:14px;padding:11px 12px;color:var(--a-mute)}
+.search svg{width:16px;height:16px;flex:none}
+.search b{color:var(--a-ink);font-weight:600}
+.search .flt{margin-left:auto;background:var(--a-ink);color:#fff;border-radius:9px;width:26px;height:26px;display:grid;place-items:center}
+.chips{display:flex;gap:8px;overflow:hidden}
+.chip{flex:none;padding:7px 12px;border-radius:99px;background:var(--a-soft);font-weight:600;font-size:12px;white-space:nowrap}
+.chip.on{background:var(--a-ink);color:#fff}
+.chip.red{background:var(--a-red);color:#fff}
+.cats{display:flex;gap:10px}
+.cat{display:grid;justify-items:center;gap:6px;font-size:11px;font-weight:600}
+.cat .dish{width:54px;height:54px;font-size:26px;border-radius:18px}
+.cat.on .dish{box-shadow:0 0 0 2px var(--a-red)}
+.dish{display:grid;place-items:center;border-radius:16px;flex:none;position:relative;overflow:hidden}
+.dish::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.45),transparent 55%)}
+.rcard{flex:none;width:200px;border-radius:18px;background:var(--a-bg);border:1px solid var(--a-line);overflow:hidden;cursor:pointer}
+.rcard .dish{height:100px;border-radius:0;font-size:46px}
+.rcard .in{padding:10px 12px;display:grid;gap:4px}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--a-mute)}
+.tag .st{color:#E8A400}
+.hs{display:flex;gap:12px;overflow:hidden;margin-right:-18px}
+.item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:16px;background:var(--a-bg);border:1px solid var(--a-line)}
+.item .dish{width:62px;height:62px;font-size:32px}
+.item .t{flex:1;min-width:0;display:grid;gap:3px}
+.item .t b{font-size:13.5px}
+.price{font-family:var(--f-display);font-weight:700;font-size:14px}
+.plus{width:28px;height:28px;border-radius:10px;background:var(--a-red);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px;border:0;flex:none;line-height:1}
+.qty{display:flex;align-items:center;gap:8px;font-weight:700}
+.qty span{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:var(--a-soft)}
+.qty span:last-child{background:var(--a-ink);color:#fff}
+.btn{display:flex;justify-content:center;align-items:center;gap:8px;background:var(--a-red);color:#fff;font-weight:700;font-size:14px;border:0;border-radius:16px;padding:15px;cursor:pointer;font-family:var(--f-body);width:100%}
+.btn.dark{background:var(--a-ink)}
+.btn small{opacity:.8;font-weight:600}
+.foot{padding:12px 18px 22px;flex:none;background:var(--a-bg);border-top:1px solid var(--a-line)}
+.nav{display:flex;justify-content:space-around;align-items:center;padding:10px 14px 22px;border-top:1px solid var(--a-line);flex:none;color:var(--a-mute)}
+.nav .on{color:var(--a-red)}
+.nav .cartn{position:relative}
+.nav .cartn::after{content:"3";position:absolute;top:-6px;right:-8px;background:var(--a-red);color:#fff;font-size:9px;font-weight:700;border-radius:99px;width:15px;height:15px;display:grid;place-items:center}
+.lines{display:grid;gap:8px;font-size:12.5px}
+.lines .row{justify-content:space-between}
+.lines .tot{font-weight:700;font-size:15px;padding-top:8px;border-top:1px dashed var(--a-line)}
+.box{border:1px solid var(--a-line);border-radius:16px;padding:12px;display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--a-line);border-radius:14px;font-weight:600}
+.opt.on{border-color:var(--a-red);background:#FFF4F1}
+.radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--a-line);flex:none}
+.on .radio{border:5px solid var(--a-red)}
+.seg{display:flex;background:var(--a-soft);border-radius:12px;padding:3px}
+.seg span{flex:1;text-align:center;padding:7px;border-radius:9px;font-weight:600;font-size:12px}
+.seg .on{background:var(--a-bg);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:16px;border-bottom:1px solid var(--a-line);font-weight:600;font-size:13px}
+.tabs span{padding-bottom:9px;color:var(--a-mute)}
+.tabs .on{color:var(--a-ink);box-shadow:inset 0 -2px 0 var(--a-red)}
+.steps{display:grid;gap:0}
+.step{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start;padding-bottom:12px;position:relative}
+.step::before{content:"";position:absolute;left:10px;top:20px;bottom:0;width:2px;background:var(--a-line)}
+.step:last-child::before{display:none}
+.step .dot{width:22px;height:22px;border-radius:50%;background:var(--a-soft);border:2px solid var(--a-line);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;position:relative}
+.step.done .dot{background:var(--a-leaf);border-color:var(--a-leaf)}
+.step.done::before{background:var(--a-leaf)}
+.step.now .dot{background:var(--a-red);border-color:#FFD3C9}
+.step b{font-size:13px}
+.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFC94A,#D93D22);display:grid;place-items:center;font-weight:800;color:#fff;font-family:var(--f-display);flex:none}
+
+/* splash */
+.splash{background:var(--a-red);color:#fff;align-items:center;justify-content:center;gap:16px}
+.logo{font-family:var(--f-display);font-weight:800;font-size:56px;letter-spacing:-.04em;line-height:1;display:flex;align-items:center;gap:2px}
+.bite{width:58px;height:58px;border-radius:50%;background:var(--a-butter);-webkit-mask:radial-gradient(circle at 100% 18%,transparent 13px,#000 14px);mask:radial-gradient(circle at 100% 18%,transparent 13px,#000 14px)}
+.splash p{margin:0;font-weight:500;opacity:.9}
+.splash .loader{position:absolute;bottom:60px;width:60px;height:4px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden}
+.splash .loader::after{content:"";display:block;width:40%;height:100%;background:#fff;border-radius:2px;animation:load 1.4s ease-in-out infinite}
+@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+@media (prefers-reduced-motion:reduce){.splash .loader::after{animation:none}}
+
+.hero-img{height:190px;flex:none;font-size:92px;border-radius:0;margin:0 -18px}
+.over{position:absolute;top:44px;left:18px;right:18px;display:flex;justify-content:space-between;z-index:2}
+.over .icon-btn{background:rgba(255,255,255,.92)}
+.map{height:250px;flex:none;margin:0 -18px;position:relative;background:#F3EDE6}
+.map svg{width:100%;height:100%;display:block}
+
+/* UI kit */
+.kit{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;margin-top:36px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;display:grid;gap:16px;align-content:start;min-width:0}
+.panel h3{font-size:18px;font-weight:700}
+.p-color{grid-column:span 7}.p-type{grid-column:span 5}.p-comp{grid-column:span 12}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+.sw div{display:grid;gap:6px;font-size:13px}
+.sw i{height:64px;border-radius:14px;display:block;border:1px solid rgba(0,0,0,.06)}
+.sw code{font-size:12px;color:var(--muted)}
+.ts{display:grid;gap:12px}
+.ts div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.ts code{font-size:12px;color:var(--muted);white-space:nowrap}
+.comp{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;background:var(--a-bg);color:var(--a-ink);border-radius:16px;padding:24px;font-size:13px}
+.comp > div{display:grid;gap:10px;width:240px;max-width:100%}
+.comp .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--a-mute)}
+
+.close{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:28px}
+.close div{border-top:2px solid var(--accent);padding-top:14px}
+.close h3{font-size:19px;margin-bottom:6px}
+.close p{margin:0;color:var(--muted);font-size:15px}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .p-color,.p-type{grid-column:span 12}
+  .close{grid-template-columns:1fr}
+  .wall figure:nth-child(even){transform:none}
+}
+@media (max-width:380px){ .phone{transform:scale(.9);transform-origin:top center;margin-bottom:-64px} }
+
+/* real photography */
+.dish.ph::after{display:none}
+.dish.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.dish.ph.cut img{object-fit:contain;padding:12%;mix-blend-mode:multiply}
+.cat .dish.ph.cut img{padding:6%}
+.dish.ph.hero-img img{object-fit:cover}
+
+/* presentation stage */
+.stage{position:relative;border-radius:36px;overflow:hidden;background:
+  radial-gradient(120% 90% at 50% 115%,#D2421F 0%,#B8321A 55%,#8E2010 100%);color:#fff;
+  display:grid;gap:8px;padding-block:52px 0;padding-inline:24px;justify-items:center;text-align:center}
+.stage .logo{font-size:44px}
+.stage .logo .bite{width:44px;height:44px}
+.stage p{margin:0;font-size:17px;opacity:.92;max-width:40ch}
+.stage-phones{display:flex;justify-content:center;align-items:flex-start;margin-top:40px;margin-bottom:-170px}
+.stage .phone{zoom:.86;box-shadow:0 0 0 9px #17100F,0 40px 80px -20px rgba(40,5,0,.55)}
+.stage .phone.l{transform:rotate(-7deg) translate(30px,90px)}
+.stage .phone.r{transform:rotate(7deg) translate(-30px,90px)}
+.stage .phone.c{z-index:2}
+.stage-phones .phone *{pointer-events:none}
+.stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,rgba(120,20,5,.35));pointer-events:none}
+.stage .tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.stage .tags span{border:1px solid rgba(255,255,255,.45);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:600}
+@media (max-width:860px){.stage .phone.l,.stage .phone.r{display:none}.stage-phones{margin-bottom:-260px}}
+</style>
+
+<div class="wrap">
+  <section class="stage" aria-label="Витрина приложения Crave">
+    <div class="logo"><span class="bite"></span>crave</div>
+    <p>Найдите ресторан, соберите заказ и следите, как его везут. Всё в несколько касаний.</p>
+    <div class="tags"><span>iOS и Android</span><span>8 ключевых экранов</span><span>UI-кит</span><span>Кликабельный прототип</span></div>
+    <div class="stage-phones" id="stage-phones"></div>
+  </section>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Кейс · Дизайн мобильного продукта</div>
+      <h1>Crave<span>.</span><br>Доставка еды без бесконечной ленты.</h1>
+      <p class="lede">Мобильное приложение, в котором легко найти ресторан и быстро заказать еду.</p>
+      <dl class="meta">
+        <div><dt>Клиент</dt><dd>Концепт стартапа доставки еды</dd></div>
+        <div><dt>Сроки</dt><dd>4 недели</dd></div>
+        <div><dt>Объём работ</dt><dd><ul><li>Поиск и подбор ресторанов</li><li>Страница ресторана и меню</li><li>Корзина, оформление, отслеживание заказа</li><li>UI-кит и интерактивный прототип</li></ul></dd></div>
+        <div><dt>Инструменты</dt><dd>Figma, Illustrator</dd></div>
+        <div class="goal"><dt>Цель</dt><dd>Создать плавный путь от выбора блюда до оформленного заказа.</dd></div>
+      </dl>
+    </div>
+    <div class="proto">
+      <div class="phone" id="proto" aria-live="polite"></div>
+      <div class="proto-hint"><span>Нажимайте внутри прототипа</span><button type="button" id="restart">Сначала</button></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sh">
+      <div class="eyebrow">Основной сценарий</div>
+      <h2>Шесть касаний от «хочу есть» до «уже везут»</h2>
+      <p>На каждом экране одно главное действие, закреплённое внизу — там, где уже находится большой палец. Перейдите к любому шагу ниже или нажимайте прямо в телефоне.</p>
+    </div>
+    <div class="flow" id="flow"></div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="eyebrow">Все экраны</div>
+      <h2>Найти, выбрать, оплатить, отследить</h2>
+    </div>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <div class="eyebrow">UI-кит</div>
+      <h2>Небольшая система, которая будит аппетит</h2>
+      <p>Красная паприка — цвет всех главных действий. Сливочно-жёлтый зарезервирован за рейтингами и логотипом, поэтому никогда не спорит с кнопкой.</p>
+    </div>
+    <div class="kit">
+      <div class="panel p-color">
+        <h3>Цвет</h3>
+        <div class="sw">
+          <div><i style="background:#D93D22"></i><b>Паприка</b><code>#D93D22 · действия</code></div>
+          <div><i style="background:#FFC94A"></i><b>Сливочный</b><code>#FFC94A · бренд, рейтинги</code></div>
+          <div><i style="background:#2F8F5B"></i><b>Базилик</b><code>#2F8F5B · успех</code></div>
+          <div><i style="background:#24161A"></i><b>Эспрессо</b><code>#24161A · текст</code></div>
+          <div><i style="background:#F7F1EE"></i><b>Овсяный</b><code>#F7F1EE · поля</code></div>
+          <div><i style="background:#8C7D80"></i><b>Дымчатый</b><code>#74666A · второстепенный</code></div>
+        </div>
+      </div>
+      <div class="panel p-type">
+        <h3>Типографика</h3>
+        <div class="ts">
+          <div><span style="font-family:var(--f-display);font-weight:800;font-size:28px">Заголовок</span><code>Rubik 800 · 26/28</code></div>
+          <div><span style="font-family:var(--f-display);font-weight:700;font-size:18px">Раздел</span><code>Rubik 700 · 16/20</code></div>
+          <div><span style="font-weight:600">Название блюда</span><code>Manrope 600 · 13.5/18</code></div>
+          <div><span class="mute" style="color:var(--muted);font-size:13px">Текст и подписи</span><code>Manrope 400 · 12/16</code></div>
+        </div>
+      </div>
+      <div class="panel p-comp">
+        <h3>Компоненты</h3>
+        <div class="comp" id="comp"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><div class="eyebrow">Дизайн-решения</div><h2>Что определило сценарий</h2></div>
+    <div class="close">
+      <div><h3>Поиск — прямо на главной</h3><p>Строка поиска и категории кухонь на первом экране: тот, кто уже знает, чего хочет, вообще не листает ленту.</p></div>
+      <div><h3>Условия доставки на каждой карточке</h3><p>Рейтинг, время и стоимость доставки видны на карточке ресторана — для сравнения не нужно лишних касаний.</p></div>
+      <div><h3>Итог всегда на виду</h3><p>Текущая сумма живёт в нижней кнопке от блюда до оформления. Никаких сюрпризов на шаге оплаты.</p></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const I = {
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>',
+  bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
+  filter:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg>',
+  tag:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>'
+};
+// photo tile; "cut" = cutout shot on white, shown whole on a tinted tile
+const CUT = new Set(['menuburger','cat_drink','cat_soup','cat_salad']);
+const dish = (p, cls='', bg='#F7F1EE') => `<div class="dish ph ${CUT.has(p)?'cut':''} ${cls}" style="background:${bg}"><img src="crave-assets/${p}.jpg" alt=""></div>`;
+const status = () => `<div class="status"><span>9:41</span><span class="dots"><i></i><i></i></span></div>`;
+const nav = (on) => `<div class="nav"><span class="${on==='home'?'on':''}" data-go="home">${I.home}</span><span class="${on==='search'?'on':''}" data-go="search">${I.search}</span><span>${I.heart}</span><span class="cartn" data-go="cart">${I.bag}</span><span>${I.user}</span></div>`;
+const topBar = (title, back) => `<div class="row sp"><button class="icon-btn" data-go="${back}" aria-label="Назад">${I.back}</button><b style="font-size:15px">${title}</b><span style="width:34px"></span></div>`;
+const rating = (r, n) => `<span class="tag"><span class="st">★</span>${r}${n?` (${n})`:''}</span>`;
+
+const S = {
+splash:{name:'Заставка', note:'Момент бренда, пока загружаются геолокация и меню.', html:`
+ <div class="scr splash" data-go="home" style="cursor:pointer">
+  <div class="logo"><span class="bite"></span>crave</div>
+  <p>Всё, чего хочется, — быстро.</p>
+  <div class="loader"></div>
+ </div>`},
+home:{name:'Главная', note:'Сначала поиск, затем кухни, затем рестораны рядом.', html:`
+ <div class="scr">${status()}
+ <div class="body">
+  <div class="row sp"><div><div class="small mute">Доставка по адресу</div><b class="row" style="gap:4px">${I.pin} ул. Тверская, 12, эт. 3</b></div><div class="av" style="width:34px;height:34px;font-size:13px">С</div></div>
+  <h2 class="h-app">Чего хочется,<br>Саша?</h2>
+  <div class="search" data-go="search" style="cursor:pointer">${I.search}<span>Блюда, рестораны…</span><span class="flt">${I.filter}</span></div>
+  <div class="cats">
+   <div class="cat on">${dish('menuburger','','#FFF1E8')}Бургеры</div><div class="cat">${dish('salad','','#EEF6EF')}Боулы</div><div class="cat">${dish('cat_soup','','#F6EFE8')}Супы</div><div class="cat">${dish('cat_drink','','#FFEFF1')}Напитки</div>
+  </div>
+  <div class="row sp"><h3 class="h-sec">Быстро и рядом</h3><span class="link">Все</span></div>
+  <div class="hs">
+   <div class="rcard" data-go="restaurant">${dish('burger','','#2A2422')}<div class="in"><b>Brick Lane Burger Co.</b><div class="row">${rating('4.8')}<span class="tag">15–25 мин</span><span class="tag">€1.49</span></div></div></div>
+   <div class="rcard">${dish('steak','','#1E1A18')}<div class="in"><b>Ember Grill</b><div class="row">${rating('4.7')}<span class="tag">25–35 мин</span></div></div></div>
+  </div>
+  <div class="row sp"><h3 class="h-sec">Популярное сейчас</h3></div>
+  <div class="item">${dish('bowl')}<div class="t"><b>Рисовый боул с яйцом в сое</b><span class="small mute">Tokyo Bowl · 20 мин</span><span class="price">€11.90</span></div><span class="plus">+</span></div>
+ </div>${nav('home')}</div>`},
+search:{name:'Результаты поиска', note:'Фильтры по времени, рейтингу и доставке — над результатами.', html:`
+ <div class="scr">${status()}
+ <div class="body">
+  <div class="row"><button class="icon-btn" data-go="home" aria-label="Назад">${I.back}</button><div class="search" style="flex:1">${I.search}<b>бургер</b></div></div>
+  <div class="chips"><span class="chip on">До 30 мин</span><span class="chip">4.5+ ★</span><span class="chip">Бесплатная доставка</span></div>
+  <div class="small mute">12 ресторанов привезут бургеры к вам</div>
+  <div class="item" data-go="restaurant" style="cursor:pointer">${dish('burger','','#2A2422')}<div class="t"><b>Brick Lane Burger Co.</b><span class="small mute">Бургеры · Картофель фри · €€</span><div class="row">${rating('4.8','1.2k')}<span class="tag">15–25 мин</span></div></div></div>
+  <div class="item">${dish('menuburger','','#FFF1E8')}<div class="t"><b>Stack House</b><span class="small mute">Бургеры · Американская · €</span><div class="row">${rating('4.6','860')}<span class="tag">20–30 мин</span></div></div></div>
+  <div class="item">${dish('steak','','#1E1A18')}<div class="t"><b>Ember Grill</b><span class="small mute">Гриль · Стейки · €€€</span><div class="row">${rating('4.7','412')}<span class="tag">25–35 мин</span></div></div></div>
+  <div class="item">${dish('salad')}<div class="t"><b>Green Bowl Co.</b><span class="small mute">ЗОЖ · Веган-бургеры · €€</span><div class="row">${rating('4.5','690')}<span class="tag">15–20 мин</span></div></div></div>
+ </div>${nav('search')}</div>`},
+restaurant:{name:'Ресторан и меню', note:'Условия доставки сверху, меню разбито на вкладки.', html:`
+ <div class="scr">
+  <div class="over"><button class="icon-btn" data-go="home" aria-label="Назад">${I.back}</button><button class="icon-btn" aria-label="В избранное">${I.heart}</button></div>
+ <div class="body" style="padding-top:0">
+  ${dish('burger','hero-img','#2A2422')}
+  <div><h2 class="h-app" style="font-size:22px">Brick Lane Burger Co.</h2><div class="small mute">Бургеры · Картофель фри · Патриаршие</div></div>
+  <div class="row" style="gap:6px"><span class="chip"><span style="color:#E8A400">★</span> 4.8 (1.2k)</span><span class="chip">15–25 мин</span><span class="chip">€1.49</span></div>
+  <div class="tabs"><span class="on">Популярное</span><span>Бургеры</span><span>Гарниры</span><span>Напитки</span></div>
+  <div class="item" data-go="dish" style="cursor:pointer">${dish('burger','','#2A2422')}<div class="t"><b>Двойной смэш-бургер</b><span class="small mute">Две котлеты, чеддер, огурчики</span><span class="price">€12.00</span></div><span class="plus">+</span></div>
+  <div class="item">${dish('menuburger','','#FFF1E8')}<div class="t"><b>Классический</b><span class="small mute">Говядина, томат, салат, фирменный соус</span><span class="price">€10.50</span></div><span class="plus">+</span></div>
+  <div class="item">${dish('salad')}<div class="t"><b>Зелёный боул</b><span class="small mute">Авокадо, зелень, нут</span><span class="price">€9.50</span></div><span class="plus">+</span></div>
+  <div class="item">${dish('cat_drink','','#FFEFF1')}<div class="t"><b>Розовый лимонад</b><span class="small mute">Домашний, 330 мл</span><span class="price">€3.90</span></div><span class="plus">+</span></div>
+ </div>
+ <div class="foot"><button class="btn dark" data-go="cart">Корзина · 2 позиции <small>€13.40</small></button></div></div>`},
+dish:{name:'Карточка блюда', note:'Опции и добавки сразу меняют цену в кнопке.', html:`
+ <div class="scr">
+  <div class="over"><button class="icon-btn" data-go="restaurant" aria-label="Назад">${I.back}</button><button class="icon-btn" aria-label="В избранное">${I.heart}</button></div>
+ <div class="body" style="padding-top:0">
+  ${dish('burger','hero-img','#2A2422')}
+  <div class="row sp"><h2 class="h-app" style="font-size:22px">Двойной смэш-бургер</h2><span class="price" style="font-size:18px;color:var(--a-red)">€12.00</span></div>
+  <div class="small mute">Две котлеты из говядины, выдержанный чеддер, огурчики, булочка бриошь. 820 ккал.</div>
+  <div class="h-sec" style="font-size:14px">Прожарка <span class="small mute" style="font-family:var(--f-body);font-weight:500">· обязательно</span></div>
+  <div class="seg"><span>Medium</span><span class="on">Well done</span></div>
+  <div class="h-sec" style="font-size:14px">Добавки</div>
+  <div class="opt on"><span class="radio"></span>Копчёный бекон<span style="margin-left:auto">+€1.50</span></div>
+  <div class="opt"><span class="radio"></span>Двойной чеддер<span style="margin-left:auto">+€1.00</span></div>
+ </div>
+ <div class="foot row"><div class="qty"><span>−</span>1<span>+</span></div><button class="btn" data-go="cart">В корзину · €13.50</button></div></div>`},
+cart:{name:'Корзина', note:'Меняйте количество и видьте все сборы до оформления.', html:`
+ <div class="scr">${status()}
+ <div class="body">
+  ${topBar('Корзина','restaurant')}
+  <div class="small mute">Brick Lane Burger Co. · доставка через 15–25 мин</div>
+  <div class="item">${dish('burger','','#2A2422')}<div class="t"><b>Двойной смэш-бургер</b><span class="small mute">Well done · бекон</span><span class="price">€13.50</span></div><div class="qty"><span>−</span>1<span>+</span></div></div>
+  <div class="item">${dish('salad')}<div class="t"><b>Зелёный боул</b><span class="small mute">Без лука</span><span class="price">€9.50</span></div><div class="qty"><span>−</span>1<span>+</span></div></div>
+  <div class="item">${dish('cat_drink','','#FFEFF1')}<div class="t"><b>Розовый лимонад</b><span class="small mute">330 мл</span><span class="price">€3.90</span></div><div class="qty"><span>−</span>1<span>+</span></div></div>
+  <div class="search">${I.tag}<span>Ввести промокод</span></div>
+  <div class="lines">
+   <div class="row"><span class="mute">Товары</span><span>€26.90</span></div>
+   <div class="row"><span class="mute">Доставка</span><span>€1.49</span></div>
+   <div class="row"><span class="mute">Сервисный сбор</span><span>€0.99</span></div>
+   <div class="row tot"><span>Итого</span><span>€29.38</span></div>
+  </div>
+ </div>
+ <div class="foot"><button class="btn" data-go="checkout">К оформлению · €29.38</button></div></div>`},
+checkout:{name:'Оформление', note:'Адрес, время, оплата и чаевые на одном экране.', html:`
+ <div class="scr">${status()}
+ <div class="body">
+  ${topBar('Оформление','cart')}
+  <div class="box"><div class="row sp"><b>Адрес доставки</b><span class="link">Изменить</span></div><div class="row" style="gap:6px">${I.pin}<span>ул. Тверская, 12, эт. 3 · Оставить у двери</span></div></div>
+  <b>Время доставки</b>
+  <div class="opt on"><span class="radio"></span><div><div>Стандартная</div><div class="small mute" style="font-weight:500">15–25 мин</div></div><span style="margin-left:auto">Бесплатно</span></div>
+  <div class="opt"><span class="radio"></span><div><div>Приоритетная</div><div class="small mute" style="font-weight:500">10–15 мин, в первую очередь</div></div><span style="margin-left:auto">+€1.99</span></div>
+  <b>Оплата</b>
+  <div class="opt on"><span class="radio"></span>Visa •••• 4242<span class="link" style="margin-left:auto">Изменить</span></div>
+  <div class="row sp"><b>Чаевые курьеру</b><span class="small mute">100% получит Миша</span></div>
+  <div class="chips"><span class="chip">€1</span><span class="chip red">€2</span><span class="chip">€3</span><span class="chip">Другое</span></div>
+ </div>
+ <div class="foot"><button class="btn" data-go="tracking">Заказать · €31.38</button></div></div>`},
+tracking:{name:'Отслеживание', note:'Курьер на карте в реальном времени и понятная шкала статусов.', html:`
+ <div class="scr">
+  <div class="over"><button class="icon-btn" data-go="home" aria-label="Закрыть">${I.back}</button><span class="chip" style="background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)">Заказ #CR-2048</span></div>
+ <div class="body" style="padding-top:0">
+  <div class="map"><svg viewBox="0 0 300 250" preserveAspectRatio="xMidYMid slice" aria-label="Карта с маршрутом курьера">
+   <rect width="300" height="250" fill="#F3EDE6"/>
+   <g stroke="#FFFFFF" stroke-width="14" fill="none"><path d="M-10 80H310M-10 180H310M70-10V260M200-10V260"/></g>
+   <rect x="85" y="95" width="100" height="70" rx="8" fill="#DDEFD9"/><rect x="215" y="10" width="80" height="55" rx="8" fill="#E6E0F5"/>
+   <path d="M40 210 Q70 180 70 140 T130 80 Q200 80 200 50 L250 40" fill="none" stroke="#D93D22" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 8"/>
+   <path d="M40 210 Q70 180 70 140" fill="none" stroke="#D93D22" stroke-width="4" stroke-linecap="round"/>
+   <circle cx="40" cy="210" r="8" fill="#24161A"/><circle cx="250" cy="40" r="11" fill="#D93D22"/><circle cx="250" cy="40" r="4" fill="#fff"/>
+   <circle cx="70" cy="140" r="13" fill="#FFC94A" stroke="#fff" stroke-width="3"/><circle cx="70" cy="140" r="4" fill="#24161A"/>
+  </svg></div>
+  <div class="row sp"><div><div class="small mute">Прибудет в</div><div class="h-app" style="font-size:28px">12:48</div></div><span class="chip" style="background:#E6F2E9;color:#22704A">Вовремя</span></div>
+  <div class="steps">
+   <div class="step done"><span class="dot">✓</span><b>Заказ подтверждён</b><span class="small mute">12:21</span></div>
+   <div class="step done"><span class="dot">✓</span><b>Brick Lane готовит</b><span class="small mute">12:23</span></div>
+   <div class="step now"><span class="dot"></span><b>Миша забрал заказ</b><span class="small mute">12:36</span></div>
+   <div class="step"><span class="dot"></span><b class="mute">Доставлено</b><span></span></div>
+  </div>
+  <div class="box row"><div class="av">М</div><div style="flex:1"><b>Миша уже в пути</b><div class="small mute">Электровелосипед · 1,2 км</div></div><button class="icon-btn" aria-label="Позвонить курьеру" style="background:var(--a-red);color:#fff">${I.phone}</button></div>
+ </div></div>`}
+};
+const order = ['splash','home','search','restaurant','dish','cart','checkout','tracking'];
+const flowSteps = ['home','restaurant','dish','cart','checkout','tracking'];
+
+// presentation stage
+document.getElementById('stage-phones').innerHTML =
+  `<div class="phone l">${S.home.html}</div><div class="phone c">${S.restaurant.html}</div><div class="phone r">${S.tracking.html}</div>`;
+
+// screen wall
+document.getElementById('wall').innerHTML = order.map(k =>
+  `<figure><div class="phone">${S[k].html}</div><figcaption><b>${S[k].name}</b>${S[k].note}</figcaption></figure>`).join('');
+
+// prototype
+const proto = document.getElementById('proto'), flow = document.getElementById('flow');
+flow.innerHTML = flowSteps.map((k,i) => `${i?'<i>→</i>':''}<button type="button" data-step="${k}">${S[k].name}</button>`).join('');
+function show(k){
+  proto.innerHTML = S[k].html;
+  flow.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.step===k));
+}
+proto.addEventListener('click', e => { const t = e.target.closest('[data-go]'); if (t) show(t.dataset.go); });
+flow.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (b) { show(b.dataset.step); proto.scrollIntoView({behavior:'smooth',block:'center'}); } });
+document.getElementById('restart').onclick = () => { show('splash'); setTimeout(() => show('home'), 1400); };
+show('splash'); setTimeout(() => show('home'), 1400);
+
+// component sheet
+document.getElementById('comp').innerHTML = `
+ <div><span class="lbl">Кнопки</span><button class="btn" type="button">В корзину · €13.50</button><button class="btn dark" type="button">Корзина · 2 позиции</button></div>
+ <div><span class="lbl">Чипсы и фильтры</span><div class="chips" style="flex-wrap:wrap"><span class="chip on">До 30 мин</span><span class="chip">4.5+ ★</span><span class="chip red">€2</span></div><div class="seg"><span>Medium</span><span class="on">Well done</span></div></div>
+ <div><span class="lbl">Позиция меню</span><div class="item">${dish('burger','','#2A2422')}<div class="t"><b>Двойной смэш-бургер</b><span class="price">€12.00</span></div><span class="plus">+</span></div><div class="opt on"><span class="radio"></span>Копчёный бекон<span style="margin-left:auto">+€1.50</span></div></div>
+ <div><span class="lbl">Карточка ресторана</span><div class="rcard" style="width:100%">${dish('steak','','#1E1A18')}<div class="in"><b>Ember Grill</b><div class="row">${rating('4.7')}<span class="tag">25–35 мин</span><span class="tag">€1.99</span></div></div></div></div>`;
+</script>
+
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Lumora"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Lumora</a>
+</body>
+</html>
