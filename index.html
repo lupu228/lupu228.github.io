@@ -759,7 +759,7 @@ document.getElementById('steps').innerHTML=steps.map(function(s,i){
   return '<li class="rv" style="--d:'+(i*90)+'ms"><span class="n">'+s[0]+'</span><h3>'+s[1]+'</h3><p>'+s[2]+'</p></li>';
 }).join('');
 
-var stats=[[5,'','Проектов в портфолио'],[30,'+','Экранов в прототипах'],[100,'%','Адаптивная вёрстка'],[24,'ч','Время ответа на заявку']];
+var stats=[[30,'+','Завершённых проектов'],[6,'+','Лет на фрилансе'],[100,'%','Адаптивная вёрстка'],[24,'ч','Время ответа на заявку']];
 document.getElementById('statGrid').innerHTML=stats.map(function(s,i){
   return '<li class="rv" style="--d:'+(i*90)+'ms"><div class="n"><span class="cnt" data-v="'+s[0]+'">0</span>'+s[1]+'</div><div class="l">'+s[2]+'</div></li>';
 }).join('');
