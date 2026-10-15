@@ -737,7 +737,7 @@ document.getElementById('partners').innerHTML=partners.map(function(n){
   return '<li><a href="'+n[1]+'"><span class="hv"><svg><use href="#i-dot"/></svg>'+n[0]+'</span></a></li>'; }).join('');
 
 // [name, category, year, description, tags, link, background html, extra class, duration]
-function SHOT(n,pos){var src=n==='serein'?'assets/work/serein.svg':'assets/work/'+n+'.jpg';return '<div class="bg shot"><img src="'+src+'" alt="" loading="lazy" decoding="async" width="1800" style="object-position:'+(pos||'50% 0')+'"></div>';}
+function SHOT(n,pos){var src=n==='serein'?'assets/work/serein.jpg':'assets/work/'+n+'.jpg';return '<div class="bg shot"><img src="'+src+'" alt="" loading="lazy" decoding="async" width="1800" style="object-position:'+(pos||'50% 0')+'"></div>';}
 var works=[
   ['Nexora','SaaS-лендинг','2026','Сайт платформы автоматизации для малого бизнеса: живой дашборд на первом экране, 3D-объекты, тарифы и запись на демо.',['Веб-дизайн','Лендинг','3D'],'nexora/case/',SHOT('nexora'),'wide','5 дней'],
   ['Crave','Мобильное приложение','2025','Доставка еды без бесконечной ленты: от выбора ресторана до отслеживания курьера за шесть касаний.',['Mobile UX','UI-кит','Прототип'],'crave/',SHOT('crave','50% 30%'),'','7 дней'],
