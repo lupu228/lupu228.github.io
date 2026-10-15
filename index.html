@@ -621,7 +621,8 @@ form input:focus,form textarea:focus{border-color:rgba(17,17,17,.3);background:#
         <li><a class="alink" href="crave/"><span class="hv">Crave</span></a></li>
         <li><a class="alink" href="lume/"><span class="hv">Lume</span></a></li>
         <li><a class="alink" href="novatrack/"><span class="hv">NovaTrack</span></a></li>
-        <li><a class="alink" href="fitlife/"><span class="hv">FitLife</span></a></li></ul></div>
+        <li><a class="alink" href="fitlife/"><span class="hv">FitLife</span></a></li>
+        <li><a class="alink" href="serein/"><span class="hv">Serein</span></a></li></ul></div>
       <div class="f-col"><h4>Контакты</h4><ul>
         <li><a class="alink" href="https://t.me/nova_coding" target="_blank" rel="noopener"><span class="hv">Telegram · @nova_coding</span></a></li>
         <li><a class="alink" href="#contact" data-contact><span class="hv">Форма заявки</span></a></li></ul></div>
@@ -731,18 +732,19 @@ function splitWords(h2){
 document.querySelectorAll('.words').forEach(splitWords);
 
 /* ---------- content ---------- */
-var partners=[['Nexora','nexora/case/'],['Crave','crave/'],['Lume','lume/'],['NovaTrack','novatrack/'],['FitLife','fitlife/']];
+var partners=[['Nexora','nexora/case/'],['Crave','crave/'],['Lume','lume/'],['NovaTrack','novatrack/'],['FitLife','fitlife/'],['Serein','serein/']];
 document.getElementById('partners').innerHTML=partners.map(function(n){
   return '<li><a href="'+n[1]+'"><span class="hv"><svg><use href="#i-dot"/></svg>'+n[0]+'</span></a></li>'; }).join('');
 
 // [name, category, year, description, tags, link, background html, extra class, duration]
-function SHOT(n,pos){return '<div class="bg shot"><img src="assets/work/'+n+'.jpg" alt="" loading="lazy" decoding="async" width="1800" style="object-position:'+(pos||'50% 0')+'"></div>';}
+function SHOT(n,pos){var src=n==='serein'?'assets/work/serein.svg':'assets/work/'+n+'.jpg';return '<div class="bg shot"><img src="'+src+'" alt="" loading="lazy" decoding="async" width="1800" style="object-position:'+(pos||'50% 0')+'"></div>';}
 var works=[
   ['Nexora','SaaS-лендинг','2026','Сайт платформы автоматизации для малого бизнеса: живой дашборд на первом экране, 3D-объекты, тарифы и запись на демо.',['Веб-дизайн','Лендинг','3D'],'nexora/case/',SHOT('nexora'),'wide','5 дней'],
   ['Crave','Мобильное приложение','2025','Доставка еды без бесконечной ленты: от выбора ресторана до отслеживания курьера за шесть касаний.',['Mobile UX','UI-кит','Прототип'],'crave/',SHOT('crave','50% 30%'),'','7 дней'],
   ['Lume','Айдентика и e-commerce','2025','Фирменный стиль и интернет-магазин натуральной косметики: логотип, упаковка, карточка товара и мобильная оплата.',['Брендинг','Shopify','Упаковка'],'lume/',SHOT('lume','50% 45%'),'','3 дня'],
   ['NovaTrack','Веб-приложение','2024','Рабочее пространство агентства: проекты, клиенты, задачи и финансы в одном дашборде со светлой и тёмной темой.',['Дашборд','React','Дизайн-система'],'novatrack/',SHOT('novatrack'),'','3 дня'],
-  ['FitLife','UI/UX · Фитнес','2025','Тренировки, питание и прогресс в одном приложении — с кликабельным прототипом на 10 экранов.',['Mobile App','UX','Прототип'],'fitlife/',SHOT('fitlife','50% 10%'),'','7 дней']
+  ['FitLife','UI/UX · Фитнес','2025','Тренировки, питание и прогресс в одном приложении — с кликабельным прототипом на 10 экранов.',['Mobile App','UX','Прототип'],'fitlife/',SHOT('fitlife','50% 10%'),'','7 дней'],
+  ['Serein','Айдентика · Парфюмерия','2026','Айдентика и интернет-магазин авторской парфюмерии: упаковка, продуктовая съёмка и редакционный e-commerce.',['Брендинг','Арт-дирекшн','E-commerce'],'serein/',SHOT('serein'),'','5 дней']
 ];
 document.getElementById('cards').innerHTML=works.map(function(w,i){
   return '<li class="rv '+(w[7]==='wide'?'wide':'')+'" style="--d:'+(i*90)+'ms"><a class="pcard '+(w[7]==='light'?'light':'')+'" href="'+w[5]+'">'+w[6]+'<div class="meta"><span>'+w[1]+' — '+w[2]+'</span><span class="go"><svg><use href="#i-aur"/></svg></span></div>'+
