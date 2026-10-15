@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#0a0a0a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nova Digital — портфолио фрилансера по дизайну и разработке">
-<meta property="og:description" content="Фрилансер с 6+ годами опыта. Бренды, сайты и приложения: Nexora, Crave, Lume, NovaTrack, FitLife.">
+<meta property="og:description" content="Фрилансер с 6+ годами опыта. Бренды, сайты и приложения: Nexora, Crave, Lume, NovaTrack, FitLife и Serein.">
 <meta property="og:image" content="https://lupu228.github.io/assets/hero-after.jpg">
 <meta property="og:locale" content="ru_RU">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%230a0a0a'/%3E%3Cpath fill='%23cf8047' d='M24 6c1.8 11 6.3 15.7 18 18-11.7 2.3-16.2 7-18 18-1.8-11-6.3-15.7-18-18 11.7-2.3 16.2-7 18-18Z'/%3E%3C/svg%3E">
@@ -622,7 +622,7 @@ form input:focus,form textarea:focus{border-color:rgba(17,17,17,.3);background:#
         <li><a class="alink" href="lume/"><span class="hv">Lume</span></a></li>
         <li><a class="alink" href="novatrack/"><span class="hv">NovaTrack</span></a></li>
         <li><a class="alink" href="fitlife/"><span class="hv">FitLife</span></a></li>
-        <li><a class="alink" href="serein/"><span class="hv">Serein</span></a></li></ul></div>
+        <li><a class="alink" href="serein/index.html"><span class="hv">Serein</span></a></li></ul></div>
       <div class="f-col"><h4>Контакты</h4><ul>
         <li><a class="alink" href="https://t.me/nova_coding" target="_blank" rel="noopener"><span class="hv">Telegram · @nova_coding</span></a></li>
         <li><a class="alink" href="#contact" data-contact><span class="hv">Форма заявки</span></a></li></ul></div>
@@ -732,7 +732,7 @@ function splitWords(h2){
 document.querySelectorAll('.words').forEach(splitWords);
 
 /* ---------- content ---------- */
-var partners=[['Nexora','nexora/case/'],['Crave','crave/'],['Lume','lume/'],['NovaTrack','novatrack/'],['FitLife','fitlife/'],['Serein','serein/']];
+var partners=[['Nexora','nexora/case/'],['Crave','crave/'],['Lume','lume/'],['NovaTrack','novatrack/'],['FitLife','fitlife/'],['Serein','serein/index.html']];
 document.getElementById('partners').innerHTML=partners.map(function(n){
   return '<li><a href="'+n[1]+'"><span class="hv"><svg><use href="#i-dot"/></svg>'+n[0]+'</span></a></li>'; }).join('');
 
@@ -744,7 +744,7 @@ var works=[
   ['Lume','Айдентика и e-commerce','2025','Фирменный стиль и интернет-магазин натуральной косметики: логотип, упаковка, карточка товара и мобильная оплата.',['Брендинг','Shopify','Упаковка'],'lume/',SHOT('lume','50% 45%'),'','3 дня'],
   ['NovaTrack','Веб-приложение','2024','Рабочее пространство агентства: проекты, клиенты, задачи и финансы в одном дашборде со светлой и тёмной темой.',['Дашборд','React','Дизайн-система'],'novatrack/',SHOT('novatrack'),'','3 дня'],
   ['FitLife','UI/UX · Фитнес','2025','Тренировки, питание и прогресс в одном приложении — с кликабельным прототипом на 10 экранов.',['Mobile App','UX','Прототип'],'fitlife/',SHOT('fitlife','50% 10%'),'','7 дней'],
-  ['Serein','Айдентика · Парфюмерия','2026','Айдентика и интернет-магазин авторской парфюмерии: упаковка, продуктовая съёмка и редакционный e-commerce.',['Брендинг','Арт-дирекшн','E-commerce'],'serein/',SHOT('serein'),'','5 дней']
+  ['Serein','Айдентика · Парфюмерия','2026','Айдентика и интернет-магазин авторской парфюмерии: упаковка, продуктовая съёмка и редакционный e-commerce.',['Брендинг','Арт-дирекшн','E-commerce'],'serein/index.html',SHOT('serein'),'','5 дней']
 ];
 document.getElementById('cards').innerHTML=works.map(function(w,i){
   return '<li class="rv '+(w[7]==='wide'?'wide':'')+'" style="--d:'+(i*90)+'ms"><a class="pcard '+(w[7]==='light'?'light':'')+'" href="'+w[5]+'">'+w[6]+'<div class="meta"><span>'+w[1]+' — '+w[2]+'</span><span class="go"><svg><use href="#i-aur"/></svg></span></div>'+
