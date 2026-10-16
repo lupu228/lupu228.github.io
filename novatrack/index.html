@@ -262,10 +262,10 @@ function Overview({go,openProject}){
         <div className="flex items-center justify-between"><h2 className="text-lg font-semibold">Ближайшие дедлайны</h2><button onClick={()=>go('projects')} className="text-sm font-semibold text-accent hover:underline">Все проекты</button></div>
         <ul className="mt-3 divide-y divide-line">
           {deadlines.map(p=>{const d=daysUntil(p.due);
-            return <li key={p.id}><button onClick={()=>openProject(p)} className="flex w-full items-center gap-3 py-3 text-left hover:bg-surface2/60 rounded-lg px-1">
+            return <li key={p.id}><button onClick={()=>openProject(p)} className="flex w-full flex-wrap items-center gap-3 py-3 text-left hover:bg-surface2/60 rounded-lg px-1">
               <div className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl text-center leading-none ${d<=4?'bg-bad/10 text-bad':d<=10?'bg-warn/15 text-warn':'bg-surface2 text-muted'}`}><span><b className="num text-[15px] block">{d}</b><span className="text-[10px]">дн.</span></span></div>
               <div className="min-w-0 flex-1"><p className="font-semibold truncate">{p.name}</p><p className="text-xs text-muted truncate">{p.client} · готово {p.progress}%</p></div>
-              <Pill s={p.status}/></button></li>;})}
+              <div className="w-full ml-14 sm:w-auto sm:ml-0"><Pill s={p.status}/></div></button></li>;})}
         </ul>
       </Card>
       <Card className="p-5">
@@ -489,7 +489,7 @@ function App(){
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 
-<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
-<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Nova Digital"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Nova Digital</a>
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}@media(max-width:480px){.lm-back{padding:11px;gap:0;right:12px;bottom:12px}.lm-back-txt{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Nova Digital"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg><span class="lm-back-txt">← Nova Digital</span></a>
 </body>
 </html>
