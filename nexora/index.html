@@ -237,6 +237,8 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
   .tbl-wrap{overflow-x:auto}
   .orb,.coin,#obj-coin{display:none}
   #obj-star{width:110px!important;height:110px!important;top:-60px!important;left:auto!important;right:-10px}
+  .demo canvas.obj[data-obj="star"]{width:90px!important;height:90px!important;right:-55px!important;bottom:-55px!important}
+  .demo .star.fallback{width:60px!important;right:-35px!important;bottom:-35px!important}
 }
 </style>
 
@@ -617,7 +619,7 @@ footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);fo
 })();
 </script>
 
-<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}</style>
-<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Nova Digital"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>← Nova Digital</a>
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#cf8047}@media print{.lm-back{display:none}}@media(max-width:480px){.lm-back{padding:11px;gap:0;right:12px;bottom:12px}.lm-back-txt{display:none}}</style>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Nova Digital"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg><span class="lm-back-txt">← Nova Digital</span></a>
 </body>
 </html>
