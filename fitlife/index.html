@@ -116,7 +116,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .tile small{color:var(--muted);font-size:11px}
 .tile svg{width:18px;height:18px;color:var(--lime)}
 .sec-h{display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 12px}
-.sec-h h4{margin:0;font:800 17px/1 var(--display);font-stretch:110%}
+.sec-h h3{margin:0;font:800 17px/1 var(--display);font-stretch:110%}
 .sec-h span{font-size:12px;color:var(--muted)}
 .bars{display:flex;align-items:flex-end;gap:8px;height:150px}
 .bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end;background:none;border:0;padding:0}
@@ -144,7 +144,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .timer{display:flex;align-items:center;gap:12px;margin:16px 0}
 .timer b{font:800 34px/1 var(--display);font-variant-numeric:tabular-nums;flex:1}
 .progress{height:6px;border-radius:6px;background:var(--card2);overflow:hidden;margin-top:6px}
-.progress i{display:block;height:100%;background:var(--lime);transition:width .3s}
+.progress i{display:block;height:100%;width:100%;background:var(--lime);transform-origin:left;transform:scaleX(0);transition:transform .3s}
 .ex{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:18px;padding:10px 12px;margin-bottom:8px}
 .ex div{flex:1;min-width:0}
 .ex small{display:block;color:var(--muted);font-size:12px}
@@ -340,8 +340,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
         <!-- Goal -->
         <div class="screen" data-screen="goal">
           <div class="steps"><i class="done"></i><i></i><i></i></div>
-          <span class="label">Вопрос 1 из 3</span>
-          <h2 class="p-h" style="margin-top:10px">Какая у тебя главная цель?</h2>
+          <h2 class="p-h" style="margin-top:14px">Какая у тебя главная цель?</h2>
           <div class="opts" data-group="goal">
             <button class="opt" aria-pressed="false"><span><strong>Похудеть</strong><small>Дефицит калорий + кардио</small></span><i class="dot"></i></button>
             <button class="opt" aria-pressed="true"><span><strong>Набрать мышцы</strong><small>Силовые планы, норма белка</small></span><i class="dot"></i></button>
@@ -353,8 +352,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
         <!-- Level -->
         <div class="screen" data-screen="level">
           <div class="steps"><i class="done"></i><i class="done"></i><i></i></div>
-          <span class="label">Вопрос 2 из 3</span>
-          <h2 class="p-h" style="margin-top:10px">Сколько дней в неделю можешь тренироваться?</h2>
+          <h2 class="p-h" style="margin-top:14px">Сколько дней в неделю можешь тренироваться?</h2>
           <div class="days" data-group="days">
             <button class="opt" aria-pressed="false"><b>2</b><small>Мягкий старт</small></button>
             <button class="opt" aria-pressed="true"><b>3–4</b><small>Баланс</small></button>
@@ -370,8 +368,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
         <!-- Signup -->
         <div class="screen" data-screen="signup">
           <div class="steps"><i class="done"></i><i class="done"></i><i class="done"></i></div>
-          <span class="label">Последний шаг</span>
-          <h2 class="p-h" style="margin-top:10px">План готов. Сохрани его.</h2>
+          <h2 class="p-h" style="margin-top:14px">План готов. Сохрани его.</h2>
           <p class="p-sub" style="margin-bottom:22px">Набор массы · 3–4 дня · Зал. План на 12 недель.</p>
           <form id="signupForm">
             <div class="field"><label for="su-name">Имя</label><input id="su-name" value="Алекс Морозов" autocomplete="off"></div>
@@ -398,7 +395,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
             <div class="bar-val"><span>Сожжено калорий · <span id="barDay">Пт</span></span><b id="barKcal">2 145</b></div>
             <div class="bars" id="bars"></div>
           </div>
-          <div class="sec-h"><h4>Планы тренировок</h4><span>Неделя 3 из 12</span></div>
+          <div class="sec-h"><h3>Планы тренировок</h3><span>Неделя 3 из 12</span></div>
           <div class="chips" data-group="plans">
             <button class="chip" aria-pressed="true" data-filter="all">Все</button>
             <button class="chip" aria-pressed="false" data-filter="upper">Верх тела</button>
@@ -425,7 +422,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
             <button class="p-btn" id="startBtn" style="width:auto;padding:14px 26px">Старт</button>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Прогресс</span><span id="exCount">0 из 6 выполнено</span></div>
-          <div class="progress"><i id="exBar" style="width:0%"></i></div>
+          <div class="progress"><i id="exBar"></i></div>
           <div id="exList" style="margin-top:14px"></div>
         </div>
 
@@ -442,7 +439,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
             <div class="macro"><small>Углеводы</small><b id="mC">135 / 270 г</b><div class="progress"><i id="mCb"></i></div></div>
             <div class="macro"><small>Жиры</small><b id="mF">40 / 80 г</b><div class="progress"><i id="mFb"></i></div></div>
           </div>
-          <div class="sec-h"><h4>Приёмы пищи</h4><span>Нажмите +, чтобы добавить</span></div>
+          <div class="sec-h"><h3>Приёмы пищи</h3><span>Нажмите +, чтобы добавить</span></div>
           <div id="meals"></div>
         </div>
 
@@ -627,7 +624,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
     row.querySelector('.check').onclick=()=>{row.classList.toggle('done');updEx();};
     exList.appendChild(row);
   });
-  function updEx(){const d=exList.querySelectorAll('.ex.done').length;document.getElementById('exCount').textContent=d+' из '+ex.length+' выполнено';document.getElementById('exBar').style.width=(d/ex.length*100)+'%';}
+  function updEx(){const d=exList.querySelectorAll('.ex.done').length;document.getElementById('exCount').textContent=d+' из '+ex.length+' выполнено';document.getElementById('exBar').style.transform='scaleX('+(d/ex.length)+')';}
   let secs=0,timer=null;const clock=document.getElementById('clock'),startBtn=document.getElementById('startBtn');
   startBtn.onclick=()=>{
     if(timer){clearInterval(timer);timer=null;startBtn.textContent='Продолжить';startBtn.classList.remove('ghost');return;}
@@ -652,7 +649,7 @@ footer{border-top:1px solid var(--line);padding-block:32px 48px;display:flex;fle
     ring.style.strokeDashoffset=C*(1-r);
     document.getElementById('kcalLeft').textContent=fmt(Math.max(TARGET-eaten,0));
     [['P',150,0.25/4],['C',270,0.45/4],['F',80,0.3/9]].forEach(([k,goal,f])=>{
-      const g=Math.round(eaten*f);document.getElementById('m'+k).textContent=g+' / '+goal+' г';document.getElementById('m'+k+'b').style.width=Math.min(g/goal*100,100)+'%';
+      const g=Math.round(eaten*f);document.getElementById('m'+k).textContent=g+' / '+goal+' г';document.getElementById('m'+k+'b').style.transform='scaleX('+Math.min(g/goal,1)+')';
     });
   }
   updFood();
