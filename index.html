@@ -481,7 +481,7 @@ form input:focus,form textarea:focus{border-color:rgba(17,17,17,.3);background:#
 
     <div class="shell hero-grid">
       <div class="hero-left">
-        <span class="eyebrow rv gate" style="--d:200ms">Freelancer · 6+ years</span>
+        <span class="eyebrow rv gate" style="--d:200ms">Фрилансер · 6+ лет опыта</span>
         <h1 class="lines gate" style="--d:250ms;--st:120ms">
           <span class="ln"><span style="--i:0">Смелые идеи,</span></span>
           <span class="ln"><span style="--i:1">воплощённые</span></span>
@@ -761,7 +761,7 @@ document.getElementById('cards').innerHTML=works.map(function(w,i){
 
 // personal (non-client) projects — kept separate from the works[] client portfolio above
 var personalWorks=[
-  ['K9-Dentist','Личный проект · 7 дней','2026','Собственный Shopify-магазин товаров для ухода за зубами собак: лендинг, карточка товара, checkout и апсейл на пополнение — спроектирован и запущен самостоятельно с нуля за 7 дней. Не клиентская работа.',['Shopify','E-commerce','Соло-разработка'],'k9-dentist/','<div class="bg shot"><img src="k9-dentist/hero.jpg" alt="" loading="lazy" decoding="async" width="1800" style="object-position:50% 20%"></div>','wide']
+  ['K9-Dentist','Личный проект · 7 дней','2026','Собственный Shopify-магазин товаров для ухода за зубами собак: лендинг, карточка товара, checkout и апсейл на пополнение — спроектирован и запущен самостоятельно с нуля за 7 дней. Не клиентская работа.',['Shopify','E-commerce','Соло-разработка'],'k9-dentist/','<div class="bg shot"><img src="k9-dentist/hero-card.png" alt="" loading="lazy" decoding="async" width="1800" style="object-fit:contain;object-position:50% 50%;background:#0b1420"></div>','wide']
 ];
 document.getElementById('personalCards').innerHTML=personalWorks.map(function(w,i){
   return '<li class="rv wide" style="--d:'+(i*90)+'ms"><a class="pcard" href="'+w[5]+'">'+w[6]+'<div class="meta"><span>'+w[1]+' — '+w[2]+'</span><span class="go"><svg><use href="#i-aur"/></svg></span></div>'+
