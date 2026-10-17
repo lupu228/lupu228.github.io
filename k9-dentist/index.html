@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>K9-Dentist — личный e-commerce проект</title><meta name="description" content="K9-Dentist — собственный Shopify-магазин товаров для ухода за зубами собак, построенный самостоятельно за 7 дней."><meta name="theme-color" content="#0b1420"><style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+:root{--ink:#0b1420;--panel:#121f2e;--panel2:#182838;--gold:#d4a655;--gold2:#e8c182;--paper:#f4efe6;--muted:#9fb0bf;--line:rgba(212,166,85,.22);--serif:'Fraunces',Georgia,serif;--sans:'Inter',Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1180px,calc(100% - 64px));margin:auto}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);font-weight:600}
+.serif{font-family:var(--serif)}
+header{border-bottom:1px solid var(--line)}
+.nav{height:80px;display:flex;align-items:center;justify-content:space-between}
+.wordmark{font:700 21px var(--serif);color:var(--gold2);letter-spacing:.02em}
+.navlinks{display:flex;gap:32px;font-size:13px;color:var(--muted)}
+.navlinks a:hover{color:var(--paper)}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(212,166,85,.08);padding:8px 14px;border-radius:999px;font-size:12px;letter-spacing:.04em;color:var(--gold2)}
+.hero{padding:76px 0 56px}
+.hero h1{font:700 clamp(36px,5.2vw,58px)/1.08 var(--serif);margin:22px 0 18px;max-width:17ch}
+.hero p{max-width:540px;color:var(--muted);font-size:16px;margin:0 0 28px}
+.actions{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:.02em}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a1c05}
+.btn-ghost{border:1px solid var(--line);color:var(--paper)}
+.shot{margin-top:48px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+.shot img{display:block;width:100%;height:auto}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta div span{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.meta div b{font:600 17px var(--sans)}
+section.block{padding:64px 0}
+section.block h2{font:600 clamp(26px,3.4vw,36px)/1.15 var(--serif);margin:0 0 20px;max-width:20ch}
+.notice{background:rgba(212,166,85,.07);border:1px solid var(--line);border-radius:14px;padding:22px 26px;font-size:14px;color:var(--paper);line-height:1.65}
+.notice b{color:var(--gold2)}
+.scope{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:28px}
+.scope div{background:var(--panel);padding:26px}
+.scope h3{font:600 16px var(--sans);margin:0 0 8px;color:var(--gold2)}
+.scope p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.tag{border:1px solid var(--line);padding:7px 14px;border-radius:999px;font-size:12px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:40px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:12px}
+footer a{color:var(--gold2)}
+.toast{position:fixed;z-index:10;right:24px;bottom:24px;background:var(--ink);color:white;padding:14px 20px;font-size:12px;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;border:1px solid var(--line)}
+@media(max-width:800px){
+  .wrap{width:min(100% - 40px,620px)}
+  .meta{grid-template-columns:1fr 1fr;row-gap:28px}
+  .scope{grid-template-columns:1fr}
+  footer{flex-direction:column;align-items:flex-start}
+}
+</style>
+<style>.lm-back{position:fixed;right:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(10,10,10,.82);color:#fff!important;font:500 13px/1 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none!important;box-shadow:0 8px 24px -8px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:transform .25s,background .25s}.lm-back:hover{transform:translateY(-2px);background:#0a0a0a}.lm-back svg{width:16px;height:16px;color:#d4a655}@media print{.lm-back{display:none}}@media(max-width:480px){.lm-back{padding:11px;gap:0;right:12px;bottom:12px}.lm-back-txt{display:none}}</style>
+</head><body>
+<header><div class="wrap nav"><a class="wordmark" href="#top">K9-DENTIST</a><nav class="navlinks"><a href="#project">О проекте</a><a href="#scope">Что сделано</a><a href="https://k9-dentist.myshopify.com/" target="_blank" rel="noopener">Магазин ↗</a></nav></div></header>
+<main id="top">
+<section class="hero"><div class="wrap">
+  <span class="badge">● Личный проект · не клиентская работа</span>
+  <h1 class="serif">Shopify-магазин товаров для ухода за зубами собак</h1>
+  <p>Собственный бренд и e-commerce магазин, спроектированный и запущенный самостоятельно с нуля за 7 дней: посадочная страница, карточка товара, оформление заказа и апсейл на пополнение комплекта.</p>
+  <div class="actions">
+    <a class="btn btn-gold" href="https://k9-dentist.myshopify.com/" target="_blank" rel="noopener">Смотреть живой магазин ↗</a>
+    <a class="btn btn-ghost" href="#project">О проекте</a>
+  </div>
+  <div class="shot"><img src="hero.jpg" alt="Скриншот живого магазина K9-Dentist"></div>
+</div></section>
+
+<section><div class="wrap meta">
+  <div><span>Тип</span><b>Личный проект</b></div>
+  <div><span>Сроки</span><b>7 дней</b></div>
+  <div><span>Инструменты</span><b>Shopify, Liquid</b></div>
+  <div><span>Результат</span><b>Лендинг, checkout, апсейл</b></div>
+</div></section>
+
+<section class="block" id="project"><div class="wrap">
+  <h2 class="serif">Собственный бренд, а не заказ клиента</h2>
+  <div class="notice">Это <b>личный e-commerce проект</b>: идея, бренд, магазин и запуск — моя собственная инициатива, не оплаченная работа для стороннего клиента. Публикую его в портфолио как пример того, что умею самостоятельно собрать и запустить рабочий интернет-магазин под жёсткий срок — от идеи до работающего чек-аута за неделю.</div>
+</div></section>
+
+<section class="block" id="scope"><div class="wrap">
+  <h2 class="serif">Что сделано за 7 дней</h2>
+  <div class="scope">
+    <div><h3>Посадочная страница</h3><p>Длинный direct-response лендинг: структура оффера, блоки с возражениями, сравнение с альтернативами, отзывы, гарантия.</p></div>
+    <div><h3>Карточка товара и чекаут</h3><p>Настройка товара, вариаций и процесса оформления заказа на Shopify.</p></div>
+    <div><h3>Апсейл на пополнение</h3><p>Отдельная страница допродажи — покупка только расходника без основного набора.</p></div>
+    <div><h3>Визуальное оформление</h3><p>Тёмная тёплая палитра, типографика и вёрстка под тему здоровья и доверия.</p></div>
+  </div>
+  <div class="tags"><span class="tag">Shopify</span><span class="tag">Liquid</span><span class="tag">E-commerce</span><span class="tag">Direct-response копирайтинг</span><span class="tag">Соло-разработка</span></div>
+</div></section>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px"><span>K9-Dentist · личный проект · 7 дней</span><a href="https://k9-dentist.myshopify.com/" target="_blank" rel="noopener">k9-dentist.myshopify.com ↗</a></div></footer>
+</main>
+<a class="lm-back" href="../" aria-label="Вернуться на сайт студии Nova Digital"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg><span class="lm-back-txt">← Nova Digital</span></a>
+</body></html>
