@@ -1000,7 +1000,10 @@ var novaStats={ru:'Доказательство — в работах, а не �
 function translateNovaNode(node,dict){
   if(node.nodeType===3){
     var raw=node.nodeValue,trimmed=raw.trim(),translated=dict[trimmed];
-    if(translated!==undefined) node.nodeValue=raw.replace(trimmed,translated);
+    if(translated!==undefined){node.nodeValue=raw.replace(trimmed,translated);return;}
+    var updated=raw,keys=Object.keys(dict).filter(function(key){return key.length>5;}).sort(function(a,b){return b.length-a.length;});
+    keys.forEach(function(key){if(updated.indexOf(key)!==-1)updated=updated.split(key).join(dict[key]);});
+    if(updated!==raw) node.nodeValue=updated;
     return;
   }
   if(node.nodeType!==1||node.matches('script,style,#langToggle')) return;
